@@ -9,7 +9,7 @@ public class ReadGui extends javax.swing.JFrame {
     // Variables declaration - do not modify
     private javax.swing.JFileChooser jFileChooser1;
     private FileListener filelis;
-    private Read2 theRead = new Read2();
+    private ExcelReader theRead = new ExcelReader();
     // End of variables declaration
 
     /** Creates new form ReadGui */
