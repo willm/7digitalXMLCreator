@@ -47,7 +47,7 @@ public class TrackGui extends javax.swing.JFrame {
     private javax.swing.JTextField trkVTitText;
     private javax.swing.JTextField volText;
     private Xml theXml;
-    private ProductGui2 product;
+    private ProductGui product;
     
     private ButHandler butlis;
     private OkHandler oklis;
@@ -367,7 +367,7 @@ public class TrackGui extends javax.swing.JFrame {
         theXml = anXml;
     }
     
-    public void addPro(ProductGui2 pro){
+    public void addPro(ProductGui pro){
         //this method MUST be called when a new track gui is created. It attaches the ProductGui2 classs to it
         product = pro;
     }

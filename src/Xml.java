@@ -11,11 +11,11 @@ public class Xml
     private Tag album;
     private Tag year;
     //private ArrayList tracks;
-    private BCollection participants = new BCollection("paricipants");
+    private TagCollection participants = new TagCollection("paricipants");
     private Tag explictC;
     private ArrayList genres;
-    private BCollection territories = new BCollection("territory_restrictions");
-    private BCollection tracks = new BCollection("tracks");
+    private TagCollection territories = new TagCollection("territory_restrictions");
+    private TagCollection tracks = new TagCollection("tracks");
 
     public Xml(String theDist, 
                 String theUpc, 
@@ -32,7 +32,7 @@ public class Xml
     {
         filename = theUpc;
         initinfo[0] = new Tag("distributor",theDist);
-        initinfo[1] = new STag("product upc",theUpc);
+        initinfo[1] = new SelfClosingTag("product upc",theUpc);
         //this is actually a cheat maybe upc should be added via add attribute method
         initinfo[2] = new Tag("product_type",thePtype);
         initinfo[3] = new Tag("product_label",theLabel);
@@ -69,20 +69,20 @@ public class Xml
                         String theTPline,
                         String theGenre
                         ){
-        BCollection theTrack=new BCollection("track");
+        TagCollection theTrack=new TagCollection("track");
         theTrack.addAttribute("isrc", theIsrc);
         theTrack.addAttribute("hidden", isHidden);
         
         theTrack.addTag(new Tag("track_identifier", theTrackId));
         
-        BCollection trackArtists = new BCollection("track_artists");
+        TagCollection trackArtists = new TagCollection("track_artists");
         Tag tkAtstNm = new Tag("track_artist_name",theTrackArtist);
         tkAtstNm.addAttribute("main","yes");
         //maybe this shouldn't be hardcoded
         trackArtists.addTag(tkAtstNm);
         theTrack.addTag(trackArtists);
         
-        BCollection trackParticipents = new BCollection("participants");
+        TagCollection trackParticipents = new TagCollection("participants");
         
         theTrack.addTag(trackParticipents);
         
@@ -104,7 +104,7 @@ public class Xml
         
         theTrack.addTag(new Tag("track_p_line", theTPline));
         
-        BCollection trackGenres = new BCollection("genres");
+        TagCollection trackGenres = new TagCollection("genres");
         trackGenres.addTag(new Tag("genre",theGenre));
         theTrack.addTag(trackGenres);
         
@@ -113,7 +113,7 @@ public class Xml
     }
     
      public void addParticipant(String theProle, String thePname){
-        BCollection theParticipant=new BCollection("participant");
+        TagCollection theParticipant=new TagCollection("participant");
         theParticipant.addTag(new Tag("participant_role", theProle));
         theParticipant.addTag(new Tag("participant_name", thePname));
         participants.addTag(theParticipant);
@@ -137,13 +137,13 @@ public class Xml
                             String thePrice, 
                             String theCurrencyCode)
     {
-        BCollection theTerritory=new BCollection("territory");
+        TagCollection theTerritory=new TagCollection("territory");
         theTerritory.addAttribute("restricted_to",restrictedTo);
         theTerritory.addTag(new Tag("territory_code",tCode));
         theTerritory.addTag(new Tag("territory_release_date",tReleaseDate));
         theTerritory.addTag(new Tag("price_code",thePriceCode));
         
-        BCollection theWSP = new BCollection("wholesale_price");
+        TagCollection theWSP = new TagCollection("wholesale_price");
         theWSP.addTag(new Tag("price",thePrice));
         theWSP.addTag(new Tag("currency_code", theCurrencyCode));
                 
@@ -280,15 +280,15 @@ public class Xml
             }
         }
     
-    public BCollection gettrck(int i){
-        BCollection theTrack = (BCollection)tracks.accessInside(i);
+    public TagCollection gettrck(int i){
+        TagCollection theTrack = (TagCollection)tracks.accessInside(i);
         theTrack.print();
         return(theTrack);
     }
     
     public void editTrackTagValue(int tNo, String title, String newVal){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         track.replace(title,newVal);
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         track.print();
@@ -297,53 +297,53 @@ public class Xml
 
     
     public void editTrackTagAttribute(int tNo, String attribute, String newVal){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         track.editAttribute(attribute, newVal);
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         track.print();
     }
     
     public String getTrackTagValue(int tNo, String title){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         return(track.returnVal(title));
     }
     
     public String getTrackAtrbtValue(int tNo, String title){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         System.out.println("ATTRIBUTE = " + track.returnAtrbtVal(title));
         return(track.returnAtrbtVal(title));
     }
     
     public String getTrackArtistValue(int tNo){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         //gets the track
-        BCollection artists = (BCollection)track.accessInside(1);
+        TagCollection artists = (TagCollection)track.accessInside(1);
         //gets the artists collection from the track
         System.out.println("Track ARTIST = " + artists.returnVal("track_artist_name"));
         return(artists.returnVal("track_artist_name"));
     }
     
     public String getTrackGenreValue(int tNo){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         //gets the track
-        BCollection genres = (BCollection)track.accessInside(12);
+        TagCollection genres = (TagCollection)track.accessInside(12);
         //gets the artists collection from the track
         System.out.println("Track GENRE = " + genres.returnVal("genre"));
         return(genres.returnVal("genre"));
     }
       
     public void addTrackParticipent(int tNo, String pRole, String pName){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         //gets the track
-        BCollection participents = (BCollection)track.accessInside(2);
+        TagCollection participents = (TagCollection)track.accessInside(2);
         //gets the participent BCollection from the track
-        BCollection participent = new BCollection("participent");
+        TagCollection participent = new TagCollection("participent");
         //adds a participent collection to the participents collection
         participent.addTag(new Tag("participant_role",pRole));
         participent.addTag(new Tag("participant_name",pName));
@@ -352,22 +352,22 @@ public class Xml
     }
     
     public String getTrackParticipentTagValue(int tNo, int pNo, String title){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         //gets the track
-        BCollection participents = (BCollection)track.accessInside(2);
+        TagCollection participents = (TagCollection)track.accessInside(2);
         //gets the participent BCollection from the track
-        BCollection participent = (BCollection)participents.accessInside(pNo);
+        TagCollection participent = (TagCollection)participents.accessInside(pNo);
         return(participent.returnVal(title));
     }
     
     public void editTrackParTagValue(int tNo, int parNo, String title, String newVal){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         //gets the track
-        BCollection participents = (BCollection)track.accessInside(2);
+        TagCollection participents = (TagCollection)track.accessInside(2);
         //gets the participent BCollection from the track
-        BCollection participent = (BCollection)participents.accessInside(parNo);
+        TagCollection participent = (TagCollection)participents.accessInside(parNo);
         participent.print();
         participent.replace(title, newVal);
         System.out.println("!1111111111111111111111111111111111111111111111111111");
@@ -375,10 +375,10 @@ public class Xml
     }
     
     public void editTrackArtistValue(int tNo, String newArt){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         //gets the track
-        BCollection artists = (BCollection)track.accessInside(1);
+        TagCollection artists = (TagCollection)track.accessInside(1);
         //gets the artists collection from the track
         
         artists.replace("track_artist_name",newArt);
@@ -387,14 +387,14 @@ public class Xml
     
     public String[] getTrackParticipents(int tNo){
         String[] result;
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
-        BCollection participents = (BCollection)track.accessInside(2);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
+        TagCollection participents = (TagCollection)track.accessInside(2);
         int size = participents.insideSize();
         result = new String[size];
-        BCollection curParticipent;
+        TagCollection curParticipent;
         for(int i =0; i<size; i++){
-            curParticipent = (BCollection)participents.accessInside(i);
+            curParticipent = (TagCollection)participents.accessInside(i);
             String[] element = new String[2];
             element[0] = curParticipent.accessInside(0).returnVal();
             element[1] = curParticipent.accessInside(1).returnVal();
@@ -408,10 +408,10 @@ public class Xml
     }
     
     public void removeTrackParticipent(int tNo, int pNo){
-        BCollection track;
-        track = (BCollection)tracks.accessInside(tNo);
+        TagCollection track;
+        track = (TagCollection)tracks.accessInside(tNo);
         //gets the track
-        BCollection participents = (BCollection)track.accessInside(2);
+        TagCollection participents = (TagCollection)track.accessInside(2);
         participents.print();
         participents.removeTag(pNo);
         participents.print();
@@ -425,14 +425,14 @@ public class Xml
     }
     
     public void getTer(int terNo){
-        BCollection ter;
-        ter = (BCollection)territories.accessInside(terNo);
+        TagCollection ter;
+        ter = (TagCollection)territories.accessInside(terNo);
         ter.print();
     }
     
     public String getTerTagValue(int terNo, String name){
-        BCollection ter;
-        ter = (BCollection)territories.accessInside(terNo);
+        TagCollection ter;
+        ter = (TagCollection)territories.accessInside(terNo);
         return ter.returnVal(name);
     }
     
@@ -445,8 +445,8 @@ public class Xml
     }*/
     
     public void editTerTagValue(int terNo, String title, String newVal){
-        BCollection ter;
-        ter = (BCollection)territories.accessInside(terNo);
+        TagCollection ter;
+        ter = (TagCollection)territories.accessInside(terNo);
         ter.replace(title,newVal);
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         ter.print();
@@ -464,15 +464,15 @@ public class Xml
     }*/
     
     public String getTerAtrbtValue(int terNo, String title){
-        BCollection ter;
-        ter = (BCollection)territories.accessInside(terNo);
+        TagCollection ter;
+        ter = (TagCollection)territories.accessInside(terNo);
         System.out.println("ATTRIBUTE = " + ter.returnAtrbtVal(title));
         return(ter.returnAtrbtVal(title));
     }
     
     public void editTerAtrbtValue(int terNo, String title, String newVal){
-        BCollection ter;
-        ter = (BCollection)territories.accessInside(terNo);
+        TagCollection ter;
+        ter = (TagCollection)territories.accessInside(terNo);
         ter.print();
         ter.editAttribute(title, newVal);
         System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
@@ -487,20 +487,20 @@ public class Xml
     }
     
     public void getPar(int parNo){
-        BCollection par;
-        par = (BCollection)participants.accessInside(parNo);
+        TagCollection par;
+        par = (TagCollection)participants.accessInside(parNo);
         par.print();
     }
     
     public String getParTagValue(int parNo, String name){
-        BCollection par;
-        par = (BCollection)participants.accessInside(parNo);
+        TagCollection par;
+        par = (TagCollection)participants.accessInside(parNo);
         return par.returnVal(name);
     }
         
     public void editParTagValue(int parNo, String title, String newVal){
-        BCollection par;
-        par = (BCollection)participants.accessInside(parNo);
+        TagCollection par;
+        par = (TagCollection)participants.accessInside(parNo);
         par.replace(title,newVal);
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         par.print();

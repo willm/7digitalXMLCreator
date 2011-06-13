@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.ImageIcon;
  
-public class ProductGui2 extends javax.swing.JFrame {
+public class ProductGui extends javax.swing.JFrame {
 
     private JLabel logoLabel;                    
     private JButton addParBut, addTerBut, addTrkBut;
@@ -66,7 +66,7 @@ public class ProductGui2 extends javax.swing.JFrame {
     private int trackCount = 0;
 
     /** Creates new form ProductGui2 */
-    public ProductGui2() {
+    public ProductGui() {
         initComponents();
     }
 
@@ -512,7 +512,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProductGui2().setVisible(true);
+                new ProductGui().setVisible(true);
             }
         });
     }
@@ -521,7 +521,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         track.addPro(this);
     }
    
-    public ProductGui2 returnThis(){
+    public ProductGui returnThis(){
         return this;
     }
     

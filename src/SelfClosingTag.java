@@ -5,10 +5,10 @@
  * @author (Will Munn) 
  * @version (24/1/2010)
  */
-public class STag extends Tag
+public class SelfClosingTag extends Tag
 {    
 
-    public STag(String theName, String theValue)
+    public SelfClosingTag(String theName, String theValue)
     {
         super(theName, theValue);
         

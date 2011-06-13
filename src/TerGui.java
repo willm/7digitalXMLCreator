@@ -23,7 +23,7 @@ public class TerGui extends javax.swing.JFrame {
     
     private ButHandler butlis = null;
     private Xml theXml = null;
-    private ProductGui2 product= null;
+    private ProductGui product= null;
     
     private boolean isEdit = false;
     private int terPos;
@@ -153,7 +153,7 @@ public class TerGui extends javax.swing.JFrame {
     }
     
     
-    public void connect(Xml anXml,ProductGui2 pro, boolean edit){
+    public void connect(Xml anXml,ProductGui pro, boolean edit){
         theXml = anXml;
         product = pro;
         isEdit = edit;

@@ -36,7 +36,7 @@ public class PartGui extends javax.swing.JFrame {
     private boolean isEdit = false;
     private int pos;
     private TrackGui track = null;
-    private ProductGui2 prod = null;
+    private ProductGui prod = null;
 
 
     /** Creates new form PartGui */
@@ -155,7 +155,7 @@ public class PartGui extends javax.swing.JFrame {
     }
         
     
-    public void ProductLevelConnect(Xml theXml, ProductGui2 theProduct){
+    public void ProductLevelConnect(Xml theXml, ProductGui theProduct){
         prod = theProduct;
         }
     

@@ -9,12 +9,12 @@ import java.io.PrintStream;
  * @version (a version number or a date)
  */
 
-public class BCollection extends Tag
+public class TagCollection extends Tag
 {
     // instance variables - replace the example below with your own
     private ArrayList inside = new ArrayList();
 
-    public BCollection(String theName)
+    public TagCollection(String theName)
     {
         super(theName, null);
         super.value=null;
