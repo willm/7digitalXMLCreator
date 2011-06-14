@@ -36,7 +36,7 @@ public class XMLTests extends TestCase {
 	public void setUp(){
 		xml.printXml();
 		String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
-		//filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
+		filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
 		_doc = DOMElements.parse(filePath);
 	}
 	
