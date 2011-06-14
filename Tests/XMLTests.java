@@ -31,7 +31,7 @@ public class XMLTests extends TestCase {
 			_productArtist, 
 			_isExplicit);
 	
-	Document _doc;
+	private Document _doc;
 	
 	public void setUp(){
 		xml.printXml();
