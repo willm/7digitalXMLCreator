@@ -31,18 +31,18 @@ public class XMLTests extends TestCase {
 			_productArtist, 
 			_isExplicit);
 	
-	Document doc;
+	Document _doc;
 	
 	public void setUp(){
 		xml.printXml();
 		String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
 		//filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
-		doc = DOMElements.parse(filePath);
+		_doc = DOMElements.parse(filePath);
 	}
 	
 	public void test_xml_contains_products_node()
 	{		
-		NodeList products = getTagsByName(doc,"products");
+		NodeList products = getTagsByName(_doc,"products");
 		
 		assertTrue(products.getLength() == 1);
 	}
@@ -55,14 +55,14 @@ public class XMLTests extends TestCase {
 	}
 	
 	public void test_products_contain_distributor(){
-		NodeList products = getTagsByName(doc, "products");
+		NodeList products = getTagsByName(_doc, "products");
 		NodeList distributor = ((Element)products.item(0)).getElementsByTagName("distributor");
 		
 		assertTrue(distributor.getLength() == 1);
 	}
 	
 	public void test_distributor_contains_correct_distributor_value(){
-		NodeList distributor = getTagsByName(doc,"distributor");
+		NodeList distributor = getTagsByName(_doc,"distributor");
 		Element value = (Element)distributor.item(0);
 		
 		assertTrue(value.getTextContent().equals(_distributor));
@@ -185,13 +185,66 @@ public class XMLTests extends TestCase {
 		assertTrue(productArtistNameNode.getLength() == 1);
 	}
 	
-
+	public void test_product_artist_name_contains_main_attribute(){
+		NodeList productArtistNameNode = getElementFromArtistsNode("product_artist_name");
+		Attr mainAttribute = ((Element)productArtistNameNode.item(0)).getAttributeNode("main");
+		
+		assertTrue(mainAttribute != null);
+	}
 	
+	public void test_main_attribute_is_set_to_yes(){
+		NodeList productArtistNameNode = getElementFromArtistsNode("product_artist_name");
+		Attr mainAttribute = ((Element)productArtistNameNode.item(0)).getAttributeNode("main");
+		
+		assertEquals(mainAttribute.getNodeValue(), "yes");
+	}
+	
+	public void test_product_artist_name_value_is_correct(){
+		NodeList productArtistNameNode = getElementFromArtistsNode("product_artist_name");
+		
+		assertEquals(productArtistNameNode.item(0).getTextContent(), _productArtist);
+	}
+
+	public void test_product_contains_participants_node(){
+		NodeList participants = getElementFromProduct("paricipants");
+		
+		assertTrue(participants.getLength() == 1);
+	}
+	
+	public void test_product_contains_explicit_node(){
+		NodeList explicit_content = getElementFromProduct("explicit_content");
+		
+		assertTrue(explicit_content.getLength() == 1);
+	}
+	
+	public void test_explicit_node_contains_correct_value(){
+		NodeList explicit_content = getElementFromProduct("explicit_content");
+		
+		assertEquals(explicit_content.item(0).getTextContent(), _isExplicit);
+	}
+	
+	public void test_product_contains_genres_node(){
+		NodeList genresNodes = getElementFromProduct("genres");
+		
+		assertTrue(genresNodes.getLength() == 1);
+	}
+	
+	public void test_product_contains_territory_restrictions_node(){
+		NodeList territoryRestrictionsNodes = getElementFromProduct("territory_restrictions");
+		
+		assertTrue(territoryRestrictionsNodes.getLength() == 1);
+	}
+	
+	public void test_product_contains_tracks_node(){
+		NodeList tracksNodes = getElementFromProduct("tracks");
+		
+		assertTrue(tracksNodes.getLength() == 1);
+	}
 	
 	//-------------------------------------------------------------------------
 	
 	public NodeList getProductElement() {
-		NodeList products =getTagsByName(doc, "products");
+		NodeList products =getTagsByName(_doc, "products");
 		return ((Element)products.item(0)).getElementsByTagName("product");
 	}
 	

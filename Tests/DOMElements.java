@@ -1,7 +1,7 @@
 import java.io.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
-import org.xml.sax.*;
+//import org.xml.sax.*;
 
 public class DOMElements{
    static public Document parse(String xmlFile){
