@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="7dig.xsd">
+<!--CREATED USING THE 7digital XML CREATOR-->
+<distributor></distributor>
+<product upc="">
+<product_type>audio single</product_type>
+<product_label></product_label>
+<product_image>.jpg</product_image>
+<product_title></product_title>
+<product_release_date>YYYYMMDD</product_release_date>
+<product_p_line></product_p_line>
+<product_c_line></product_c_line>
+<product_artists>
+<product_artist_name main="yes"></product_artist_name>
+
+</product_artists>
+<paricipants>
+</paricipants>
+<explicit_content>false</explicit_content>
+<genres>
+</genres>
+<territory_restrictions>
+<territory restricted_to="true" >
+<territory_code>tr</territory_code>
+<territory_release_date>YYYYMMDD</territory_release_date>
+<price_code></price_code>
+<wholesale_price>
+<price></price>
+<currency_code></currency_code>
+</wholesale_price>
+
+</territory>
+
+</territory_restrictions>
+<tracks>
+<track isrc="" hidden="false" >
+<track_identifier></track_identifier>
+<track_artists>
+<track_artist_name main="yes"></track_artist_name>
+
+</track_artists>
+
+<participants>
+</participants>
+
+<explicit_content>false</explicit_content>
+<track_volume>1</track_volume>
+<track_number>1</track_number>
+<track_type>Audio</track_type>
+<track_title>rter</track_title>
+<track_version_title></track_version_title>
+<track_length>HH:MM:SS</track_length>
+<track_label></track_label>
+<track_p_line></track_p_line>
+<genres>
+<genre></genre>
+</genres>
+
+</track>
+
+</tracks>
+</product>
+</products>
