@@ -63,7 +63,7 @@ public class ParticipantsTests extends TestCase{
 		NodeList participentNodes = ((Element)participantsNodes.item(0)).getElementsByTagName("participant");
 		NodeList firstParticipentRoleNodes =((Element)participentNodes.item(0)).getElementsByTagName("participant_role");
 		
-		assertTrue(firstParticipentRoleNodes.getLength() == 1);
+		assertEquals(firstParticipentRoleNodes.item(0).getTextContent(),"Didgery Doo");
 	}
 	
 	public void test_participant_contains_participant_name_node()
@@ -75,6 +75,14 @@ public class ParticipantsTests extends TestCase{
 		assertTrue(firstParticipentRoleNodes.getLength() == 1);
 	}
 	
+	public void test_participant_name_node_contains_correct_value()
+	{
+		NodeList participantsNodes = getElementFromProduct("paricipants");
+		NodeList participentNodes = ((Element)participantsNodes.item(0)).getElementsByTagName("participant");
+		NodeList firstParticipentNameNodes =((Element)participentNodes.item(0)).getElementsByTagName("participant_name");
+		
+		assertEquals(firstParticipentNameNodes.item(0).getTextContent(),"Rolf Harris");
+	}
 	//-------------------------------------------------------------------------
 
 	public Element getFirstTerritory() {
