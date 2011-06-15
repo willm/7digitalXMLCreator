@@ -121,9 +121,47 @@ public class TrackTests extends TestCase {
 		
 		assertEquals(trackIdentifierNode.item(0).getTextContent(),_trackIdentifier);
 	}
+
+	public void test_track_contains_track_artists_node(){
+		Node track = getFirstTrack();
+		NodeList trackArtistsNode = ((Element)track).getElementsByTagName("track_artists");
+		
+		assertTrue(trackArtistsNode.getLength() == 1);
+	}
 	
+	public void test_track_artists_node_contains_track_artist_name_node(){
+		Node track = getFirstTrack();
+		NodeList trackArtistsNode = ((Element)track).getElementsByTagName("track_artists");
+		NodeList trackArtistNameNode = ((Element)trackArtistsNode.item(0)).getElementsByTagName("track_artist_name");
+		
+		assertTrue(trackArtistNameNode.getLength() == 1);
+	}
 	
+	public void test_track_artist_name_node_contains_correct_value(){
+		Node track = getFirstTrack();
+		NodeList trackArtistsNode = ((Element)track).getElementsByTagName("track_artists");
+		NodeList trackArtistNameNode = ((Element)trackArtistsNode.item(0)).getElementsByTagName("track_artist_name");
+		
+		assertEquals(trackArtistNameNode.item(0).getTextContent(),_trackArtist);
+	}
 	
+	public void test_track_artists_node_contains_main_attribute(){
+		Node track = getFirstTrack();
+		NodeList trackArtistsNode = ((Element)track).getElementsByTagName("track_artists");
+		NodeList trackArtistNameNode = ((Element)trackArtistsNode.item(0)).getElementsByTagName("track_artist_name");
+		Attr mainAtribute = ((Element) trackArtistNameNode.item(0)).getAttributeNode("main");
+		
+		assertTrue(mainAtribute != null);
+	}
+	
+	public void test_main_attribute_contains_correct_value(){
+		Node track = getFirstTrack();
+		NodeList trackArtistsNode = ((Element)track).getElementsByTagName("track_artists");
+		NodeList trackArtistNameNode = ((Element)trackArtistsNode.item(0)).getElementsByTagName("track_artist_name");
+		Attr mainAtribute = ((Element) trackArtistNameNode.item(0)).getAttributeNode("main");
+		
+		assertEquals(mainAtribute.getNodeValue(), "yes");
+	}
 	
 
 
