@@ -112,7 +112,7 @@ public class Xml
         //creates a new track collection tag and adds it to the Tracks arraylist
     }
     
-     public void addParticipant(String theProle, String thePname){
+    public void addParticipant(String theProle, String thePname){
         TagCollection theParticipant=new TagCollection("participant");
         theParticipant.addTag(new Tag("participant_role", theProle));
         theParticipant.addTag(new Tag("participant_name", thePname));
@@ -199,64 +199,7 @@ public class Xml
         }
         
         try {
-            PrintStream out = new PrintStream(new FileOutputStream("xml/"+filename+".xml"));
-            
-            out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
-            out.println("<products xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"7dig.xsd\">");
-            out.println("<!--CREATED USING THE 7digital XML CREATOR-->");
-            
-            for(int i =0; i<9; i++){
-                out.println(initinfo[i].printXml());
-            }
-            //prints the initinfo array
-            
-            out.println("<product_artists>");
-            
-                out.println(productArtist.printXml());
-                //prints product artists
-            
-            out.println("</product_artists>");
-                       
-            out.print(participants.printXml());
-            //participants list 
-            
-            out.println(explictC.printXml());
-            //prints wheteher explicit content is present
-            
-            out.println("<genres>");
-            //prints genres list
-            
-                for(int i=0; i<genres.size(); i++){
-                    Tag temp = (Tag)genres.get(i);
-                    out.println(temp.printXml());
-                }
-            
-            out.println("</genres>");
-            
-            out.print(territories.printXml());
-            //territory_restrictions list
-            
-            
-            
-            out.print(tracks.printXml());
-            //tracks list
-            
-                /**for(int i=0; i<tracks.size(); i++){
-                Collection temp =(Collection) tracks.get(i);
-                //gets each track collection out of the tracks ArrayList
-                String[] currentTag = temp.printToXml();
-                //gets the string Array output by the printToXml method
-                    for(int j=0; j<currentTag.length; j++){
-                        out.println(currentTag[j]);
-                        //iterates over all tags in the current track and prints them to a new line
-                    }
-                }*/
-            
-            
-            out.println("</product>");
-            out.println("</products>");
-            
-            out.close();
+            writeToXmlFile(initinfo, productArtist, participants, explictC, genres, territories, tracks);
         }
         
         catch (FileNotFoundException e) {
@@ -264,6 +207,55 @@ public class Xml
         }
         
     }
+
+	public void writeToXmlFile(Tag[] pInitInfo, Tag pProductArtist, TagCollection pParticipants, Tag pExplicitContent, ArrayList pGenres, TagCollection pTerritories, TagCollection pTracks) throws FileNotFoundException {
+		PrintStream printStream = new PrintStream(new FileOutputStream("xml/"+filename+".xml"));
+		
+		printStream.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
+		printStream.println("<products xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"7dig.xsd\">");
+		printStream.println("<!--CREATED USING THE 7digital XML CREATOR-->");
+		
+		for(int i =0; i<9; i++){
+		    printStream.println(pInitInfo[i].printXml());
+		}
+		//prints the initinfo array
+		
+		printStream.println("<product_artists>");
+		
+		    printStream.println(pProductArtist.printXml());
+		    //prints product artists
+		
+		printStream.println("</product_artists>");
+		           
+		printStream.print(pParticipants.printXml());
+		//participants list 
+		
+		printStream.println(pExplicitContent.printXml());
+		//prints wheteher explicit content is present
+		
+		printStream.println("<genres>");
+		//prints genres list
+		
+		    for(int i=0; i<pGenres.size(); i++){
+		        Tag temp = (Tag)pGenres.get(i);
+		        printStream.println(temp.printXml());
+		    }
+		
+		printStream.println("</genres>");
+		
+		printStream.print(pTerritories.printXml());
+		//territory_restrictions list
+		
+		
+		
+		printStream.print(pTracks.printXml());
+		//tracks list
+		
+		printStream.println("</product>");
+		printStream.println("</products>");
+		
+		printStream.close();
+	}
     
     public int numOfTracks(){
         return(tracks.insideSize());
