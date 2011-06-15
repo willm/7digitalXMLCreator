@@ -60,7 +60,7 @@ public class TrackTests extends TestCase {
 	public void readOutputXmlFile(){
 		_xml.printXml();
 		String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
-		filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
+		//filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
 		_doc = DOMElements.parse(filePath);
 	}
 	
@@ -284,11 +284,34 @@ public class TrackTests extends TestCase {
 		assertTrue(trackPLineNode.getLength() == 1);
 	}
 	
-	public void test_track_p_lime_node_contains_correct_value(){
+	public void test_track_p_line_node_contains_correct_value(){
 		Node track = getFirstTrack();
 		NodeList trackPLineNode = ((Element)track).getElementsByTagName("track_p_line");
 			
 		assertEquals(trackPLineNode.item(0).getTextContent(), _trackPLine);
+	}
+	
+	public void test_track_contains_genres_node(){
+		Node track = getFirstTrack();
+		NodeList genresNode = ((Element)track).getElementsByTagName("genres");
+		
+		assertTrue(genresNode.getLength() == 1);
+	}
+	
+	public void test_genres_node_contains_genre_node(){
+		Node track = getFirstTrack();
+		NodeList genresNode = ((Element)track).getElementsByTagName("genres");
+		NodeList genreNode = ((Element)genresNode.item(0)).getElementsByTagName("genre");
+		
+		assertTrue(genreNode.getLength() == 1);
+	}
+	
+	public void test_genre_node_contains_correct_value(){
+		Node track = getFirstTrack();
+		NodeList genresNode = ((Element)track).getElementsByTagName("genres");
+		NodeList genreNode = ((Element)genresNode.item(0)).getElementsByTagName("genre");
+		
+		assertEquals(genreNode.item(0).getTextContent(), _trackGenre);
 	}
 	
 	//-------------------------------------------------------------------------

@@ -19,7 +19,7 @@ public class XMLTests extends TestCase {
 	private static final String _upc = "3654654654";
 	private static final String _distributor = "Believe";
 	
-	private Xml xml = new Xml(_distributor,
+	private Xml _xml = new Xml(_distributor,
 			_upc,
 			_productType,
 			_label,
@@ -34,9 +34,9 @@ public class XMLTests extends TestCase {
 	private Document _doc;
 	
 	public void setUp(){
-		xml.printXml();
+		_xml.printXml();
 		String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
-		filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
+		//filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
 		_doc = DOMElements.parse(filePath);
 	}
 	
