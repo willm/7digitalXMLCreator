@@ -152,26 +152,7 @@ public class Xml
         territories.addTag(theTerritory);
     }
         
-    public void print()
-    {
-        System.out.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
-        System.out.println("<products>");
-        
-        productArtist.print();
-        album.print();
-        year.print();
-        
-        System.out.println("<tracks>");
-        
-        /**for(int i=0; i<tracks.size(); i++){
-            Collection temp =(Collection) tracks.get(i);
-            temp.print();
-        }
-        */
-        System.out.println("</tracks>");
-        
-        System.out.println("</products>");
-    }
+
     
     public void printXml()
     {
