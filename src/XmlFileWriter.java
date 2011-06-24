@@ -28,7 +28,7 @@ public class XmlFileWriter {
 		//participants list 
 		
 		printStream.println(pExplicitContent.printXml());
-		//prints wheteher explicit content is present
+		//prints whether explicit content is present
 		
 		printStream.println("<genres>");
 		//prints genres list

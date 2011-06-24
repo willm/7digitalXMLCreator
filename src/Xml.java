@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Xml
 {
@@ -16,6 +17,7 @@ public class Xml
     private ArrayList genres;
     private TagCollection territories = new TagCollection("territory_restrictions");
     private TagCollection tracks = new TagCollection("tracks");
+    private List<Track> newTracks = new ArrayList<Track>(); 
 
     public Xml(String theDist, 
                 String theUpc, 
@@ -69,6 +71,12 @@ public class Xml
                         String theTPline,
                         String theGenre
                         ){
+    	Artist trackArtist = new Artist(theTrackArtist, true);
+		Track track = new Track(theIsrc, isHidden, theTrackId, trackArtist, isExplicit, 
+    			theVolume, theTrackNo, theType, theTtitle, theTversionT, theTlength, 
+    			theTlabel, theTPline, theGenre);
+    	newTracks.add(track);
+		
         TagCollection theTrack=new TagCollection("track");
         theTrack.addAttribute("isrc", theIsrc);
         theTrack.addAttribute("hidden", isHidden);
@@ -78,7 +86,7 @@ public class Xml
         TagCollection trackArtists = new TagCollection("track_artists");
         Tag tkAtstNm = new Tag("track_artist_name",theTrackArtist);
         tkAtstNm.addAttribute("main","yes");
-        //maybe this shouldn't be hardcoded
+        //maybe this shouldn't be hard coded
         trackArtists.addTag(tkAtstNm);
         theTrack.addTag(trackArtists);
         
