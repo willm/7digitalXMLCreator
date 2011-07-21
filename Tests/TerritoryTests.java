@@ -39,12 +39,12 @@ public class TerritoryTests extends TestCase {
 	
 	private Document _doc;
 	
-	String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
-	//filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
+	//String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
+	String filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
 	
 	public void setUp(){
 		
-		String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
+		//String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
 		//filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
 		_xml.addTerritory(_restrictedTo, _territoryCode, _territoryReleaseDate, _priceCode, _price, _currencyCode);
 		_xml.printXml();

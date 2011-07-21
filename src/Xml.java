@@ -4,17 +4,12 @@ import java.util.List;
 
 public class Xml
 {
-    private String testanswer =null;
-
     private String filename =null;
     private Tag[] initinfo = new Tag[9];
     private Tag productArtist;
-    private Tag album;
-    private Tag year;
-    //private ArrayList tracks;
     private TagCollection participants = new TagCollection("paricipants");
     private Tag explictC;
-    private ArrayList genres;
+    private ArrayList<Tag> genres;
     private TagCollection territories = new TagCollection("territory_restrictions");
     private TagCollection tracks = new TagCollection("tracks");
     private List<Track> newTracks = new ArrayList<Track>(); 
@@ -35,7 +30,7 @@ public class Xml
         filename = theUpc;
         initinfo[0] = new Tag("distributor",theDist);
         initinfo[1] = new SelfClosingTag("product upc",theUpc);
-        //this is actually a cheat maybe upc should be added via add attribute method
+        //this is actually a cheat maybe UPC should be added via add attribute method
         initinfo[2] = new Tag("product_type",thePtype);
         initinfo[3] = new Tag("product_label",theLabel);
         initinfo[4] = new Tag("product_image",theImage);
@@ -50,10 +45,8 @@ public class Xml
         //this hard codes the main attribute (may have to be changed)
         
         explictC = new Tag("explicit_content", isExplicit);
-        
-        //participants = new ArrayList();
-        //tracks = new ArrayList();
-        genres = new ArrayList();
+
+        genres = new ArrayList<Tag>();
     }
    
     public void addTrack(String theIsrc, 
@@ -117,7 +110,6 @@ public class Xml
         theTrack.addTag(trackGenres);
         
         tracks.addTag(theTrack);
-        //creates a new track collection tag and adds it to the Tracks arraylist
     }
     
     public void addParticipant(String theProle, String thePname){
@@ -134,7 +126,7 @@ public class Xml
     }
     
     public void removeGenres(){
-        genres = new ArrayList();
+        genres = new ArrayList<Tag>();
     }
     
     
@@ -166,14 +158,14 @@ public class Xml
     {
         File file=new File("xml");
         boolean exists = file.exists();
-        //checks if xml directory exists
+        //checks if XML directory exists
         if (!exists) {
             try{
                 boolean success = (new File("xml")).mkdir();
                 if (success) {
                   System.out.println("Directory: " + "xml" + " created");
                 }
-                //creates xml directory if it does not
+                //creates XML directory if it does not
             }            
             catch (Exception e){//Catch exception if any
               System.err.println("Error: " + e.getMessage());
@@ -370,14 +362,6 @@ public class Xml
         return ter.returnVal(name);
     }
     
-    /**public String getTerCurValue(int terNo){
-        BCollection ter, wsp;
-        ter = (BCollection)territories.accessInside(terNo);
-        wsp = (BCollection)ter.accessInside(3);
-        //gets whole sale price collection from territory
-        return wsp.returnVal("currency_code");
-    }*/
-    
     public void editTerTagValue(int terNo, String title, String newVal){
         TagCollection ter;
         ter = (TagCollection)territories.accessInside(terNo);
@@ -385,17 +369,6 @@ public class Xml
         System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         ter.print();
     }
-    
-    /**public void editTerCurValue(int terNo, String newVal){
-        BCollection ter, wsp;
-        ter = (BCollection)territories.accessInside(terNo);
-        wsp = (BCollection)ter.accessInside(3);
-        //gets whole sale price collection from territory
-        wsp.print();
-        wsp.replace("currency_code",newVal);
-        System.out.println("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-        wsp.print();
-    }*/
     
     public String getTerAtrbtValue(int terNo, String title){
         TagCollection ter;

@@ -34,7 +34,7 @@ public class ParticipantsTests extends TestCase{
 	
 	public void setUp(){
 		String filePath = "c:\\Stuff\\XMLCreator\\xml\\"+ _upc + ".xml";
-		//filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
+		filePath = "/home/will/Documents/Java/7digitalXMLCreator/xml/"+ _upc + ".xml";
 		
 		_xml.addParticipant("Didgery Doo", "Rolf Harris");
 		_xml.printXml();
