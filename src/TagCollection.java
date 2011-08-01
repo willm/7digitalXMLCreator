@@ -35,10 +35,8 @@ public class TagCollection extends Tag
         
         if(attributePresent ==true){
             opener =  "<"+name+" ";
-            for(int i=0; i<attributes.size(); i++){
-                String[] curAtrbt = new String[2];
-                curAtrbt = (String[]) attributes.get(i);
-                opener = opener + curAtrbt[0] + "=\"" + curAtrbt[1] + "\" ";
+            for(String key : attributes.keySet()){
+                opener = opener + key + "=\"" + attributes.get(key)+ "\" ";
             }
             opener = opener + ">";
         }
@@ -57,10 +55,8 @@ public class TagCollection extends Tag
     {
         if(attributePresent ==true){
             opener =  "<"+name+" ";
-            for(int i=0; i<attributes.size(); i++){
-                String[] curAtrbt = new String[2];
-                curAtrbt = (String[]) attributes.get(i);
-                opener = opener + curAtrbt[0] + "=\"" + curAtrbt[1] + "\" ";
+            for(String key : attributes.keySet()){
+                opener = opener + key + "=\"" + attributes.get(key) + "\" ";
             }
             opener = opener + ">";
         }

@@ -6,5 +6,5 @@ public class Artist{
 	public Artist(String name, Boolean isMain){
 		this.Name = name;
 		this.IsMain = isMain;
-}
+	}
 }

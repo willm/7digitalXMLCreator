@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.util.ArrayList;
+import java.util.Hashtable;
 /**
  * Write a description of class Tag here.
  * 
@@ -13,9 +10,7 @@ public class Tag
 
     protected Boolean attributePresent = false;
     protected Boolean isCollection = false;
-    protected ArrayList attributes = new ArrayList();
-    //protected String[] attribute = new String[2];
-    //this array will contain the name of the atribute at position 0 and it's value at position 1.
+    protected Hashtable<String, String> attributes = new Hashtable<String, String>();
     protected String opener;
     protected String name;
     protected String closer;
@@ -34,33 +29,20 @@ public class Tag
 
     public void addAttribute(String theAttribute, String theValue)
     {
-        String[] attribute = new String[2];
-        attribute[0] = theAttribute;
-        attribute[1] = theValue;
-        attributes.add(attribute);
+        
+        attributes.put(theAttribute, theValue);
         attributePresent = true;
     }
     
     public void editAttribute(String name, String newVal){
         if(attributePresent==true){
-            for(int i = 0; i<attributes.size(); i++){
-                String[] temp = (String[])attributes.get(i);
-                if(temp[0] == name){
-                    temp[1] = newVal;
-                }
-            }
+        	attributes.put(name, newVal);
         }
     }
     
     public String returnAtrbtVal(String theName){
         String theVal = null;
-        for(int i=0; i<attributes.size(); i++){
-            String[] temp = new String[2];
-            temp = (String[])attributes.get(i);
-            if(temp[0]==theName){
-                theVal=temp[1];
-            }
-        }
+        theVal = attributes.get(theName);
         return theVal;
     }
                 
@@ -84,10 +66,8 @@ public class Tag
         }
         
         else {
-            for(int i=0; i<attributes.size(); i++){
-                String[] curAtrbt = new String[2];
-                curAtrbt = (String[]) attributes.get(i);
-                opener = opener + curAtrbt[0] + "=\"" + curAtrbt[1]+"\"";
+            for(String key: attributes.keySet()){
+                opener = opener + key + "=\"" + attributes.get(key)+"\"";
             }
             opener = opener + ">";
             System.out.println(opener + value + closer);
@@ -105,10 +85,8 @@ public class Tag
         else{
             opener =  "<"+name+" ";
             
-            for(int i=0; i<attributes.size(); i++){
-                String[] curAtrbt = new String[2];
-                curAtrbt = (String[]) attributes.get(i);
-                opener = opener + curAtrbt[0] + "=\"" + curAtrbt[1] +"\"";
+            for(String key: attributes.keySet()){
+                opener = opener + key + "=\"" + attributes.get(key) +"\"";
             }
             opener = opener + ">";
             printXml = new String(opener+value+closer+"\r\n");
