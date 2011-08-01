@@ -1,21 +1,13 @@
 import java.util.Hashtable;
-/**
- * Write a description of class Tag here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+
 public class Tag
 {
-
-    protected Boolean attributePresent = false;
     protected Boolean isCollection = false;
     protected Hashtable<String, String> attributes = new Hashtable<String, String>();
     protected String opener;
     protected String name;
     protected String closer;
     protected String value;
-    //protected 
     
 
     public Tag(String theName, String theValue)
@@ -31,11 +23,10 @@ public class Tag
     {
         
         attributes.put(theAttribute, theValue);
-        attributePresent = true;
     }
     
     public void editAttribute(String name, String newVal){
-        if(attributePresent==true){
+        if(attributes.size()>0){
         	attributes.put(name, newVal);
         }
     }
@@ -61,7 +52,7 @@ public class Tag
     
    public void print()
     {
-        if(attributePresent == false){
+        if(attributes.size() == 0){
             System.out.println(opener+value+closer);
         }
         
@@ -78,7 +69,7 @@ public class Tag
     public String printXml()
     {
         String printXml;
-        if(attributePresent == false){
+        if(attributes.size() == 0){
             printXml = new String(opener+value+closer);
         }
         

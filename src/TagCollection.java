@@ -12,7 +12,7 @@ import java.io.PrintStream;
 public class TagCollection extends Tag
 {
     // instance variables - replace the example below with your own
-    private ArrayList inside = new ArrayList();
+    private ArrayList<Tag> inside = new ArrayList<Tag>();
 
     public TagCollection(String theName)
     {
@@ -33,7 +33,7 @@ public class TagCollection extends Tag
     public void print()
     {
         
-        if(attributePresent ==true){
+        if(attributes.size() >0){
             opener =  "<"+name+" ";
             for(String key : attributes.keySet()){
                 opener = opener + key + "=\"" + attributes.get(key)+ "\" ";
@@ -53,7 +53,7 @@ public class TagCollection extends Tag
     }
     public String printXml()
     {
-        if(attributePresent ==true){
+        if(attributes.size()>0){
             opener =  "<"+name+" ";
             for(String key : attributes.keySet()){
                 opener = opener + key + "=\"" + attributes.get(key) + "\" ";
