@@ -2,7 +2,6 @@ import java.util.Hashtable;
 
 public class Tag
 {
-    protected Boolean isCollection = false;
     protected Hashtable<String, String> attributes = new Hashtable<String, String>();
     protected String opener;
     protected String name;

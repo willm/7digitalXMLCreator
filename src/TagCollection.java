@@ -1,24 +1,13 @@
 import java.util.ArrayList;
-import java.io.OutputStream;
-import java.io.PrintStream;
-
-/**
- * Write a description of class BCollection here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 
 public class TagCollection extends Tag
 {
-    // instance variables - replace the example below with your own
     private ArrayList<Tag> inside = new ArrayList<Tag>();
 
     public TagCollection(String theName)
     {
         super(theName, null);
         super.value=null;
-        isCollection = true;
     }
 
    public void addTag(Tag theTag){
@@ -64,7 +53,7 @@ public class TagCollection extends Tag
         String printThis = (opener + "\r\n");
         for(int i=0; i<inside.size(); i++){
             Tag currentTag = (Tag)inside.get(i);
-            if(currentTag.isCollection == true){
+            if(currentTag.getClass() == TagCollection.class){
                 printThis = (printThis+currentTag.printXml()+"\r\n");
             }
             else{
