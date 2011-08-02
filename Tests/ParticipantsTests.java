@@ -3,7 +3,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import junit.framework.TestCase;
-
+import main.Xml;
 
 public class ParticipantsTests extends TestCase{
 	private static final String _isExplicit = "false";
@@ -83,6 +83,7 @@ public class ParticipantsTests extends TestCase{
 		
 		assertEquals(firstParticipentNameNodes.item(0).getTextContent(),"Rolf Harris");
 	}
+	
 	//-------------------------------------------------------------------------
 
 	public Element getFirstTerritory() {

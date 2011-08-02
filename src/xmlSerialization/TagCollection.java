@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class TagCollection extends Tag
 {
-    private ArrayList<Tag> inside = new ArrayList<Tag>();
+    private ArrayList<Tag> tags = new ArrayList<Tag>();
 
     public TagCollection(String theName)
     {
@@ -12,35 +12,18 @@ public class TagCollection extends Tag
     }
 
    public void addTag(Tag theTag){
-       inside.add(theTag);
+       tags.add(theTag);
     }
     
     public void replaceTag(int pos, Tag theTag){
-        inside.set(pos, theTag);
+        tags.set(pos, theTag);
     }
     
-      
     public void print()
     {
-        
-        if(attributes.size() >0){
-            opener =  "<"+name+" ";
-            for(String key : attributes.keySet()){
-                opener = opener + key + "=\"" + attributes.get(key)+ "\" ";
-            }
-            opener = opener + ">";
-        }
-        
-        System.out.println(opener);
-        
-        for(int i=0; i<inside.size(); i++){
-            Tag currentTag = (Tag)inside.get(i);
-                currentTag.print();
-            }
-            
-        System.out.println(closer);
-        
+        System.out.print(printXml());        
     }
+    
     public String printXml()
     {
         if(attributes.size()>0){
@@ -52,8 +35,8 @@ public class TagCollection extends Tag
         }
         
         String printThis = (opener + "\r\n");
-        for(int i=0; i<inside.size(); i++){
-            Tag currentTag = (Tag)inside.get(i);
+        for(int i=0; i<tags.size(); i++){
+            Tag currentTag = (Tag)tags.get(i);
             if(currentTag.getClass() == TagCollection.class){
                 printThis = (printThis+currentTag.printXml()+"\r\n");
             }
@@ -66,20 +49,20 @@ public class TagCollection extends Tag
     }
     
     public Tag accessInside(int pos){
-        return (Tag)inside.get(pos);
+        return tags.get(pos);
     }
     
     public void removeTag(int pos){
-        inside.remove(pos);
+        tags.remove(pos);
     }
     
     public int insideSize(){
-        return inside.size();
+        return tags.size();
     }
     
     public void replace(String theName, String theNewVal){
-        for(int i=0; i<inside.size(); i++){
-            Tag currentTag = (Tag)inside.get(i);
+        for(int i=0; i<tags.size(); i++){
+            Tag currentTag = tags.get(i);
                 if (currentTag.name == theName){
                     currentTag.editValue(theNewVal);
                 }
@@ -87,14 +70,12 @@ public class TagCollection extends Tag
         }
         
     public String returnVal(String theName){
-        for(int i=0; i<inside.size(); i++){
-            Tag currentTag = (Tag)inside.get(i);
+        for(int i=0; i<tags.size(); i++){
+            Tag currentTag = tags.get(i);
                 if (currentTag.name == theName){
                     return(currentTag.value);
                 }
         }
         return(null);
     }
-    
-    
 }

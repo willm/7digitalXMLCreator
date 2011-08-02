@@ -51,18 +51,7 @@ public class Tag
     
    public void print()
     {
-        if(attributes.size() == 0){
-            System.out.println(opener+value+closer);
-        }
-        
-        else {
-            for(String key: attributes.keySet()){
-                opener = opener + key + "=\"" + attributes.get(key)+"\"";
-            }
-            opener = opener + ">";
-            System.out.println(opener + value + closer);
-        }
-
+        System.out.print(printXml());
     }
     
     public String printXml()
