@@ -34,12 +34,12 @@ public class TagCollection extends Tag
             opener += ">";
         }
         
-        String printThis = (opener + "\r\n");
+        String output = (opener + "\r\n");
         for(Tag tag : tags){
-                printThis = (printThis+tag.printXml()+"\r\n");
+                output = (output+tag.printXml()+"\r\n");
         }
-        printThis = printThis + closer;
-        return printThis;
+        output += closer;
+        return output;
     }
     
     public Tag accessInside(int pos){
