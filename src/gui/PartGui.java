@@ -1,17 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+package gui;
 
-/*
- * PartGui.java
- *
- * Created on 13-Mar-2010, 23:52:25
- */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.ImageIcon;
+
+import main.Xml;
 /**
  *
  * @author Administrator

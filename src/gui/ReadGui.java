@@ -1,8 +1,12 @@
+package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.filechooser.*;
+
+import excel.ExcelReader;
 
 public class ReadGui extends javax.swing.JFrame {
 

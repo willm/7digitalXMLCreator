@@ -1,3 +1,4 @@
+package main;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -6,7 +7,7 @@ import xmlSerialization.*;
 
 
 public class XmlFileWriter {
-	public void writeToXmlFile(Tag[] pInitInfo, Tag pProductArtist, TagCollection pParticipants, Tag pExplicitContent, ArrayList pGenres, TagCollection pTerritories, TagCollection pTracks, String pFileName) throws FileNotFoundException {
+	public void writeToXmlFile(Tag[] pInitInfo, Tag pProductArtist, TagCollection pParticipants, Tag pExplicitContent, ArrayList<Tag> pGenres, TagCollection pTerritories, TagCollection pTracks, String pFileName) throws FileNotFoundException {
 		PrintStream printStream = new PrintStream(new FileOutputStream("xml/"+pFileName+".xml"));
 		
 		printStream.println("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>");
@@ -35,7 +36,7 @@ public class XmlFileWriter {
 		//prints genres list
 		
 		    for(int i=0; i<pGenres.size(); i++){
-		        Tag temp = (Tag)pGenres.get(i);
+		        Tag temp = pGenres.get(i);
 		        printStream.println(temp.printXml());
 		    }
 		

@@ -1,5 +1,10 @@
+package gui;
 //Import Statements
+
 import javax.swing.*;
+
+import main.Xml;
+
 import java.awt.*;
 import java.awt.event.*;
 

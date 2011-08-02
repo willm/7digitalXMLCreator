@@ -1,4 +1,7 @@
+package excel;
 //~--- non-JDK imports --------------------------------------------------------
+
+import main.Xml;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;

@@ -1,7 +1,11 @@
+package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.ImageIcon;
+
+import main.Xml;
 /**
  *
  * @author William Munn
