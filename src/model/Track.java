@@ -57,6 +57,8 @@ public class Track {
 	}
 
 	public TagCollection Serialize() {
-		return new TagCollection("track");
+		TagCollection track = new TagCollection("track");
+		track.addTag(new Tag("test","one"));
+		return track;
 	}
 }

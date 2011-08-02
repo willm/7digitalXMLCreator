@@ -45,6 +45,10 @@ public class Product {
 		Artists = new ArrayList<Artist>();
 	}
 	
+	public void addTrack(Track track){
+		Tracks.add(track);
+	}
+	
 	public TagCollection Serialize(){
 		TagCollection product = new TagCollection("product");
 		product.addAttribute("upc", Upc);
