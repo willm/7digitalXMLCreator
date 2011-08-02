@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import model.Artist;
+import xmlSerialization.*;
 
 public class Track {
 
@@ -53,5 +54,9 @@ public class Track {
 
         genres = new ArrayList<String>();
         genres.add(Genre);
+	}
+
+	public TagCollection Serialize() {
+		return new TagCollection("track");
 	}
 }

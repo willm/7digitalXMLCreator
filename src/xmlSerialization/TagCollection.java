@@ -29,22 +29,16 @@ public class TagCollection extends Tag
         if(attributes.size()>0){
             opener =  "<"+name+" ";
             for(String key : attributes.keySet()){
-                opener = opener + key + "=\"" + attributes.get(key) + "\" ";
+                opener += key + "=\"" + attributes.get(key) + "\" ";
             }
-            opener = opener + ">";
+            opener += ">";
         }
         
         String printThis = (opener + "\r\n");
-        for(int i=0; i<tags.size(); i++){
-            Tag currentTag = (Tag)tags.get(i);
-            if(currentTag.getClass() == TagCollection.class){
-                printThis = (printThis+currentTag.printXml()+"\r\n");
-            }
-            else{
-                printThis = (printThis+currentTag.printXml()+"\r\n");
-            }
+        for(Tag tag : tags){
+                printThis = (printThis+tag.printXml()+"\r\n");
         }
-        printThis = printThis + closer + "\r\n";
+        printThis = printThis + closer;
         return printThis;
     }
     

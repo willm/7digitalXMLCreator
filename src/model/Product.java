@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+import xmlSerialization.Tag;
+import xmlSerialization.TagCollection;
+
 public class Product {
 	private String Upc; 
 	private String Type; 
@@ -41,4 +44,30 @@ public class Product {
 		Participants = new ArrayList<Participant>();
 		Artists = new ArrayList<Artist>();
 	}
+	
+	public TagCollection Serialize(){
+		TagCollection product = new TagCollection("product");
+		product.addAttribute("upc", Upc);
+		
+		product.addTag(new Tag("product_type",Type));
+		product.addTag(new Tag("product_label",Label));
+		product.addTag(new Tag("product_image",Image));
+		product.addTag(new Tag("product_title",Title));
+		product.addTag(new Tag("product_release_date",ReleaseDate));
+        product.addTag(new Tag("product_p_line",PublisherLine));
+        product.addTag(new Tag("product_c_line",CopyrightLine));
+        
+        product.addTag(AddTracks());
+		
+		return product;
+	}
+	
+	private TagCollection AddTracks(){
+		TagCollection tracks = new TagCollection("tracks");
+		for(Track track : Tracks){
+			tracks.addTag(track.Serialize());
+		}
+		return tracks;
+	}
+	
 }

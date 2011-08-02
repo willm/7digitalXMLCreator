@@ -45,8 +45,6 @@ public class XmlFileWriter {
 		printStream.print(pTerritories.printXml());
 		//territory_restrictions list
 		
-		
-		
 		printStream.print(pTracks.printXml());
 		//tracks list
 		
