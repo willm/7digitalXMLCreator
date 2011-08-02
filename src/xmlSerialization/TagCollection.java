@@ -34,9 +34,9 @@ public class TagCollection extends Tag
             opener += ">";
         }
         
-        String output = (opener + "\r\n");
+        String output = (opener);
         for(Tag tag : tags){
-                output = (output+tag.printXml()+"\r\n");
+                output += tag.printXml();
         }
         output += closer;
         return output;
