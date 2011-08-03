@@ -69,10 +69,10 @@ public class Xml
                         String theGenre
                         ){
     	Artist trackArtist = new Artist(theTrackArtist, true);
-		Track track = new Track(theIsrc, isHidden, theTrackId, trackArtist, isExplicit, 
+		/*Track track = new Track(theIsrc, isHidden, theTrackId, trackArtist, isExplicit, 
     			theVolume, theTrackNo, theType, theTtitle, theTversionT, theTlength, 
     			theTlabel, theTPline, theGenre);
-    	newTracks.add(track);
+    	newTracks.add(track);*/
 		
         TagCollection theTrack=new TagCollection("track");
         theTrack.addAttribute("isrc", theIsrc);

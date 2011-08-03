@@ -1,5 +1,7 @@
 package model;
 
+import xmlSerialization.Tag;
+
 public class Artist{
 	
 	private String Name;
@@ -7,5 +9,10 @@ public class Artist{
 	public Artist(String name, Boolean isMain){
 		this.Name = name;
 		this.IsMain = isMain;
+	}
+	public Tag serialize() {
+		Tag artist = new Tag("product_artist_name", Name);
+		artist.addAttribute("main", IsMain ? "yes" : "no");
+		return artist;
 	}
 }

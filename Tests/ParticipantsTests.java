@@ -1,6 +1,16 @@
 import org.w3c.dom.Document;
+
+import model.Artist;
+import model.Distributor;
+import model.Genre;
+import model.Product;
+import model.ProductSerializer;
+import model.Track;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import xmlSerialization.TagCollection;
 
 import junit.framework.TestCase;
 import main.Xml;
@@ -82,6 +92,14 @@ public class ParticipantsTests extends TestCase{
 		NodeList firstParticipentNameNodes =((Element)participentNodes.item(0)).getElementsByTagName("participant_name");
 		
 		assertEquals(firstParticipentNameNodes.item(0).getTextContent(),"Rolf Harris");
+	}
+	
+	public void test_a(){
+		Product a = new Product("43243242", "fgrg", "zzzz", "ybfvdf", "fegfev", "8787nj", "lom", "fdgf", new Artist("bob dylan",true), true);
+		a.Tracks.add(new Track("", true, "", new Artist("pink floyd", true), false, "", 1, "", "", "", "", "", "", new Genre("prog rock")));
+		ProductSerializer productSerializer = new ProductSerializer(a);
+		TagCollection b = productSerializer.Serialize();
+		System.out.print(b.prettyFormat(b.printXml()));
 	}
 	
 	//-------------------------------------------------------------------------
