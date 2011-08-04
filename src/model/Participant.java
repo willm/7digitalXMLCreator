@@ -1,6 +1,7 @@
 package model;
 
 import xmlSerialization.Tag;
+import xmlSerialization.TagCollection;
 
 public class Participant{
 	private String Name;
@@ -10,7 +11,9 @@ public class Participant{
 		Role = role;
 	}
 	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+		TagCollection serializedParticipant = new TagCollection("participant");
+		serializedParticipant.addTag(new Tag("paticipant_role", Role));
+		serializedParticipant.addTag(new Tag("paticipant_name", Name));
+		return serializedParticipant;
 	}
 }

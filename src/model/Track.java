@@ -41,13 +41,13 @@ public class Track {
                         )
 	{
 		this.Isrc = isrc; 
-        this.isHidden = isHidden; //could be changed to boolean?
+        this.isHidden = isHidden;
         this.TrackId = TrackId;
         this.TrackArtist = TrackArtist;
-        this.isExplicit = isExplicit; //could be changed to boolean?
+        this.isExplicit = isExplicit;
         this.Volume = Volume;
-        this.TrackNo = TrackNo; //could be changed to int?
-        this.Type = Type; //is this necessary?
+        this.TrackNo = TrackNo;
+        this.Type = Type;
         this.Ttitle = Ttitle;
         this.TversionT = TversionT;
         this.Tlength = Tlength;
@@ -59,7 +59,5 @@ public class Track {
         
         Genres = new ArrayList<Genre>();
         Genres.add(Genre);
-	}
-
-	
+	}	
 }

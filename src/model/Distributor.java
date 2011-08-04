@@ -10,8 +10,8 @@ public class Distributor {
 		Name = name;
 	}
 	
-	public void Serialize(){
+	public Tag Serialize(){
 		Tag serialisedDistributor = new Tag("distributor", Name);
-		serialisedDistributor.print();
+		return serialisedDistributor;
 	}
 }
