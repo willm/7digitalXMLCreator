@@ -50,9 +50,11 @@ public class ProductSerializer{
 	}
 
 	private TagCollection serializeTracks(){
+		
 		TagCollection tracks = new TagCollection("tracks");
 		for(Track track : product.Tracks){
-			tracks.addTag(track.Serialize());
+			TrackSerializer trackSerializer = new TrackSerializer(track);
+			tracks.addTag(trackSerializer.Serialize());
 		}
 		return tracks;
 	}
