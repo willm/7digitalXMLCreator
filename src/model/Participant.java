@@ -6,11 +6,11 @@ import xmlSerialization.TagCollection;
 public class Participant{
 	private String Name;
 	private String Role;
-	public Participant(String name, String role){
+	public Participant(String role, String name){
 		Name = name;
 		Role = role;
 	}
-	public Tag serialize() {
+	public TagCollection serialize() {
 		TagCollection serializedParticipant = new TagCollection("participant");
 		serializedParticipant.addTag(new Tag("paticipant_role", Role));
 		serializedParticipant.addTag(new Tag("paticipant_name", Name));

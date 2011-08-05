@@ -28,11 +28,32 @@ public class ProductSerializer{
         
         serializedProduct.addTag(new Tag("explicit_content", product.IsExplicit ? "true" : "false"));
         
+        serializedProduct.addTag(serializeGenres());
+        
+        serializedProduct.addTag(serializeTerritories());
+        
         serializedProduct.addTag(serializeTracks());
-		
+        
 		return serializedProduct;
 	}
 	
+	private Tag serializeTerritories() {
+		TagCollection serializedTerritories = new TagCollection("territory_restrictions");
+		for(Territory territory : product.territories){
+			TerritorySerializer territorySerializer = new TerritorySerializer(territory);
+			serializedTerritories.addTag(territorySerializer.Serialize());
+		}
+		return serializedTerritories;
+	}
+
+	private Tag serializeGenres() {
+		TagCollection serializedGenres = new TagCollection("genres"); 
+		for(Genre genre : product.Genres){
+			serializedGenres.addTag(genre.serialize());
+		}
+		return serializedGenres;
+	}
+
 	private TagCollection serializeParticipants() {
 		TagCollection productParticipants = new TagCollection("paricipants");
 		for(Participant participant : product.Participants){

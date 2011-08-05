@@ -30,7 +30,7 @@ public class TrackTests extends TestCase {
 			_publisherLine, 
 			_copyrightLine, 
 			_productArtist, 
-			"false");
+			false);
 	
 	private Document _doc;
 	
@@ -38,9 +38,9 @@ public class TrackTests extends TestCase {
 	public static final String _hidden = "false";
 	public static final String _trackIdentifier = "track.wav";
 	public static final String _trackArtist = "Michael Jackson";
-	public static final String _isExplicit = "false";
+	public static final Boolean _isExplicit = false;
 	public static final String _volume = "1";
-	public static final String _trackNumber = "1";
+	public static final int _trackNumber = 1;
 	public static final String _trackType = "audio";
 	public static final String _trackTitle = "Wanna Be Startin' Somethin'";
 	public static final String _trackVTitle = "Original Version";
@@ -51,7 +51,7 @@ public class TrackTests extends TestCase {
 
 	
 	public void setUp(){
-		_xml.addTrack(_isrc, "false", _trackIdentifier, _trackArtist, 
+		_xml.addTrack(_isrc, false, _trackIdentifier, _trackArtist, 
 				_isExplicit, _volume, _trackNumber, _trackType, _trackTitle, 
 				_trackVTitle, _trackLength, _trackLabel, _trackPLine, _trackGenre);
 		readOutputXmlFile();
@@ -65,14 +65,14 @@ public class TrackTests extends TestCase {
 	}
 	
 	public void test_adding_a_track_adds_a_track_node_to_track(){
-		_xml.addTrack("", "", "", "", "", "", "", "", "", "", "", "", "", "");
+		_xml.addTrack("", false, "", "", false, "", 5, "", "", "", "", "", "", "");
 		readOutputXmlFile();
 		
 		NodeList tracks = getTracksNode();
 		
 		assertEquals(((Element)tracks.item(0)).getElementsByTagName("track").getLength(), 2);
 		
-		_xml.addTrack("", "", "", "", "", "", "", "", "", "", "", "", "", "");
+		_xml.addTrack("",true, "", "", true, "", 9, "", "", "", "", "", "", "");
 		readOutputXmlFile();
 		
 		tracks = getTracksNode();

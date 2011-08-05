@@ -6,10 +6,7 @@ import java.awt.event.*;
 import javax.swing.ImageIcon;
 
 import main.Xml;
-/**
- *
- * @author William Munn
- */
+
 public class TrackGui extends javax.swing.JFrame {
 
 
@@ -17,7 +14,7 @@ public class TrackGui extends javax.swing.JFrame {
     private javax.swing.JButton AddPtcptBut;
     private javax.swing.JButton EdtPrtcpntBut;
     private javax.swing.JButton addTrkBut;
-    private javax.swing.JCheckBox explctBox;
+    private javax.swing.JCheckBox isExplicitBox;
     private javax.swing.JCheckBox hiddenBox;
     private javax.swing.JTextField isrcText;
     private javax.swing.JLabel jLabel1;
@@ -88,7 +85,7 @@ public class TrackGui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         trkArtText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        explctBox = new javax.swing.JCheckBox();
+        isExplicitBox = new javax.swing.JCheckBox();
         volText = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -128,7 +125,7 @@ public class TrackGui extends javax.swing.JFrame {
 
         jLabel3.setText("Track Artist");
 
-        explctBox.setText("Is Explicit");
+        isExplicitBox.setText("Is Explicit");
 
         volText.setText("1");
         
@@ -193,7 +190,7 @@ public class TrackGui extends javax.swing.JFrame {
                     .addComponent(trkVTitText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(trkTitText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(trkNrText, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(explctBox)
+                    .addComponent(isExplicitBox)
                     .addComponent(trkArtText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(isrcText, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hiddenBox)
@@ -220,7 +217,7 @@ public class TrackGui extends javax.swing.JFrame {
                     .addComponent(trkArtText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(explctBox)
+                .addComponent(isExplicitBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(volText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,7 +420,7 @@ public class TrackGui extends javax.swing.JFrame {
         trkIdText.setText(theXml.getTrackTagValue(pos,"track_identifier"));
         trkArtText.setText(theXml.getTrackArtistValue(pos));
         if(theXml.getTrackTagValue(pos,"explicit_content")=="true"){
-            explctBox.setSelected(true);
+            isExplicitBox.setSelected(true);
         }
         volText.setText(theXml.getTrackTagValue(pos,"track_volume"));
         trkTitText.setText(theXml.getTrackTagValue(pos,"track_title"));
@@ -477,11 +474,11 @@ public class TrackGui extends javax.swing.JFrame {
                 hidden = "false";
             }
             
-            if(explctBox.isSelected() == true){
+            if(isExplicitBox.isSelected() == true){
                 System.out.println("trk explicit? -- Yes");
                 rude = "true";
             }
-            else if(explctBox.isSelected() == false){
+            else if(isExplicitBox.isSelected() == false){
                 System.out.println("trk explicit? -- NO");
                 rude = "false";
             }
@@ -502,12 +499,12 @@ public class TrackGui extends javax.swing.JFrame {
                     }
                 else{
                    theXml.addTrack(isrcText.getText(),
-                                   hidden,
+                                   hiddenBox.isSelected(),
                                    trkIdText.getText(),
                                    trkArtText.getText(),
-                                   rude,
+                                   isExplicitBox.isSelected(),
                                    volText.getText(),
-                                   trkNrText.getText(),
+                                   new Integer(trkNrText.getText()),
                                    theType,
                                    trkTitText.getText(),
                                    trkVTitText.getText(),

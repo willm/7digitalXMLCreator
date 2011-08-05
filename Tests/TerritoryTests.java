@@ -29,9 +29,9 @@ public class TerritoryTests extends TestCase {
 			_publisherLine, 
 			_copyrightLine, 
 			_productArtist, 
-			"false");
+			false);
 	
-	private static final String _restrictedTo = "true";
+	private static final Boolean _restrictedTo = true;
 	private static final String _territoryCode = "FR";
 	private static final String _territoryReleaseDate = "2011-01-20";
 	private static final String _priceCode = "PRICE CODE";

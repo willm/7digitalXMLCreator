@@ -111,7 +111,7 @@ int firstRow=4;
     public Xml newXml(){
         Xml anXml = new Xml(distributor,initXml[0],initXml[1],
                                             initXml[2],initXml[3],initXml[4],initXml[5],
-                                            initXml[6],initXml[7],initXml[8],initXml[9]);
+                                            initXml[6],initXml[7],initXml[8],new Boolean(initXml[9]));
         return anXml;
     }
     
@@ -121,8 +121,8 @@ int firstRow=4;
                             cell =row.getCell(k);
                             initTrack[k-13] = antiNullString(cell);
                         }
-        theXml.addTrack(initTrack[0],initTrack[1],initTrack[2],initTrack[3],
-                    initTrack[4],initTrack[5],initTrack[6],initTrack[7],initTrack[8],initTrack[9],
+        theXml.addTrack(initTrack[0],new Boolean(initTrack[1]),initTrack[2],initTrack[3],
+                    new Boolean(initTrack[4]),initTrack[5],new Integer(initTrack[6]),initTrack[7],initTrack[8],initTrack[9],
                     initTrack[10],initTrack[11],initTrack[12],initTrack[13]);
     }
     
@@ -150,37 +150,37 @@ int firstRow=4;
         
         if(ters.length == terDates.length && ters.length == terCodes.length){
             for(int l=0; l<ters.length; l++){
-                theXml.addTerritory("true",ters[l],terDates[l],terCodes[l],"","");
+                theXml.addTerritory(true,ters[l],terDates[l],terCodes[l],"","");
             }
         }
         
         else if(ters.length > terDates.length && ters.length == terCodes.length){
             for(int l=0; l<ters.length; l++){
-                if(l<terDates.length){theXml.addTerritory("true",ters[l],terDates[l],terCodes[l],"","");}
-                else{theXml.addTerritory("true",ters[l],terDates[terDates.length-1],terCodes[l],"","");}
+                if(l<terDates.length){theXml.addTerritory(true,ters[l],terDates[l],terCodes[l],"","");}
+                else{theXml.addTerritory(true,ters[l],terDates[terDates.length-1],terCodes[l],"","");}
             }
         }
         
         else if(ters.length == terDates.length && ters.length > terCodes.length){
             for(int l=0; l<ters.length; l++){
-                if(l<terCodes.length){theXml.addTerritory("true",ters[l],terDates[l],terCodes[l],"","");}
-                else{theXml.addTerritory("true",ters[l],terDates[l],terCodes[terCodes.length-1],"","");}
+                if(l<terCodes.length){theXml.addTerritory(true,ters[l],terDates[l],terCodes[l],"","");}
+                else{theXml.addTerritory(true,ters[l],terDates[l],terCodes[terCodes.length-1],"","");}
             }
         }
         
         else if(ters.length > terDates.length && ters.length > terCodes.length){
             for(int i=0; i<ters.length; i++){
                 if(i<terCodes.length && i<terDates.length){
-                    theXml.addTerritory("true",ters[i],terDates[i],terCodes[i],"","");
+                    theXml.addTerritory(true,ters[i],terDates[i],terCodes[i],"","");
                 }
                 else if(i<terCodes.length && i>=terDates.length){
-                    theXml.addTerritory("true",ters[i],terDates[terDates.length-1],terCodes[i],"","");
+                    theXml.addTerritory(true,ters[i],terDates[terDates.length-1],terCodes[i],"","");
                 }
                 else if(i>=terCodes.length && i<terDates.length){
-                    theXml.addTerritory("true",ters[i],terDates[i],terCodes[terCodes.length-1],"","");
+                    theXml.addTerritory(true,ters[i],terDates[i],terCodes[terCodes.length-1],"","");
                 }
                 else if(i>=terCodes.length && i>=terDates.length){
-                    theXml.addTerritory("true",ters[i],terDates[terDates.length-1],terCodes[terCodes.length-1],"","");
+                    theXml.addTerritory(true,ters[i],terDates[terDates.length-1],terCodes[terCodes.length-1],"","");
                 }
             }
         }
@@ -193,7 +193,7 @@ int firstRow=4;
         if(!rawExters.equals("")){
             System.out.println("THE EXTER = " + rawExters);
             for(int m=0; m<exters.length; m++){
-                theXml.addTerritory("false",exters[m],"","","","");
+                theXml.addTerritory(false,exters[m],"","","","");
             }
         }
     }

@@ -8,7 +8,7 @@ import xmlSerialization.*;
 
 public class Xml
 {
-    private String filename =null;
+    private String fileName =null;
     private Tag[] initinfo = new Tag[9];
     private Tag productArtist;
     private TagCollection participants = new TagCollection("paricipants");
@@ -16,7 +16,11 @@ public class Xml
     private ArrayList<Tag> genres;
     private TagCollection territories = new TagCollection("territory_restrictions");
     private TagCollection tracks = new TagCollection("tracks");
-    private List<Track> newTracks = new ArrayList<Track>(); 
+    
+    private List<Track> newTracks = new ArrayList<Track>();
+    private Product product;
+	private Distributor distributor;
+	
 
     public Xml(String theDist, 
                 String theUpc, 
@@ -28,38 +32,32 @@ public class Xml
                 String thePublisherLine,
                 String theCopywLine,
                 String theArtist,
-                String isExplicit
+                Boolean isExplicit
                 )
-    {
-        filename = theUpc;
-        initinfo[0] = new Tag("distributor",theDist);
-        initinfo[1] = new SelfClosingTag("product upc",theUpc);
-        //this is actually a cheat maybe UPC should be added via add attribute method
-        initinfo[2] = new Tag("product_type",thePtype);
-        initinfo[3] = new Tag("product_label",theLabel);
-        initinfo[4] = new Tag("product_image",theImage);
-        initinfo[5] = new Tag("product_title",thePtitle);
-        initinfo[6] = new Tag("product_release_date",theRdate);
-        initinfo[7] = new Tag("product_p_line",thePublisherLine);
-        initinfo[8] = new Tag("product_c_line",theCopywLine);
-        
-        
-        productArtist = new Tag("product_artist_name",theArtist);
-        productArtist.addAttribute("main","yes");
-        //this hard codes the main attribute (may have to be changed)
-        
-        explictC = new Tag("explicit_content", isExplicit);
-
-        genres = new ArrayList<Tag>();
+    { 
+    	distributor = new Distributor(theDist);
+    	product = new Product(
+    				theUpc,
+    				thePtype,
+    				theLabel,
+    				theImage,
+    				thePtitle,
+    				theRdate,
+    				thePublisherLine,
+    				theCopywLine,
+    				new Artist(theArtist, true),
+    				isExplicit);
+    	
+        fileName = theUpc;
     }
    
     public void addTrack(String theIsrc, 
-                        String isHidden, //could be changed to boolean?
+                        Boolean isHidden, //could be changed to boolean?
                         String theTrackId,
                         String theTrackArtist,
-                        String isExplicit, //could be changed to boolean?
+                        Boolean isExplicit, //could be changed to boolean?
                         String theVolume,
-                        String theTrackNo, //could be changed to int?
+                        int theTrackNo, //could be changed to int?
                         String theType, //is this necessary?
                         String theTtitle,
                         String theTversionT,
@@ -68,96 +66,52 @@ public class Xml
                         String theTPline,
                         String theGenre
                         ){
+    	
     	Artist trackArtist = new Artist(theTrackArtist, true);
-		/*Track track = new Track(theIsrc, isHidden, theTrackId, trackArtist, isExplicit, 
-    			theVolume, theTrackNo, theType, theTtitle, theTversionT, theTlength, 
-    			theTlabel, theTPline, theGenre);
-    	newTracks.add(track);*/
-		
-        TagCollection theTrack=new TagCollection("track");
-        theTrack.addAttribute("isrc", theIsrc);
-        theTrack.addAttribute("hidden", isHidden);
-        
-        theTrack.addTag(new Tag("track_identifier", theTrackId));
-        
-        TagCollection trackArtists = new TagCollection("track_artists");
-        Tag tkAtstNm = new Tag("track_artist_name",theTrackArtist);
-        tkAtstNm.addAttribute("main","yes");
-        //maybe this shouldn't be hard coded
-        trackArtists.addTag(tkAtstNm);
-        theTrack.addTag(trackArtists);
-        
-        TagCollection trackParticipents = new TagCollection("participants");
-        
-        theTrack.addTag(trackParticipents);
-        
-        theTrack.addTag(new Tag("explicit_content", isExplicit));
-        
-        theTrack.addTag(new Tag("track_volume", theVolume));
-        
-        theTrack.addTag(new Tag("track_number", theTrackNo));
-        
-        theTrack.addTag(new Tag("track_type", theType));
-        
-        theTrack.addTag(new Tag("track_title", theTtitle));
-        
-        theTrack.addTag(new Tag("track_version_title", theTversionT));
-        
-        theTrack.addTag(new Tag("track_length", theTlength));
-        
-        theTrack.addTag(new Tag("track_label", theTlabel));
-        
-        theTrack.addTag(new Tag("track_p_line", theTPline));
-        
-        TagCollection trackGenres = new TagCollection("genres");
-        trackGenres.addTag(new Tag("genre",theGenre));
-        theTrack.addTag(trackGenres);
-        
-        tracks.addTag(theTrack);
+		Track track = new Track(
+								theIsrc, 
+								isHidden, 
+								theTrackId, 
+								trackArtist, 
+								isExplicit, 
+								theVolume, 
+								theTrackNo, 
+								theType, 
+								theTtitle, 
+								theTversionT, 
+								theTlength, 
+								theTlabel, 
+								theTPline, 
+								new Genre(theGenre));
+    	product.Tracks.add(track);
+
     }
     
-    public void addParticipant(String theProle, String thePname){
-        TagCollection theParticipant=new TagCollection("participant");
-        theParticipant.addTag(new Tag("participant_role", theProle));
-        theParticipant.addTag(new Tag("participant_name", thePname));
-        participants.addTag(theParticipant);
-        //creates a new participant collection tag and adds it to the participants arraylist
+    public void addParticipant(String theProle, String thePname){    	
+    	product.Participants.add(new Participant(theProle, thePname));
     }
     
     public void addGenre(String theGenre){
-        Tag genre=new Tag("genre",theGenre);
-        genres.add(genre);
+        product.Genres.add(new Genre(theGenre));
     }
     
     public void removeGenres(){
-        genres = new ArrayList<Tag>();
+    	product.Genres = new ArrayList<Genre>();
     }
     
     
-    public void addTerritory(String restrictedTo, 
+    public void addTerritory(Boolean isRestrictedTo, 
                             String tCode, 
                             String tReleaseDate, 
                             String thePriceCode, 
                             String thePrice, 
                             String theCurrencyCode)
     {
-        TagCollection theTerritory=new TagCollection("territory");
-        theTerritory.addAttribute("restricted_to",restrictedTo);
-        theTerritory.addTag(new Tag("territory_code",tCode));
-        theTerritory.addTag(new Tag("territory_release_date",tReleaseDate));
-        theTerritory.addTag(new Tag("price_code",thePriceCode));
-        
-        TagCollection theWSP = new TagCollection("wholesale_price");
-        theWSP.addTag(new Tag("price",thePrice));
-        theWSP.addTag(new Tag("currency_code", theCurrencyCode));
-                
-        theTerritory.addTag(theWSP);
-        
-        territories.addTag(theTerritory);
+    	Territory territory = new Territory(isRestrictedTo,
+    			tCode,tReleaseDate,thePriceCode,thePrice,theCurrencyCode);
+    	product.territories.add(territory);
     }
         
-
-    
     public void printXml()
     {
         File file=new File("xml");
@@ -184,7 +138,7 @@ public class Xml
         }
         
         try {
-        	new XmlFileWriter().writeToXmlFile(initinfo, productArtist, participants, explictC, genres, territories, tracks, filename);
+        	new XmlFileWriter().writeToXmlFile(product, distributor, fileName);
         }
         
         catch (FileNotFoundException e) {
@@ -192,11 +146,9 @@ public class Xml
         }
         
     }
-
-	
     
     public int numOfTracks(){
-        return(tracks.insideSize());
+        return(product.Tracks.size());
     }
     
     public void editTag(String title, String newVal){
@@ -206,7 +158,7 @@ public class Xml
                 }                
             }
             if(title.equals("product upc")){
-                filename=newVal;
+                fileName=newVal;
             }
         }
     

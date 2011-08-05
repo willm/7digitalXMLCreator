@@ -688,6 +688,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             
             if(isEdit == false){
             
+            	
+            	
                 theXml = new Xml(distText.getText(),
                                 upcText.getText(),
                                 theType,
@@ -698,7 +700,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                                 publineText.getText(),
                                 coplineText.getText(),
                                 artistText.getText(),
-                                rude
+                                new Boolean(rude)
                                 );
                                 
 

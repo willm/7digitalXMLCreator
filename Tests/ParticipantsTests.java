@@ -16,7 +16,7 @@ import junit.framework.TestCase;
 import main.Xml;
 
 public class ParticipantsTests extends TestCase{
-	private static final String _isExplicit = "false";
+	private static final Boolean _isExplicit = false;
 	private static final String _productArtist = "Michael Jackson";
 	private static final String _copyrightLine = "copyright starRecords";
 	private static final String _publisherLine = "Published By star publishing";

@@ -16,6 +16,8 @@ public class Product {
 	public ArrayList<Track> Tracks;
 	public ArrayList<Participant> Participants;
 	public ArrayList<Artist> Artists;
+	public ArrayList<Genre> Genres;
+	public ArrayList<Territory> territories;
 	
 	public Product(String theUpc, 
                 String thePtype, 
@@ -41,5 +43,7 @@ public class Product {
 		Participants = new ArrayList<Participant>();
 		Artists = new ArrayList<Artist>();
 		Artists.add(Artist);
+		Genres = new ArrayList<Genre>();
+		territories = new ArrayList<Territory>();
 	}
 }

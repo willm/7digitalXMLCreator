@@ -268,7 +268,7 @@ public class TerGui extends javax.swing.JFrame {
             */
             if(isEdit == false){            
 
-               theXml.addTerritory(restricted,
+               theXml.addTerritory(new Boolean(restricted),
                                terCodeText.getText(),
                                terRelDateText.getText(),
                                terPCodeText.getText(),
