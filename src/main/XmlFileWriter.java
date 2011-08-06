@@ -65,6 +65,7 @@ public class XmlFileWriter {
 		ProductSerializer productSerializer = new ProductSerializer(product);
 		products.addTag(productSerializer.Serialize());
 		printStream.print(products.prettyFormat(products.printXml()));
+		System.out.print(products.prettyFormat(products.printXml()));
 		printStream.close();
 	}
 }

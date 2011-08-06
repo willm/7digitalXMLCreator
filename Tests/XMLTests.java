@@ -207,7 +207,7 @@ public class XMLTests extends TestCase {
 	}
 
 	public void test_product_contains_participants_node(){
-		NodeList participants = getElementFromProduct("paricipants");
+		NodeList participants = getElementFromProduct("participants");
 		
 		assertTrue(participants.getLength() == 1);
 	}
@@ -221,7 +221,7 @@ public class XMLTests extends TestCase {
 	public void test_explicit_node_contains_correct_value(){
 		NodeList explicit_content = getElementFromProduct("explicit_content");
 		
-		assertEquals(explicit_content.item(0).getTextContent(), _isExplicit);
+		assertEquals(explicit_content.item(0).getTextContent(), _isExplicit.toString());
 	}
 	
 	public void test_product_contains_genres_node(){

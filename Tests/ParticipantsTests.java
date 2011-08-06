@@ -1,7 +1,6 @@
 import org.w3c.dom.Document;
 
 import model.Artist;
-import model.Distributor;
 import model.Genre;
 import model.Product;
 import model.ProductSerializer;
@@ -52,7 +51,7 @@ public class ParticipantsTests extends TestCase{
 	}
 	
 	public void test_participants_node_contains_participant(){
-		NodeList participantsNodes = getElementFromProduct("paricipants");
+		NodeList participantsNodes = getElementFromProduct("participants");
 		NodeList participentNodes = ((Element)participantsNodes.item(0)).getElementsByTagName("participant");
 		
 		assertTrue(participentNodes.getLength() ==  1);
@@ -60,7 +59,7 @@ public class ParticipantsTests extends TestCase{
 	
 	public void test_participant_contains_participant_role_node()
 	{
-		NodeList participantsNodes = getElementFromProduct("paricipants");
+		NodeList participantsNodes = getElementFromProduct("participants");
 		NodeList participentNodes = ((Element)participantsNodes.item(0)).getElementsByTagName("participant");
 		NodeList firstParticipentRoleNodes =((Element)participentNodes.item(0)).getElementsByTagName("participant_role");
 		
@@ -69,7 +68,7 @@ public class ParticipantsTests extends TestCase{
 	
 	public void test_participant_role_node_contains_correct_value()
 	{
-		NodeList participantsNodes = getElementFromProduct("paricipants");
+		NodeList participantsNodes = getElementFromProduct("participants");
 		NodeList participentNodes = ((Element)participantsNodes.item(0)).getElementsByTagName("participant");
 		NodeList firstParticipentRoleNodes =((Element)participentNodes.item(0)).getElementsByTagName("participant_role");
 		
@@ -78,7 +77,7 @@ public class ParticipantsTests extends TestCase{
 	
 	public void test_participant_contains_participant_name_node()
 	{
-		NodeList participantsNodes = getElementFromProduct("paricipants");
+		NodeList participantsNodes = getElementFromProduct("participants");
 		NodeList participentNodes = ((Element)participantsNodes.item(0)).getElementsByTagName("participant");
 		NodeList firstParticipentRoleNodes =((Element)participentNodes.item(0)).getElementsByTagName("participant_name");
 		
@@ -87,7 +86,7 @@ public class ParticipantsTests extends TestCase{
 	
 	public void test_participant_name_node_contains_correct_value()
 	{
-		NodeList participantsNodes = getElementFromProduct("paricipants");
+		NodeList participantsNodes = getElementFromProduct("participants");
 		NodeList participentNodes = ((Element)participantsNodes.item(0)).getElementsByTagName("participant");
 		NodeList firstParticipentNameNodes =((Element)participentNodes.item(0)).getElementsByTagName("participant_name");
 		

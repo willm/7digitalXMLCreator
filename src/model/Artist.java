@@ -10,8 +10,8 @@ public class Artist{
 		this.Name = name;
 		this.IsMain = isMain;
 	}
-	public Tag serialize() {
-		Tag artist = new Tag("product_artist_name", Name);
+	public Tag serialize(String type) {
+		Tag artist = new Tag(type+"_artist_name", Name);
 		artist.addAttribute("main", IsMain ? "yes" : "no");
 		return artist;
 	}

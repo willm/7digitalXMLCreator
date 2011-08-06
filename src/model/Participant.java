@@ -12,8 +12,8 @@ public class Participant{
 	}
 	public TagCollection serialize() {
 		TagCollection serializedParticipant = new TagCollection("participant");
-		serializedParticipant.addTag(new Tag("paticipant_role", Role));
-		serializedParticipant.addTag(new Tag("paticipant_name", Name));
+		serializedParticipant.addTag(new Tag("participant_role", Role));
+		serializedParticipant.addTag(new Tag("participant_name", Name));
 		return serializedParticipant;
 	}
 }

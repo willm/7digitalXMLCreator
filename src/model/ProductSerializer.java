@@ -55,7 +55,7 @@ public class ProductSerializer{
 	}
 
 	private TagCollection serializeParticipants() {
-		TagCollection productParticipants = new TagCollection("paricipants");
+		TagCollection productParticipants = new TagCollection("participants");
 		for(Participant participant : product.Participants){
 			productParticipants.addTag(participant.serialize());
 		}
@@ -65,7 +65,7 @@ public class ProductSerializer{
 	private TagCollection serializeArtists() {
 		TagCollection productArtists = new TagCollection("product_artists");
 		for(Artist artist : product.Artists){
-			productArtists.addTag(artist.serialize());
+			productArtists.addTag(artist.serialize("product"));
 		}
 		return productArtists;
 	}

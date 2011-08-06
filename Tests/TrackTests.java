@@ -176,7 +176,7 @@ public class TrackTests extends TestCase {
 		Node track = getFirstTrack();
 		NodeList trackExplicitNode = ((Element)track).getElementsByTagName("explicit_content");
 		
-		assertEquals(trackExplicitNode.item(0).getTextContent(),_isExplicit);
+		assertEquals(trackExplicitNode.item(0).getTextContent(),_isExplicit.toString());
 	}
 	
 	public void test_track_contains_track_volume_node(){
@@ -204,7 +204,7 @@ public class TrackTests extends TestCase {
 		Node track = getFirstTrack();
 		NodeList trackNumberNode = ((Element)track).getElementsByTagName("track_number");
 		
-		assertEquals(trackNumberNode.item(0).getTextContent(),_trackNumber);
+		assertTrue(Integer.parseInt(trackNumberNode.item(0).getTextContent()) ==_trackNumber);
 	}
 	
 	public void test_track_contains_track_type_node(){

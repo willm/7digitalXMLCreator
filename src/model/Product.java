@@ -37,6 +37,7 @@ public class Product {
 		Title = thePtitle;
 		ReleaseDate = theRdate;
 		CopyrightLine = theCopywLine;
+		PublisherLine = thePublisherLine;
 		Artist = artist;
 		IsExplicit = isExplicit;
 		Tracks = new ArrayList<Track>();

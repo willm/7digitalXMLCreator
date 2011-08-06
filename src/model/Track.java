@@ -57,6 +57,8 @@ public class Track {
         Artists = new ArrayList<Artist>();
         Participants = new ArrayList<Participant>();
         
+        Artists.add(TrackArtist);
+        
         Genres = new ArrayList<Genre>();
         Genres.add(Genre);
 	}	

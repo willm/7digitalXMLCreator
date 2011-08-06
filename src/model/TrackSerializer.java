@@ -55,7 +55,7 @@ public class TrackSerializer {
 	private TagCollection serializeArtists() {
 		TagCollection trackArtists = new TagCollection("track_artists");
 		for(Artist artist : track.Artists){
-			trackArtists.addTag(artist.serialize());
+			trackArtists.addTag(artist.serialize("track"));
 		}
 		return trackArtists;
 	}

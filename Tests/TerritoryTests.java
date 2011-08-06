@@ -74,7 +74,7 @@ public class TerritoryTests extends TestCase {
 		
 		Attr restrictedTo = ((Element)territories.item(0)).getAttributeNode("restricted_to");
 		
-		assertEquals(restrictedTo.getValue(), _restrictedTo);
+		assertEquals(restrictedTo.getValue(), _restrictedTo.toString());
 	}
 
 	public void test_territory_node_contains_territory_code_node(){
