@@ -2,7 +2,6 @@ package main;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import model.*;
 import xmlSerialization.*;
 
@@ -10,14 +9,9 @@ public class Xml
 {
     private String fileName =null;
     private Tag[] initinfo = new Tag[9];
-    private Tag productArtist;
-    private TagCollection participants = new TagCollection("paricipants");
-    private Tag explictC;
-    private ArrayList<Tag> genres;
     private TagCollection territories = new TagCollection("territory_restrictions");
     private TagCollection tracks = new TagCollection("tracks");
     
-    private List<Track> newTracks = new ArrayList<Track>();
     private Product product;
 	private Distributor distributor;
 	
@@ -85,6 +79,10 @@ public class Xml
 								new Genre(theGenre));
     	product.Tracks.add(track);
 
+    }
+    
+    public void replaceDistributor(String name){
+    	distributor = new Distributor(name);
     }
     
     public Track getTrack(int trackNumber){
@@ -155,7 +153,7 @@ public class Xml
         return(product.Tracks.size());
     }
     
-    public void editTag(String title, String newVal){
+    public void editInitialProductInfo(String title, String newVal){
         for(int i =0; i<initinfo.length; i++){
             if(initinfo[i].returnName().equals(title)){
                 initinfo[i].editValue(newVal);
@@ -357,5 +355,9 @@ public class Xml
 	public Territory getTerritory(int territoryNumber) {
 		return product.territories.get(territoryNumber);
 		
+	}
+
+	public Product getProduct() {
+		return product;
 	}    
 }

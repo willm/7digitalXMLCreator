@@ -254,7 +254,7 @@ public class TerritoryGui extends javax.swing.JFrame {
                                
                 productGui.updateTerList(terCodeText.getText());
                 productGui.setTerritories();
-                productGui.productReady();
+                productGui.productCanBeprinted();
             }
             
             else if(isEdit == true){

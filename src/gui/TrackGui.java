@@ -496,7 +496,7 @@ public class TrackGui extends javax.swing.JFrame {
                    product.updateTList(trackTitleText.getText() + " (" + trackVersionTitleText.getText() + ")");
                    
                    product.setTracks();
-                   product.productReady();
+                   product.productCanBeprinted();
                    AddParticipantButton.setEnabled(true);
                    okBut.setEnabled(true);
                    addTrkBut.setEnabled(false);

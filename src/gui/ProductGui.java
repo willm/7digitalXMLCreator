@@ -3,13 +3,14 @@ import javax.swing.*;
 import java.awt.event.*;
 
 import main.Xml;
+import model.Product;
  
 public class ProductGui extends javax.swing.JFrame {
 
     private JLabel logoLabel;                    
-    private JButton addParBut, addTerBut, addTrkBut;
-    private JTextField artistText, coplineText;
-    private JButton crtPrdctBut;
+    private JButton addParticipantButton, addTerritoryButton, addTrackButton;
+    private JTextField artistText, copyrightText;
+    private JButton createOrUpdateButton;
     private JTextField dateText;
     private JTextField distText;
     private JButton edtParBut, edtTerBut, editTrackButton;
@@ -23,16 +24,16 @@ public class ProductGui extends javax.swing.JFrame {
     private JTextField labelText;
     private JButton mkXmlBut;
     private JComboBox pTypeBox;
-    private JTextField publineText;
-    private JButton remParBut, remTerBut, removeTrackkButton;
+    private JTextField publisherText;
+    private JButton remParBut, remTerBut, removeTrackButton;
     private JTextField titleText, upcText;
     private JButton clearAllBut;
     private JButton edtPrdctBut;
     private javax.swing.JButton excelBut;
         
-    private JTextField[] gfields = new JTextField[3];
+    private JTextField[] genreFields = new JTextField[3];
 
-    private ButHandler butlis = null;
+    private ButHandler createOrUpdateButtonHandler = null;
     private TrkHandler trklis = null;
     private TerHandler terlis = null;
     private TrkRemHandler trkremlis = null;
@@ -55,7 +56,7 @@ public class ProductGui extends javax.swing.JFrame {
     private ReadGui excelReader = null;
     private boolean test =false;
     private boolean containsTrack =false;
-    private boolean containsTer = false;
+    private boolean containsTerritory = false;
     private boolean containsPar = false;
     private boolean isEdit = false;
 
@@ -86,7 +87,7 @@ public class ProductGui extends javax.swing.JFrame {
         imageText = new javax.swing.JTextField();
         titleText = new javax.swing.JTextField();
         dateText = new javax.swing.JTextField();
-        publineText = new javax.swing.JTextField();
+        publisherText = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         pTypeBox = new javax.swing.JComboBox();
@@ -97,36 +98,36 @@ public class ProductGui extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        coplineText = new javax.swing.JTextField();
+        copyrightText = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         artistText = new javax.swing.JTextField();
         explicitBox = new javax.swing.JCheckBox();
         genreA = new javax.swing.JTextField();
         genreB = new javax.swing.JTextField();
         genreC = new javax.swing.JTextField();
-        gfields[0] = genreA;
-        gfields[1] = genreB;
-        gfields[2] = genreC;
+        genreFields[0] = genreA;
+        genreFields[1] = genreB;
+        genreFields[2] = genreC;
         jLabel11 = new javax.swing.JLabel();
-        crtPrdctBut = new javax.swing.JButton();
+        createOrUpdateButton = new javax.swing.JButton();
         mkXmlBut = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         trackList = new javax.swing.JList();
         jLabel12 = new javax.swing.JLabel();
-        addTrkBut = new javax.swing.JButton();
+        addTrackButton = new javax.swing.JButton();
         editTrackButton = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList();
-        addTerBut = new javax.swing.JButton();
+        addTerritoryButton = new javax.swing.JButton();
         edtTerBut = new javax.swing.JButton();
         edtParBut = new javax.swing.JButton();
-        addParBut = new javax.swing.JButton();
+        addParticipantButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         participantsList = new javax.swing.JList();
         jLabel14 = new javax.swing.JLabel();
-        removeTrackkButton = new javax.swing.JButton();
+        removeTrackButton = new javax.swing.JButton();
         remTerBut = new javax.swing.JButton();
         remParBut = new javax.swing.JButton();
         clearAllBut = new javax.swing.JButton();
@@ -169,7 +170,7 @@ public class ProductGui extends javax.swing.JFrame {
 
         jLabel11.setText("Genres");
 
-        crtPrdctBut.setText("Create / Update Product");
+        createOrUpdateButton.setText("Create / Update Product");
         
         edtPrdctBut.setText("Edit Product");
         edtPrdctBut.setEnabled(false);
@@ -215,8 +216,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(artistText, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
-                                        .addComponent(publineText, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
-                                        .addComponent(coplineText, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                                        .addComponent(publisherText, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                                        .addComponent(copyrightText, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                                         .addComponent(titleText, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                                         .addComponent(pTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(imageText, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
@@ -234,7 +235,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(genreC, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(crtPrdctBut)
+                                .addComponent(createOrUpdateButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(edtPrdctBut)))
                         .addGap(45, 45, 45))
@@ -280,11 +281,11 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(publineText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(publisherText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(coplineText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(copyrightText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -300,7 +301,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                     .addComponent(genreC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(crtPrdctBut)
+                    .addComponent(createOrUpdateButton)
                     .addComponent(edtPrdctBut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,8 +323,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 
         jLabel12.setText("Tracks");
 
-        addTrkBut.setText("Add Track");
-        addTrkBut.setEnabled(false);
+        addTrackButton.setText("Add Track");
+        addTrackButton.setEnabled(false);
 
         editTrackButton.setText("Edit Track");
         editTrackButton.setEnabled(false);
@@ -339,8 +340,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         
         jScrollPane2.setViewportView(jList2);
 
-        addTerBut.setText("Add Territory");
-        addTerBut.setEnabled(false);
+        addTerritoryButton.setText("Add Territory");
+        addTerritoryButton.setEnabled(false);
 
         edtTerBut.setText("Edit Territory");
         edtTerBut.setEnabled(false);
@@ -348,8 +349,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         edtParBut.setText("Edit Prtcpnt");
         edtParBut.setEnabled(false);
 
-        addParBut.setText("Add Participant");
-        addParBut.setEnabled(false);
+        addParticipantButton.setText("Add Participant");
+        addParticipantButton.setEnabled(false);
         
         participantSampleModel = new DefaultListModel();
         for(int i = 0; i<parlist.length; i++){
@@ -360,8 +361,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 
         jLabel14.setText("Product Participants");
 
-        removeTrackkButton.setText("Remove Track");
-        removeTrackkButton.setEnabled(false);
+        removeTrackButton.setText("Remove Track");
+        removeTrackButton.setEnabled(false);
 
         remTerBut.setText("Remove Ter");
         remTerBut.setEnabled(false);
@@ -381,14 +382,14 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                     .addComponent(jLabel12)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(addTrkBut)
+                        .addComponent(addTrackButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editTrackButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(removeTrackkButton))
+                        .addComponent(removeTrackButton))
                     .addComponent(jLabel13)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(addTerBut)
+                        .addComponent(addTerritoryButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(edtTerBut)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -396,7 +397,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                     .addComponent(jLabel14)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(addParBut)
+                        .addComponent(addParticipantButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(edtParBut)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -412,16 +413,16 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addTrkBut)
+                    .addComponent(addTrackButton)
                     .addComponent(editTrackButton)
-                    .addComponent(removeTrackkButton))
+                    .addComponent(removeTrackButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addTerBut)
+                    .addComponent(addTerritoryButton)
                     .addComponent(edtTerBut)
                     .addComponent(remTerBut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -430,7 +431,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addParBut)
+                    .addComponent(addParticipantButton)
                     .addComponent(edtParBut)
                     .addComponent(remParBut))
                 .addContainerGap(47, Short.MAX_VALUE))
@@ -458,49 +459,49 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         );
         
         //Attaching Listeners
-        
-        butlis = new ButHandler();
-        crtPrdctBut.addActionListener(butlis);
-        
-        trklis = new TrkHandler();
-        addTrkBut.addActionListener(trklis);
-        
-        prntlis = new PrintHandler();
-        mkXmlBut.addActionListener(prntlis);
-        
-        trkedtlis = new TrkEditHandler();
-        editTrackButton.addActionListener(trkedtlis);
-        
-        trkremlis = new TrkRemHandler();
-        removeTrackkButton.addActionListener(trkremlis);
-        
-        terlis = new TerHandler();
-        addTerBut.addActionListener(terlis);
-        
-        partlis = new PartHandler();
-        addParBut.addActionListener(partlis);
-        
-        teredtlis = new TerEditHandler();
-        edtTerBut.addActionListener(teredtlis); 
-        
-        terremlis = new TertRemHandler();
-        remTerBut.addActionListener(terremlis);
-        
-        paredtlis = new PartEditHandler();
-        edtParBut.addActionListener(paredtlis);
-        
-        parremlis = new ParticipantRemovalHandler();
-        remParBut.addActionListener(parremlis);
-        
-        startlis = new StartOverHandler();
-        clearAllBut.addActionListener(startlis);
-        
-        prodedtlis = new ProdEdtHandler();
-        edtPrdctBut.addActionListener(prodedtlis);
-        
-        excellis = new ExcelImpHandler();
-        excelBut.addActionListener(excellis);
-        
+		
+		createOrUpdateButtonHandler = new ButHandler();
+		createOrUpdateButton.addActionListener(createOrUpdateButtonHandler);
+		
+		trklis = new TrkHandler();
+		addTrackButton.addActionListener(trklis);
+		
+		prntlis = new PrintHandler();
+		mkXmlBut.addActionListener(prntlis);
+		
+		trkedtlis = new TrkEditHandler();
+		editTrackButton.addActionListener(trkedtlis);
+		
+		trkremlis = new TrkRemHandler();
+		removeTrackButton.addActionListener(trkremlis);
+		
+		terlis = new TerHandler();
+		addTerritoryButton.addActionListener(terlis);
+		
+		partlis = new PartHandler();
+		addParticipantButton.addActionListener(partlis);
+		
+		teredtlis = new TerEditHandler();
+		edtTerBut.addActionListener(teredtlis); 
+		
+		terremlis = new TertRemHandler();
+		remTerBut.addActionListener(terremlis);
+		
+		paredtlis = new PartEditHandler();
+		edtParBut.addActionListener(paredtlis);
+		
+		parremlis = new ParticipantRemovalHandler();
+		remParBut.addActionListener(parremlis);
+		
+		startlis = new StartOverHandler();
+		clearAllBut.addActionListener(startlis);
+		
+		prodedtlis = new ProdEdtHandler();
+		edtPrdctBut.addActionListener(prodedtlis);
+		
+		excellis = new ExcelImpHandler();
+		excelBut.addActionListener(excellis);
+
 
         pack();
     }                                                 
@@ -535,8 +536,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             if(editTrackButton.isEnabled()==false){
                 editTrackButton.setEnabled(true);
             }
-            if(removeTrackkButton.isEnabled()==false){
-                removeTrackkButton.setEnabled(true);
+            if(removeTrackButton.isEnabled()==false){
+                removeTrackButton.setEnabled(true);
             }
             mkXmlBut.setEnabled(true);
         }
@@ -636,15 +637,15 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         }
         
         public void setTerritories(){
-            containsTer = true;
+            containsTerritory = true;
         }
         
         public void setPar(){
             containsPar = true;
         }
         
-       public void productReady(){
-            if(containsTrack == true && containsTer == true){
+       public void productCanBeprinted(){
+            if(containsTrack == true && containsTerritory == true){
                 mkXmlBut.setEnabled(true);
             }
             else{
@@ -654,7 +655,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         
         //Action Listeners
         
-        private class ButHandler implements ActionListener {
+       private class ButHandler implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             
@@ -692,8 +693,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                                 imageText.getText(),
                                 titleText.getText(),
                                 dateText.getText(),
-                                publineText.getText(),
-                                coplineText.getText(),
+                                publisherText.getText(),
+                                copyrightText.getText(),
                                 artistText.getText(),
                                 new Boolean(rude)
                                 );
@@ -703,85 +704,83 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                System.out.println(test);
             
                for(int i =0; i<3; i++){
-                   if(gfields[i].getText().equals("")){
+                   if(genreFields[i].getText().equals("")){
                        }
                     else{
-                       theXml.addGenre(gfields[i].getText());
-                       gfields[i].setEnabled(false);
+                       theXml.addGenre(genreFields[i].getText());
+                       genreFields[i].setEnabled(false);
                     }
                 }
                 //genre method, sort!
-                addTrkBut.setEnabled(true);
-                addTerBut.setEnabled(true);
-                addParBut.setEnabled(true);
+                addTrackButton.setEnabled(true);
+                addTerritoryButton.setEnabled(true);
+                addParticipantButton.setEnabled(true);
                 
                                
             }
             
             else if(isEdit==true){
-                theXml.editTag("distributor",distText.getText());
-                theXml.editTag("product upc",upcText.getText());
-                theXml.editTag("product_type",theType);
-                theXml.editTag("product_label",labelText.getText());
-                theXml.editTag("product_image",imageText.getText());
-                theXml.editTag("product_title",titleText.getText());
-                theXml.editTag("product_release_date",dateText.getText());
-                theXml.editTag("product_p_line",publineText.getText());
-                theXml.editTag("product_c_line",coplineText.getText());
-                theXml.editTag("product_artist_name",artistText.getText());
-                theXml.editTag("explicit_content",rude);
+            	
+                theXml.replaceDistributor(distText.getText());
+                Product product = theXml.getProduct();
+                product.Upc = upcText.getText();
+                product.Type = theType;
+                product.Label = labelText.getText();
+                product.Image = imageText.getText();
+                product.Title = titleText.getText();
+                product.ReleaseDate = dateText.getText();
+                product.PublisherLine = publisherText.getText();
+                product.CopyrightLine = copyrightText.getText();
+                product.Artists.get(0).Name = artistText.getText();
+                product.IsExplicit = new Boolean(rude);
                 theXml.removeGenres();
                 //removes existing genres
                 for(int i =0; i<3; i++){
-                   if(gfields[i].getText().equals("")){
-                       }
-                    else{
-                       theXml.addGenre(gfields[i].getText());
-                       gfields[i].setEnabled(false);
+                   if(!genreFields[i].getText().equals("")){                    
+                       theXml.addGenre(genreFields[i].getText());
+                       genreFields[i].setEnabled(false);
                     }
                 }
-                //adds new/edited genres
-               
-                
+                //adds new edited genres
                                 
                 if(containsTrack == true){
                     editTrackButton.setEnabled(true);
-                    removeTrackkButton.setEnabled(true);
+                    removeTrackButton.setEnabled(true);
                 }
-                addTrkBut.setEnabled(true);
-                if(containsTer == true){
+                addTrackButton.setEnabled(true);
+                if(containsTerritory == true){
                     edtTerBut.setEnabled(true);
                     remTerBut.setEnabled(true);
                 }
-                addTerBut.setEnabled(true);
+                addTerritoryButton.setEnabled(true);
                 if(containsPar == true){
                     edtParBut.setEnabled(true);
                     remParBut.setEnabled(true);
                 }
-                addParBut.setEnabled(true);
-                productReady();
+                addParticipantButton.setEnabled(true);
+                productCanBeprinted();
                                 
             }
-            edtPrdctBut.setEnabled(true);
-            distText.setEditable(false);
-           upcText.setEditable(false);
-           pTypeBox.setEnabled(false);
-           labelText.setEditable(false);
-           imageText.setEditable(false);
-           titleText.setEditable(false);
-           dateText.setEditable(false);
-           publineText.setEditable(false);
-           coplineText.setEditable(false);
-           artistText.setEditable(false);
-           explicitBox.setEnabled(false);
-           crtPrdctBut.setEnabled(false);
+			edtPrdctBut.setEnabled(true);
+			distText.setEditable(false);
+			upcText.setEditable(false);
+			pTypeBox.setEnabled(false);
+			labelText.setEditable(false);
+			imageText.setEditable(false);
+			titleText.setEditable(false);
+			dateText.setEditable(false);
+			publisherText.setEditable(false);
+			copyrightText.setEditable(false);
+			artistText.setEditable(false);
+			explicitBox.setEnabled(false);
+			createOrUpdateButton.setEnabled(false);
            
            for(int i=0; i<3;i++){
-               gfields[i].setEnabled(false);
+               genreFields[i].setEnabled(false);
             }
         }
     }
-    
+
     private class TrkHandler implements ActionListener{
         
         public void actionPerformed(ActionEvent e){
@@ -818,7 +817,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             remFrmTrkList(trackList.getSelectedIndex());  
             
             if(sampleModel.getSize() < 1){
-                removeTrackkButton.setEnabled(false);
+                removeTrackButton.setEnabled(false);
                 editTrackButton.setEnabled(false);
                 containsTrack = false;
             }              
@@ -852,8 +851,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             if(tersampleModel.getSize() < 1){
                 remTerBut.setEnabled(false);
                 edtTerBut.setEnabled(false);
-                containsTer = false;
-                productReady();
+                containsTerritory = false;
+                productCanBeprinted();
             }
         }
     }
@@ -894,7 +893,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 remParBut.setEnabled(false);
                 edtParBut.setEnabled(false);
                 containsPar = false;
-                productReady();
+                productCanBeprinted();
             }
         }
     }
@@ -915,10 +914,10 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             titleText.setText("");
             dateText.setEditable(true);
             dateText.setText("");
-            publineText.setEditable(true);
-            publineText.setText("");
-            coplineText.setEditable(true);
-            coplineText.setText("");
+            publisherText.setEditable(true);
+            publisherText.setText("");
+            copyrightText.setEditable(true);
+            copyrightText.setText("");
             artistText.setEditable(true);
             artistText.setText("");
             explicitBox.setEnabled(true);
@@ -941,24 +940,24 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             }
             participantsList.setModel(participantSampleModel);
             for(int i =0; i<3; i++){
-                gfields[i].setEnabled(true);
-                gfields[i].setText("");
+                genreFields[i].setEnabled(true);
+                genreFields[i].setText("");
             }
             
-            addParBut.setEnabled(false);
+            addParticipantButton.setEnabled(false);
             remParBut.setEnabled(false);
             edtParBut.setEnabled(false);
             
-            addTrkBut.setEnabled(false);
-            removeTrackkButton.setEnabled(false);
+            addTrackButton.setEnabled(false);
+            removeTrackButton.setEnabled(false);
             editTrackButton.setEnabled(false);
             
-            addTerBut.setEnabled(false);
+            addTerritoryButton.setEnabled(false);
             remTerBut.setEnabled(false);
             edtTerBut.setEnabled(false);
             
             edtPrdctBut.setEnabled(false);
-            crtPrdctBut.setEnabled(true);
+            createOrUpdateButton.setEnabled(true);
             mkXmlBut.setEnabled(false);
             isEdit=false;
         }
@@ -968,15 +967,15 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             
             isEdit =true;
                         
-            addParBut.setEnabled(false);
+            addParticipantButton.setEnabled(false);
             remParBut.setEnabled(false);
             edtParBut.setEnabled(false);
             
-            addTrkBut.setEnabled(false);
-            removeTrackkButton.setEnabled(false);
+            addTrackButton.setEnabled(false);
+            removeTrackButton.setEnabled(false);
             editTrackButton.setEnabled(false);
             
-            addTerBut.setEnabled(false);
+            addTerritoryButton.setEnabled(false);
             remTerBut.setEnabled(false);
             edtTerBut.setEnabled(false);
             
@@ -987,15 +986,15 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             imageText.setEditable(true);
             titleText.setEditable(true);
             dateText.setEditable(true);
-            publineText.setEditable(true);
-            coplineText.setEditable(true);
+            publisherText.setEditable(true);
+            copyrightText.setEditable(true);
             artistText.setEditable(true);
             explicitBox.setEnabled(true);
             
             for(int i =0; i<3; i++){
-                gfields[i].setEnabled(true);
+                genreFields[i].setEnabled(true);
             }
-            crtPrdctBut.setEnabled(true);
+            createOrUpdateButton.setEnabled(true);
             mkXmlBut.setEnabled(false);
             edtPrdctBut.setEnabled(false);
         }

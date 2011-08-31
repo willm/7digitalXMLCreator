@@ -11,7 +11,7 @@ public class Product {
 	public String ReleaseDate;
 	public String PublisherLine;
 	public String CopyrightLine;
-	public Artist Artist;
+	private Artist Artist;
 	public boolean IsExplicit;
 	public ArrayList<Track> Tracks;
 	public ArrayList<Participant> Participants;
