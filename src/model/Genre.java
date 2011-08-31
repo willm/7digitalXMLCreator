@@ -4,7 +4,7 @@ import xmlSerialization.Tag;
 
 public class Genre {
 	
-	private String Name;
+	public String Name;
 	
 	public Genre(String name){
 		Name = name;

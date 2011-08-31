@@ -3,15 +3,19 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
 import main.Xml;
+import model.Participant;
+import model.Track;
 
 public class TrackGui extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify
-    private javax.swing.JButton AddPtcptBut;
+    private javax.swing.JButton AddParticipantButton;
     private javax.swing.JButton EdtPrtcpntBut;
     private javax.swing.JButton addTrkBut;
     private javax.swing.JCheckBox isExplicitBox;
@@ -36,21 +40,21 @@ public class TrackGui extends javax.swing.JFrame {
     private javax.swing.JButton okBut;
     private javax.swing.JList prtcpntLst;
     private javax.swing.JButton remPrtcpntBut;
-    private javax.swing.JTextField trkGnrText;
-    private javax.swing.JTextField trkIdText;
-    private javax.swing.JTextField trkArtText;
-    private javax.swing.JTextField trkLblText;
-    private javax.swing.JTextField trkPubLnText;
-    private javax.swing.JTextField trkLthText;
+    private javax.swing.JTextField trackGenreText;
+    private javax.swing.JTextField trackIdentifierText;
+    private javax.swing.JTextField trackArtistText;
+    private javax.swing.JTextField trackLabelText;
+    private javax.swing.JTextField trackPublisherText;
+    private javax.swing.JTextField trackLengthText;
     private javax.swing.JTextField trkNrText;
-    private javax.swing.JTextField trkTitText;
-    private javax.swing.JComboBox trkTypBox;
-    private javax.swing.JTextField trkVTitText;
+    private javax.swing.JTextField trackTitleText;
+    private javax.swing.JComboBox trackTypeBox;
+    private javax.swing.JTextField trackVersionTitleText;
     private javax.swing.JTextField volText;
     private Xml theXml;
     private ProductGui product;
     
-    private ButHandler butlis;
+    private OkButHandler butlis;
     private OkHandler oklis;
     private RemHandler remlis;
     private AddPartHandler partlis;
@@ -81,9 +85,9 @@ public class TrackGui extends javax.swing.JFrame {
         isrcText = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         hiddenBox = new javax.swing.JCheckBox();
-        trkIdText = new javax.swing.JTextField();
+        trackIdentifierText = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        trkArtText = new javax.swing.JTextField();
+        trackArtistText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         isExplicitBox = new javax.swing.JCheckBox();
         volText = new javax.swing.JTextField();
@@ -91,18 +95,18 @@ public class TrackGui extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         trkNrText = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        trkTypBox = new javax.swing.JComboBox();
+        trackTypeBox = new javax.swing.JComboBox();
         jLabel7 = new javax.swing.JLabel();
-        trkTitText = new javax.swing.JTextField();
+        trackTitleText = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        trkVTitText = new javax.swing.JTextField();
-        trkLthText = new javax.swing.JTextField();
+        trackVersionTitleText = new javax.swing.JTextField();
+        trackLengthText = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        trkLblText = new javax.swing.JTextField();
+        trackLabelText = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        trkPubLnText = new javax.swing.JTextField();
-        trkGnrText = new javax.swing.JTextField();
+        trackPublisherText = new javax.swing.JTextField();
+        trackGenreText = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         okBut = new javax.swing.JButton();
         addTrkBut = new javax.swing.JButton();
@@ -110,7 +114,7 @@ public class TrackGui extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         prtcpntLst = new javax.swing.JList();
         jLabel13 = new javax.swing.JLabel();
-        AddPtcptBut = new javax.swing.JButton();
+        AddParticipantButton = new javax.swing.JButton();
         EdtPrtcpntBut = new javax.swing.JButton();
         remPrtcpntBut = new javax.swing.JButton();
 
@@ -137,13 +141,13 @@ public class TrackGui extends javax.swing.JFrame {
 
         jLabel6.setText("Track Type");
 
-        trkTypBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Audio", "Video" }));
+        trackTypeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Audio", "Video" }));
 
         jLabel7.setText("Track Title");
 
         jLabel8.setText("Track Version Title");
 
-        trkLthText.setText("HH:MM:SS");
+        trackLengthText.setText("HH:MM:SS");
 
         jLabel9.setText("Track Length");
 
@@ -183,20 +187,20 @@ public class TrackGui extends javax.swing.JFrame {
                         .addComponent(addTrkBut)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(okBut))
-                    .addComponent(trkGnrText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                    .addComponent(trkPubLnText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                    .addComponent(trkLblText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                    .addComponent(trkLthText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                    .addComponent(trkVTitText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                    .addComponent(trkTitText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(trackGenreText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(trackPublisherText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(trackLabelText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(trackLengthText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(trackVersionTitleText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(trackTitleText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(trkNrText, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(isExplicitBox)
-                    .addComponent(trkArtText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(trackArtistText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(isrcText, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hiddenBox)
-                    .addComponent(trkIdText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(trackIdentifierText, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(volText, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(trkTypBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(trackTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -210,11 +214,11 @@ public class TrackGui extends javax.swing.JFrame {
                 .addComponent(hiddenBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(trkIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackIdentifierText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(trkArtText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackArtistText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(isExplicitBox)
@@ -229,30 +233,30 @@ public class TrackGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(trkTypBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(trackTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(trkTitText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackTitleText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(trkVTitText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackVersionTitleText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(trkLthText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackLengthText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(trkLblText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackLabelText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(trkPubLnText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackPublisherText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(trkGnrText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(trackGenreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -271,8 +275,8 @@ public class TrackGui extends javax.swing.JFrame {
 
         jLabel13.setText("Track Participants");
 
-        AddPtcptBut.setText("Add Participant");
-        AddPtcptBut.setEnabled(false);
+        AddParticipantButton.setText("Add Participant");
+        AddParticipantButton.setEnabled(false);
 
         EdtPrtcpntBut.setText("Edit Participant");
         EdtPrtcpntBut.setEnabled(false);
@@ -292,7 +296,7 @@ public class TrackGui extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(remPrtcpntBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(AddPtcptBut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(AddParticipantButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(EdtPrtcpntBut)))
                 .addContainerGap())
@@ -306,7 +310,7 @@ public class TrackGui extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AddPtcptBut, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AddParticipantButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EdtPrtcpntBut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(remPrtcpntBut)
@@ -334,14 +338,14 @@ public class TrackGui extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        butlis=new ButHandler();
+        butlis=new OkButHandler();
         addTrkBut.addActionListener(butlis);
         
         oklis=new OkHandler();
         okBut.addActionListener(oklis);
         
         partlis= new AddPartHandler();
-        AddPtcptBut.addActionListener(partlis);
+        AddParticipantButton.addActionListener(partlis);
         
         remlis = new RemHandler();
         remPrtcpntBut.addActionListener(remlis);
@@ -350,7 +354,7 @@ public class TrackGui extends javax.swing.JFrame {
         EdtPrtcpntBut.addActionListener(edtparlis);
                
         pack();
-    }// </editor-fold>
+    }
 
     /**
     * @param args the command line arguments
@@ -407,41 +411,33 @@ public class TrackGui extends javax.swing.JFrame {
         prtcpntLst.ensureIndexIsVisible(index);
     }
     
-    public void setEdit(){
+    public void setTrackAsEdit(){
         //this method is called when the edit track button is pressed in a ProductGui2
         isEdit = true;
-        isrcText.setText(theXml.getTrackAtrbtValue(pos, "isrc"));
+        Track track = theXml.getTrack(pos);
+        isrcText.setText(track.Isrc);
         
-        String hidden = theXml.getTrackAtrbtValue(pos, "hidden");
-        if(hidden == "true"){
-            hiddenBox.setSelected(true);
-        }
+        hiddenBox.setSelected(track.isHidden);
             
-        trkIdText.setText(theXml.getTrackTagValue(pos,"track_identifier"));
-        trkArtText.setText(theXml.getTrackArtistValue(pos));
-        if(theXml.getTrackTagValue(pos,"explicit_content")=="true"){
-            isExplicitBox.setSelected(true);
+        trackIdentifierText.setText(track.Id);
+        trackArtistText.setText(track.Artists.get(0).Name);
+        isExplicitBox.setSelected(track.IsExplicit);
+        volText.setText(track.Volume);
+        trackTitleText.setText(track.Title);
+        trackVersionTitleText.setText(track.VersionTitle);
+        
+        trackTypeBox.setSelectedItem(track.Type);
+        
+        trackLengthText.setText(track.Length);
+        trackLabelText.setText(track.Label);
+        trackPublisherText.setText(track.PublisherLine);
+
+        trackGenreText.setText(track.Genres.get(0).Name);
+        ArrayList<Participant> existingParticipents = track.Participants;
+        for(Participant participant : existingParticipents){
+            updatePList(participant.Name + " - " + participant.Role);
         }
-        volText.setText(theXml.getTrackTagValue(pos,"track_volume"));
-        trkTitText.setText(theXml.getTrackTagValue(pos,"track_title"));
-        trkVTitText.setText(theXml.getTrackTagValue(pos,"track_version_title"));
-        if(theXml.getTrackTagValue(pos,"track_type")=="Audio"){
-            trkTypBox.setSelectedItem("Audio");
-        }
-        else if(theXml.getTrackTagValue(pos,"track_type")=="Video"){
-            trkTypBox.setSelectedItem("Video");
-        }
-        trkLthText.setText(theXml.getTrackTagValue(pos,"track_length"));
-        trkLblText.setText(theXml.getTrackTagValue(pos,"track_label"));
-        trkPubLnText.setText(theXml.getTrackTagValue(pos,"track_p_line"));
-        //need to add other stuff
-        trkGnrText.setText(theXml.getTrackGenreValue(pos));
-        String[] existingParticipents = theXml.getTrackParticipents(pos);
-        for(int i =0; i<existingParticipents.length; i++){
-            updatePList(existingParticipents[i]);
-        }
-        AddPtcptBut.setEnabled(true);
-        //okBut.setEnabled(true);
+        AddParticipantButton.setEnabled(true);
     }        
     
     private TrackGui returnThis(){
@@ -457,94 +453,77 @@ public class TrackGui extends javax.swing.JFrame {
         System.out.println(pos);
     }
     
-    private class ButHandler implements ActionListener {
+    private class OkButHandler implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             
-            String hidden =null;
-            String rude =null;
+            Boolean hidden =hiddenBox.isSelected();
+            Boolean rude = isExplicitBox.isSelected();
+            
             String theType =null;
             
-            if(hiddenBox.isSelected() == true){
-                System.out.println("trk hidden? -- Yes");
-                hidden = "true";
-            }
-            else if(hiddenBox.isSelected() == false){
-                System.out.println("trk hidden? -- NO");
-                hidden = "false";
-            }
-            
-            if(isExplicitBox.isSelected() == true){
-                System.out.println("trk explicit? -- Yes");
-                rude = "true";
-            }
-            else if(isExplicitBox.isSelected() == false){
-                System.out.println("trk explicit? -- NO");
-                rude = "false";
-            }
-            
-            if(trkTypBox.getSelectedItem() == "Audio"){
+            if(trackTypeBox.getSelectedItem() == "Audio"){
                 System.out.println("trk typ audio");
                 theType = "Audio";
             }
-            else if(trkTypBox.getSelectedItem() == "Video"){
+            else if(trackTypeBox.getSelectedItem() == "Video"){
                 System.out.println("trk typ video");
                 theType = "Video";
             }
             
             //this is called when add track is clicked
             if(isEdit == false){
-                if(trkTitText.getText().equals("")){
+                if(trackTitleText.getText().equals("")){
                        JOptionPane.showMessageDialog(null, "Please enter a track title");;
                     }
                 else{
                    theXml.addTrack(isrcText.getText(),
                                    hiddenBox.isSelected(),
-                                   trkIdText.getText(),
-                                   trkArtText.getText(),
+                                   trackIdentifierText.getText(),
+                                   trackArtistText.getText(),
                                    isExplicitBox.isSelected(),
                                    volText.getText(),
                                    new Integer(trkNrText.getText()),
                                    theType,
-                                   trkTitText.getText(),
-                                   trkVTitText.getText(),
-                                   trkLthText.getText(),
-                                   trkLblText.getText(),
-                                   trkPubLnText.getText(),
-                                   trkGnrText.getText()
+                                   trackTitleText.getText(),
+                                   trackVersionTitleText.getText(),
+                                   trackLengthText.getText(),
+                                   trackLabelText.getText(),
+                                   trackPublisherText.getText(),
+                                   trackGenreText.getText()
                                    );
 
-                   product.updateTList(trkTitText.getText() + " (" + trkVTitText.getText() + ")");
+                   product.updateTList(trackTitleText.getText() + " (" + trackVersionTitleText.getText() + ")");
                    
                    product.setTracks();
                    product.productReady();
-                   AddPtcptBut.setEnabled(true);
+                   AddParticipantButton.setEnabled(true);
                    okBut.setEnabled(true);
                    addTrkBut.setEnabled(false);
                         }
                     }
            //this is called when edit track is clicked             
            else if(isEdit ==true){
-               //pos = (Integer.parseInt(trkNrText.getText())) -1;
+
                System.out.println(pos);
-               theXml.editTrackTagAttribute(pos,"isrc",isrcText.getText());
-               theXml.editTrackTagAttribute(pos,"hidden",hidden);
-               theXml.editTrackTagValue(pos,"track_identifier",trkIdText.getText());
-               theXml.editTrackArtistValue(pos,trkArtText.getText());
-               theXml.editTrackTagValue(pos,"explicit_content",rude);
-               theXml.editTrackTagValue(pos,"track_volume",volText.getText());
-               theXml.editTrackTagValue(pos,"track_type",theType);
-               theXml.editTrackTagValue(pos,"track_title",trkTitText.getText());
-               theXml.editTrackTagValue(pos,"track_version_title",trkVTitText.getText());
-               theXml.editTrackTagValue(pos,"track_length",trkLthText.getText());
-               theXml.editTrackTagValue(pos,"track_label",trkLblText.getText());
-               theXml.editTrackTagValue(pos,"track_p_line",trkPubLnText.getText());
-               theXml.editTrackTagValue(pos,"genre",trkGnrText.getText());
+               Track track = theXml.getTrack(pos);
+               track.Isrc = isrcText.getText();
+               track.isHidden = hidden;
+               track.Id = trackIdentifierText.getText();
+               track.Artists.get(0).Name = trackArtistText.getText();
+               track.IsExplicit = rude;
+               track.Volume = volText.getText();
+               track.Type = theType;
+               track.Title = trackTitleText.getText();
+               track.VersionTitle = trackVersionTitleText.getText();
+               track.Length = trackLengthText.getText();
+               track.Label = trackLabelText.getText();
+               track.PublisherLine = trackPublisherText.getText();
+               track.Genres.get(0).Name = trackGenreText.getText();
+
+               product.updateTrackTitleInList(pos, trackTitleText.getText() + " (" + trackVersionTitleText.getText() + ")");
                
-               //product.updateTtitleInList(pos, trkNrText.getText() + ". " + trkTitText.getText());
-               product.updateTtitleInList(pos, trkTitText.getText() + " (" + trkVTitText.getText() + ")");
-               
-               AddPtcptBut.setEnabled(true);
+               AddParticipantButton.setEnabled(true);
                okBut.setEnabled(true);
             }
                                    
@@ -554,18 +533,18 @@ public class TrackGui extends javax.swing.JFrame {
            System.out.println("----------------THE TRACK-------------");
            System.out.println(isrcText.getText() +
                            hidden+
-                           trkIdText.getText()+
-                           trkArtText.getText()+
+                           trackIdentifierText.getText()+
+                           trackArtistText.getText()+
                            rude+
                            volText.getText()+
                            trkNrText.getText()+
                            theType+
-                           trkTitText.getText()+
-                           trkVTitText.getText()+
-                           trkLthText.getText()+
-                           trkLblText.getText()+
-                           trkPubLnText.getText()+
-                           trkGnrText.getText()
+                           trackTitleText.getText()+
+                           trackVersionTitleText.getText()+
+                           trackLengthText.getText()+
+                           trackLabelText.getText()+
+                           trackPublisherText.getText()+
+                           trackGenreText.getText()
                            );
            System.out.println("--------------------------------------");
             //setVisible(false);

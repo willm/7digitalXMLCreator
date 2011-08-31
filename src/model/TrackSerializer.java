@@ -16,20 +16,20 @@ public class TrackSerializer {
 
 		theTrack.addAttribute("isrc", track.Isrc);
 	    theTrack.addAttribute("hidden", track.isHidden ? "true" : "false");
-	    theTrack.addTag(new Tag("track_identifier", track.TrackId));
+	    theTrack.addTag(new Tag("track_identifier", track.Id));
 		
 	    theTrack.addTag(serializeArtists());
 	    theTrack.addTag(serializeParticipants());
 	    
-	    theTrack.addTag(new Tag("explicit_content", track.isExplicit ? "true" : "false"));	    
+	    theTrack.addTag(new Tag("explicit_content", track.IsExplicit ? "true" : "false"));	    
 	    theTrack.addTag(new Tag("track_volume", track.Volume));	    
 	    theTrack.addTag(new Tag("track_number", Integer.toString(track.TrackNo)));	    
 	    theTrack.addTag(new Tag("track_type", track.Type));	    
-	    theTrack.addTag(new Tag("track_title", track.Ttitle));	    
-	    theTrack.addTag(new Tag("track_version_title", track.TversionT));	    
-	    theTrack.addTag(new Tag("track_length", track.Tlength));	    
-	    theTrack.addTag(new Tag("track_label", track.Tlabel));	    
-	    theTrack.addTag(new Tag("track_p_line", track.TPline));
+	    theTrack.addTag(new Tag("track_title", track.Title));	    
+	    theTrack.addTag(new Tag("track_version_title", track.VersionTitle));	    
+	    theTrack.addTag(new Tag("track_length", track.Length));	    
+	    theTrack.addTag(new Tag("track_label", track.Label));	    
+	    theTrack.addTag(new Tag("track_p_line", track.PublisherLine));
 	    
 	    theTrack.addTag(serializeGenres());
 		

@@ -87,6 +87,10 @@ public class Xml
 
     }
     
+    public Track getTrack(int trackNumber){
+    	return product.Tracks.get(trackNumber);
+    }
+    
     public void addParticipant(String theProle, String thePname){    	
     	product.Participants.add(new Participant(theProle, thePname));
     }

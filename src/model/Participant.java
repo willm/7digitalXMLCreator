@@ -4,8 +4,8 @@ import xmlSerialization.Tag;
 import xmlSerialization.TagCollection;
 
 public class Participant{
-	private String Name;
-	private String Role;
+	public String Name;
+	public String Role;
 	public Participant(String role, String name){
 		Name = name;
 		Role = role;

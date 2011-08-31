@@ -15,19 +15,19 @@ public class ProductGui extends javax.swing.JFrame {
     private JButton crtPrdctBut;
     private JTextField dateText;
     private JTextField distText;
-    private JButton edtParBut, edtTerBut, edtTrkBut;
+    private JButton edtParBut, edtTerBut, editTrackButton;
     private JCheckBox explicitBox;
     private JTextField genreA, genreB, genreC;
     private JTextField imageText;
     private JLabel jLabel1, jLabel10, jLabel11, jLabel12, jLabel13, jLabel14, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9;
-    private JList jList1, jList2, jList3;
+    private JList trackList, jList2, jList3;
     private JPanel jPanel1, jPanel2;
     private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
     private JTextField labelText;
     private JButton mkXmlBut;
     private JComboBox pTypeBox;
     private JTextField publineText;
-    private JButton remParBut, remTerBut, remTrkBut;
+    private JButton remParBut, remTerBut, removeTrackkButton;
     private JTextField titleText, upcText;
     private JButton clearAllBut;
     private JButton edtPrdctBut;
@@ -52,7 +52,7 @@ public class ProductGui extends javax.swing.JFrame {
      
 
     private Xml theXml;
-    private TrackGui track = null;
+    private TrackGui trackGui = null;
     private TerGui territory = null;
     private PartGui part = null;
     private ReadGui excelReader = null;
@@ -117,10 +117,10 @@ public class ProductGui extends javax.swing.JFrame {
         mkXmlBut = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        trackList = new javax.swing.JList();
         jLabel12 = new javax.swing.JLabel();
         addTrkBut = new javax.swing.JButton();
-        edtTrkBut = new javax.swing.JButton();
+        editTrackButton = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList();
@@ -131,7 +131,7 @@ public class ProductGui extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jList3 = new javax.swing.JList();
         jLabel14 = new javax.swing.JLabel();
-        remTrkBut = new javax.swing.JButton();
+        removeTrackkButton = new javax.swing.JButton();
         remTerBut = new javax.swing.JButton();
         remParBut = new javax.swing.JButton();
         clearAllBut = new javax.swing.JButton();
@@ -320,18 +320,18 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         for(int i = 0; i<tracklist.length; i++){
             sampleModel.addElement(tracklist[i]);
         }
-        jList1.setModel(sampleModel);
+        trackList.setModel(sampleModel);
         
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jList1);
+        trackList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(trackList);
 
         jLabel12.setText("Tracks");
 
         addTrkBut.setText("Add Track");
         addTrkBut.setEnabled(false);
 
-        edtTrkBut.setText("Edit Track");
-        edtTrkBut.setEnabled(false);
+        editTrackButton.setText("Edit Track");
+        editTrackButton.setEnabled(false);
 
         jLabel13.setText("Territories");
 
@@ -365,8 +365,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 
         jLabel14.setText("Product Participants");
 
-        remTrkBut.setText("Remove Track");
-        remTrkBut.setEnabled(false);
+        removeTrackkButton.setText("Remove Track");
+        removeTrackkButton.setEnabled(false);
 
         remTerBut.setText("Remove Ter");
         remTerBut.setEnabled(false);
@@ -388,9 +388,9 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(addTrkBut)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edtTrkBut)
+                        .addComponent(editTrackButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(remTrkBut))
+                        .addComponent(removeTrackkButton))
                     .addComponent(jLabel13)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(addTerBut)
@@ -418,8 +418,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addTrkBut)
-                    .addComponent(edtTrkBut)
-                    .addComponent(remTrkBut))
+                    .addComponent(editTrackButton)
+                    .addComponent(removeTrackkButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -474,10 +474,10 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         mkXmlBut.addActionListener(prntlis);
         
         trkedtlis = new TrkEditHandler();
-        edtTrkBut.addActionListener(trkedtlis);
+        editTrackButton.addActionListener(trkedtlis);
         
         trkremlis = new TrkRemHandler();
-        remTrkBut.addActionListener(trkremlis);
+        removeTrackkButton.addActionListener(trkremlis);
         
         terlis = new TerHandler();
         addTerBut.addActionListener(terlis);
@@ -522,7 +522,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     }
     public void attachtotrack(){
         //attaches a track gui to this product
-        track.addPro(this);
+        trackGui.addPro(this);
     }
    
     public ProductGui returnThis(){
@@ -535,24 +535,24 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             sampleModel.addElement(title);
             getContentPane().invalidate();
             getContentPane().validate();
-            jList1.setSelectedIndex(index);
-            jList1.ensureIndexIsVisible(index);
-            if(edtTrkBut.isEnabled()==false){
-                edtTrkBut.setEnabled(true);
+            trackList.setSelectedIndex(index);
+            trackList.ensureIndexIsVisible(index);
+            if(editTrackButton.isEnabled()==false){
+                editTrackButton.setEnabled(true);
             }
-            if(remTrkBut.isEnabled()==false){
-                remTrkBut.setEnabled(true);
+            if(removeTrackkButton.isEnabled()==false){
+                removeTrackkButton.setEnabled(true);
             }
             mkXmlBut.setEnabled(true);
         }
         
-        public void updateTtitleInList(int pos, String newTitle){
+        public void updateTrackTitleInList(int pos, String newTitle){
             int index = sampleModel.getSize();
             sampleModel.set(pos, newTitle);
             getContentPane().invalidate();
             getContentPane().validate();
-            jList1.setSelectedIndex(index);
-            jList1.ensureIndexIsVisible(index);
+            trackList.setSelectedIndex(index);
+            trackList.ensureIndexIsVisible(index);
         }
         
         public void remFrmTrkList(int pos){
@@ -560,8 +560,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             sampleModel.remove(pos);
             getContentPane().invalidate();
             getContentPane().validate();
-            jList1.setSelectedIndex(index);
-            jList1.ensureIndexIsVisible(index);
+            trackList.setSelectedIndex(index);
+            trackList.ensureIndexIsVisible(index);
             }
         
         public void updateTerList(String title){
@@ -750,8 +750,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 
                                 
                 if(containsTrack == true){
-                    edtTrkBut.setEnabled(true);
-                    remTrkBut.setEnabled(true);
+                    editTrackButton.setEnabled(true);
+                    removeTrackkButton.setEnabled(true);
                 }
                 addTrkBut.setEnabled(true);
                 if(containsTer == true){
@@ -790,41 +790,41 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     private class TrkHandler implements ActionListener{
         
         public void actionPerformed(ActionEvent e){
-            track = new TrackGui();
-            track.setVisible(true);
-            track.addXml(theXml);
+            trackGui = new TrackGui();
+            trackGui.setVisible(true);
+            trackGui.addXml(theXml);
             attachtotrack();                    
             trackCount = theXml.numOfTracks()+1;
-            track.setTrkNo(trackCount);
+            trackGui.setTrkNo(trackCount);
         }
     }
     
     private class TrkEditHandler implements ActionListener{
         
         public void actionPerformed(ActionEvent e){
-            track = new TrackGui();
-            track.setVisible(true);
-            track.addXml(theXml);
+            trackGui = new TrackGui();
+            trackGui.setVisible(true);
+            trackGui.addXml(theXml);
             attachtotrack();
-            track.setTrkNo(jList1.getSelectedIndex()+1);
-            track.setEdit();
-            theXml.gettrck(jList1.getSelectedIndex());
+            trackGui.setTrkNo(trackList.getSelectedIndex()+1);
+            trackGui.setTrackAsEdit();
+//            theXml.gettrck(trackList.getSelectedIndex());
         }
     }
     
     private class TrkRemHandler implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            theXml.removeTrk(jList1.getSelectedIndex());
-            int newTrkNo = jList1.getSelectedIndex();
-            for(int i = jList1.getSelectedIndex(); i<(sampleModel.getSize()-1); i++){
+            theXml.removeTrk(trackList.getSelectedIndex());
+            int newTrkNo = trackList.getSelectedIndex();
+            for(int i = trackList.getSelectedIndex(); i<(sampleModel.getSize()-1); i++){
                 newTrkNo += 1;
                 theXml.editTrackTagValue(i,"track_number",Integer.toString(newTrkNo));
             }            
-            remFrmTrkList(jList1.getSelectedIndex());  
+            remFrmTrkList(trackList.getSelectedIndex());  
             
             if(sampleModel.getSize() < 1){
-                remTrkBut.setEnabled(false);
-                edtTrkBut.setEnabled(false);
+                removeTrackkButton.setEnabled(false);
+                editTrackButton.setEnabled(false);
                 containsTrack = false;
             }              
         }
@@ -931,7 +931,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             for(int i = 0; i<tracklist.length; i++){
                 sampleModel.addElement(tracklist[i]);
             }
-            jList1.setModel(sampleModel);
+            trackList.setModel(sampleModel);
             
             tersampleModel = new DefaultListModel();
             for(int i = 0; i<terlist.length; i++){
@@ -955,8 +955,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             edtParBut.setEnabled(false);
             
             addTrkBut.setEnabled(false);
-            remTrkBut.setEnabled(false);
-            edtTrkBut.setEnabled(false);
+            removeTrackkButton.setEnabled(false);
+            editTrackButton.setEnabled(false);
             
             addTerBut.setEnabled(false);
             remTerBut.setEnabled(false);
@@ -978,8 +978,8 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             edtParBut.setEnabled(false);
             
             addTrkBut.setEnabled(false);
-            remTrkBut.setEnabled(false);
-            edtTrkBut.setEnabled(false);
+            removeTrackkButton.setEnabled(false);
+            editTrackButton.setEnabled(false);
             
             addTerBut.setEnabled(false);
             remTerBut.setEnabled(false);
