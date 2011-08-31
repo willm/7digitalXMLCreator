@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 import main.Xml;
 import model.Product;
+import model.Track;
  
 public class ProductGui extends javax.swing.JFrame {
 
@@ -788,7 +789,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             trackGui.setVisible(true);
             trackGui.addXml(theXml);
             attachtotrack();                    
-            trackCount = theXml.numOfTracks()+1;
+            trackCount = theXml.numberOfTracks()+1;
             trackGui.setTrkNo(trackCount);
         }
     }
@@ -808,11 +809,12 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     
     private class TrkRemHandler implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            theXml.removeTrk(trackList.getSelectedIndex());
+            theXml.removeTrack(trackList.getSelectedIndex());
             int newTrkNo = trackList.getSelectedIndex();
             for(int i = trackList.getSelectedIndex(); i<(sampleModel.getSize()-1); i++){
                 newTrkNo += 1;
-                theXml.editTrackTagValue(i,"track_number",Integer.toString(newTrkNo));
+                Track track = theXml.getTrack(i);
+                track.TrackNo = newTrkNo;
             }            
             remFrmTrkList(trackList.getSelectedIndex());  
             
@@ -846,7 +848,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     
     private class TertRemHandler implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            theXml.removeTer(jList2.getSelectedIndex());
+            theXml.removeTerritory(jList2.getSelectedIndex());
             remFrmTerList(jList2.getSelectedIndex());
             if(tersampleModel.getSize() < 1){
                 remTerBut.setEnabled(false);

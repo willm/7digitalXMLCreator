@@ -233,7 +233,7 @@ int firstRow=4;
                 for(int i=0; i<partRoles.length; i++){
                     partRoles[i] = partRoles[i].trim();
                     if(isProduct){theXml.addParticipant(partRoles[i], partNames[i]);}
-                    else{theXml.addTrackParticipent(theXml.numOfTracks()-1, partRoles[i], partNames[i]);}
+                    else{theXml.addTrackParticipent(theXml.numberOfTracks()-1, partRoles[i], partNames[i]);}
                 }
             }
         }
