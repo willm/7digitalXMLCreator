@@ -4,7 +4,6 @@ package excel;
 import main.Xml;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -26,7 +25,7 @@ public class ExcelReader
 private POIFSFileSystem fileSystem = null;
 private InputStream inputStream = null;
 private String xlsPath;
-private ArrayList productsInSheet;           
+private ArrayList<Xml> productsInSheet;           
 private HSSFWorkbook workBook;
 private HSSFSheet sheet = null;
 private HSSFRow row = null;
@@ -42,7 +41,7 @@ int firstRow=4;
 
     public ExcelReader(){
         xlsPath = "";
-        productsInSheet= new ArrayList();
+        productsInSheet= new ArrayList<Xml>();
 
     }
     
@@ -257,7 +256,6 @@ int firstRow=4;
         
         try{
             inputStream = new FileInputStream (thePath);
-
         }
         catch (FileNotFoundException e){
             return ("File not found in the specified path.");
@@ -309,7 +307,7 @@ int firstRow=4;
             //creates product for first row of document
             
             for(int i=firstRow+1; i<=sheet.getLastRowNum(); i++){
-                //counts down to the bottom of excell doc
+                //counts down to the bottom of excel doc
                 row = sheet.getRow(i);
                 System.out.println("row:"+i +"last row:" + sheet.getLastRowNum());
                 cell =row.getCell(0);  
