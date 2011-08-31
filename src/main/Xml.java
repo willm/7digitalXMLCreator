@@ -282,7 +282,6 @@ public class Xml
     
     public void removeTrackParticipent(int tNo, int pNo){
     	product.Tracks.get(tNo).Participants.remove(pNo);
-        TagCollection track;
     }
     
     public void removeTrk(int tNo){
@@ -353,5 +352,10 @@ public class Xml
     
     public String getTagVal(int pos){
         return initinfo[pos].returnVal();
-    }    
+    }
+
+	public Territory getTerritory(int territoryNumber) {
+		return product.territories.get(territoryNumber);
+		
+	}    
 }
