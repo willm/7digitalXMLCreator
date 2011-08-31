@@ -281,13 +281,8 @@ public class Xml
     }
     
     public void removeTrackParticipent(int tNo, int pNo){
+    	product.Tracks.get(tNo).Participants.remove(pNo);
         TagCollection track;
-        track = (TagCollection)tracks.accessInside(tNo);
-        //gets the track
-        TagCollection participents = (TagCollection)track.accessInside(2);
-        participents.print();
-        participents.removeTag(pNo);
-        participents.print();
     }
     
     public void removeTrk(int tNo){
@@ -352,11 +347,8 @@ public class Xml
     public void replaceParticipant(int parNo,Participant newParticipant){
     	product.Participants.set(parNo, newParticipant);
     }
-    public void removePar(int parNo){
-        participants.print();
-        participants.removeTag(parNo);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        participants.print();
+    public void removeParticipant(int parNo){
+    	product.Participants.remove(parNo);
     }
     
     public String getTagVal(int pos){

@@ -38,7 +38,7 @@ public class TrackGui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton okBut;
-    private javax.swing.JList prtcpntLst;
+    private javax.swing.JList participantList;
     private javax.swing.JButton remPrtcpntBut;
     private javax.swing.JTextField trackGenreText;
     private javax.swing.JTextField trackIdentifierText;
@@ -112,7 +112,7 @@ public class TrackGui extends javax.swing.JFrame {
         addTrkBut = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        prtcpntLst = new javax.swing.JList();
+        participantList = new javax.swing.JList();
         jLabel13 = new javax.swing.JLabel();
         AddParticipantButton = new javax.swing.JButton();
         EdtPrtcpntBut = new javax.swing.JButton();
@@ -269,9 +269,9 @@ public class TrackGui extends javax.swing.JFrame {
         for(int i = 0; i<partlist.length; i++){
             sampleModel.addElement(partlist[i]);
         }
-        prtcpntLst.setModel(sampleModel);
-        prtcpntLst.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(prtcpntLst);
+        participantList.setModel(sampleModel);
+        participantList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(participantList);
 
         jLabel13.setText("Track Participants");
 
@@ -383,8 +383,8 @@ public class TrackGui extends javax.swing.JFrame {
             sampleModel.addElement(thePrtcpt);
             getContentPane().invalidate();
             getContentPane().validate();
-            prtcpntLst.setSelectedIndex(index);
-            prtcpntLst.ensureIndexIsVisible(index);
+            participantList.setSelectedIndex(index);
+            participantList.ensureIndexIsVisible(index);
             if(EdtPrtcpntBut.isEnabled()==false){
                 EdtPrtcpntBut.setEnabled(true);                
             }
@@ -398,17 +398,17 @@ public class TrackGui extends javax.swing.JFrame {
         sampleModel.set(pos, newTitle);
         getContentPane().invalidate();
         getContentPane().validate();
-        prtcpntLst.setSelectedIndex(index);
-        prtcpntLst.ensureIndexIsVisible(index);
+        participantList.setSelectedIndex(index);
+        participantList.ensureIndexIsVisible(index);
     }
     
     public void remPfrmList(){      
         int index = sampleModel.getSize();
-        sampleModel.remove(prtcpntLst.getSelectedIndex());
+        sampleModel.remove(participantList.getSelectedIndex());
         getContentPane().invalidate();
         getContentPane().validate();
-        prtcpntLst.setSelectedIndex(index);
-        prtcpntLst.ensureIndexIsVisible(index);
+        participantList.setSelectedIndex(index);
+        participantList.ensureIndexIsVisible(index);
     }
     
     public void setTrackAsEdit(){
@@ -570,8 +570,8 @@ public class TrackGui extends javax.swing.JFrame {
     private class RemHandler implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            System.out.println(prtcpntLst.getSelectedIndex());
-            theXml.removeTrackParticipent(pos,prtcpntLst.getSelectedIndex());
+            System.out.println(participantList.getSelectedIndex());
+            theXml.removeTrackParticipent(pos,participantList.getSelectedIndex());
             remPfrmList();
             //needs to be removed from xml!!!
         }
@@ -584,7 +584,7 @@ public class TrackGui extends javax.swing.JFrame {
             participantGui = new ParticipantGui();
             participantGui.setVisible(true);
             participantGui.connect(theXml,pos,true,returnThis());
-            participantGui.setEdit(pos,prtcpntLst.getSelectedIndex());
+            participantGui.setEdit(pos,participantList.getSelectedIndex());
         }
     }
     

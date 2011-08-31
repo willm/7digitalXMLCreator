@@ -20,7 +20,7 @@ public class ProductGui extends javax.swing.JFrame {
     private JTextField genreA, genreB, genreC;
     private JTextField imageText;
     private JLabel jLabel1, jLabel10, jLabel11, jLabel12, jLabel13, jLabel14, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9;
-    private JList trackList, jList2, jList3;
+    private JList trackList, jList2, participantsList;
     private JPanel jPanel1, jPanel2;
     private JScrollPane jScrollPane1, jScrollPane2, jScrollPane3;
     private JTextField labelText;
@@ -45,7 +45,7 @@ public class ProductGui extends javax.swing.JFrame {
     private TerEditHandler teredtlis = null;
     private TertRemHandler terremlis = null;
     private PartEditHandler paredtlis = null;
-    private PartRemHandler parremlis = null;
+    private ParticipantRemovalHandler parremlis = null;
     private StartOverHandler startlis = null;
     private ProdEdtHandler prodedtlis = null;
     private ExcelImpHandler excellis = null;
@@ -65,11 +65,10 @@ public class ProductGui extends javax.swing.JFrame {
     private String[] tracklist = {  };
     private String[] terlist = {  };
     private String[] parlist = {  };
-    private DefaultListModel sampleModel, tersampleModel, parsampleModel;
+    private DefaultListModel sampleModel, tersampleModel, participantSampleModel;
     
     private int trackCount = 0;
 
-    /** Creates new form ProductGui2 */
     public ProductGui() {
         initComponents();
     }
@@ -129,7 +128,7 @@ public class ProductGui extends javax.swing.JFrame {
         edtParBut = new javax.swing.JButton();
         addParBut = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList();
+        participantsList = new javax.swing.JList();
         jLabel14 = new javax.swing.JLabel();
         removeTrackkButton = new javax.swing.JButton();
         remTerBut = new javax.swing.JButton();
@@ -356,12 +355,12 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         addParBut.setText("Add Participant");
         addParBut.setEnabled(false);
         
-        parsampleModel = new DefaultListModel();
+        participantSampleModel = new DefaultListModel();
         for(int i = 0; i<parlist.length; i++){
-            parsampleModel.addElement(parlist[i]);
+            participantSampleModel.addElement(parlist[i]);
         }
-        jList3.setModel(parsampleModel);
-        jScrollPane3.setViewportView(jList3);
+        participantsList.setModel(participantSampleModel);
+        jScrollPane3.setViewportView(participantsList);
 
         jLabel14.setText("Product Participants");
 
@@ -494,7 +493,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         paredtlis = new PartEditHandler();
         edtParBut.addActionListener(paredtlis);
         
-        parremlis = new PartRemHandler();
+        parremlis = new ParticipantRemovalHandler();
         remParBut.addActionListener(parremlis);
         
         startlis = new StartOverHandler();
@@ -599,12 +598,12 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             }
         
         public void updateParList(String name){
-            int index = parsampleModel.getSize();
-            parsampleModel.addElement(name);
+            int index = participantSampleModel.getSize();
+            participantSampleModel.addElement(name);
             getContentPane().invalidate();
             getContentPane().validate();
-            jList3.setSelectedIndex(index);
-            jList3.ensureIndexIsVisible(index);
+            participantsList.setSelectedIndex(index);
+            participantsList.ensureIndexIsVisible(index);
             if(edtParBut.isEnabled()==false){
                 edtParBut.setEnabled(true);
             }
@@ -613,22 +612,22 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             }
         }
         
-        public void remFrmParList(int pos){
-            int index = parsampleModel.getSize();
-            parsampleModel.remove(pos);
+        public void removeFromParticipantList(int pos){
+            int index = participantSampleModel.getSize();
+            participantSampleModel.remove(pos);
             getContentPane().invalidate();
             getContentPane().validate();
-            jList3.setSelectedIndex(index);
-            jList3.ensureIndexIsVisible(index);
+            participantsList.setSelectedIndex(index);
+            participantsList.ensureIndexIsVisible(index);
             }
         
         public void updateParticipantInList(int pos, String newTitle){
-            int index = parsampleModel.getSize();
-            parsampleModel.set(pos, newTitle);
+            int index = participantSampleModel.getSize();
+            participantSampleModel.set(pos, newTitle);
             getContentPane().invalidate();
             getContentPane().validate();
-            jList3.setSelectedIndex(index);
-            jList3.ensureIndexIsVisible(index);
+            participantsList.setSelectedIndex(index);
+            participantsList.ensureIndexIsVisible(index);
         }
             
         
@@ -887,21 +886,21 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             part.ProductLevelConnect(theXml,returnThis());
             part.setVisible(true);
             part.connect(theXml,0,false,null);
-            part.setEdit(jList3.getSelectedIndex(),0);
+            part.setEdit(participantsList.getSelectedIndex(),0);
             }
     }
     
-    private class PartRemHandler implements ActionListener{
+    private class ParticipantRemovalHandler implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            theXml.removePar(jList3.getSelectedIndex());
-            remFrmParList(jList3.getSelectedIndex());  
-            if(parsampleModel.getSize() < 1){
+            theXml.removeParticipant(participantsList.getSelectedIndex());
+            removeFromParticipantList(participantsList.getSelectedIndex());  
+            if(participantSampleModel.getSize() < 1){
                 remParBut.setEnabled(false);
                 edtParBut.setEnabled(false);
                 containsPar = false;
                 productReady();
             }
-            }
+        }
     }
     
     private class StartOverHandler implements ActionListener{
@@ -940,11 +939,11 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         
             jList2.setModel(tersampleModel);
 
-            parsampleModel = new DefaultListModel();
+            participantSampleModel = new DefaultListModel();
             for(int i = 0; i<parlist.length; i++){
-                parsampleModel.addElement(parlist[i]);
+                participantSampleModel.addElement(parlist[i]);
             }
-            jList3.setModel(parsampleModel);
+            participantsList.setModel(participantSampleModel);
             for(int i =0; i<3; i++){
                 gfields[i].setEnabled(true);
                 gfields[i].setText("");
