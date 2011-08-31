@@ -54,7 +54,7 @@ public class ProductGui extends javax.swing.JFrame {
     private Xml theXml;
     private TrackGui trackGui = null;
     private TerGui territory = null;
-    private PartGui part = null;
+    private ParticipantGui part = null;
     private ReadGui excelReader = null;
     private boolean test =false;
     private boolean containsTrack =false;
@@ -622,7 +622,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
             jList3.ensureIndexIsVisible(index);
             }
         
-        public void updatePartitleInList(int pos, String newTitle){
+        public void updateParticipantInList(int pos, String newTitle){
             int index = parsampleModel.getSize();
             parsampleModel.set(pos, newTitle);
             getContentPane().invalidate();
@@ -874,7 +874,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     private class PartHandler implements ActionListener{
         
         public void actionPerformed(ActionEvent e){
-            part = new PartGui();
+            part = new ParticipantGui();
             part.ProductLevelConnect(theXml,returnThis());
             part.setVisible(true);
             part.connect(theXml,0,false,null);
@@ -883,7 +883,7 @@ javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     
     private class PartEditHandler implements ActionListener{
         public void actionPerformed(ActionEvent e){
-            part = new PartGui();
+            part = new ParticipantGui();
             part.ProductLevelConnect(theXml,returnThis());
             part.setVisible(true);
             part.connect(theXml,0,false,null);

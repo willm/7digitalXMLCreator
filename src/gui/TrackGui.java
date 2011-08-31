@@ -61,7 +61,7 @@ public class TrackGui extends javax.swing.JFrame {
     private EdtPartHandler edtparlis;
     private boolean isEdit = false;
     
-    private PartGui part = null;
+    private ParticipantGui participantGui = null;
     private String[] partlist = { };
     private DefaultListModel sampleModel;
     private int pos;
@@ -393,7 +393,7 @@ public class TrackGui extends javax.swing.JFrame {
             }
         }
         
-    public void updateParTInList(int pos, String newTitle){
+    public void updateTrackParticipantInList(int pos, String newTitle){
         int index = sampleModel.getSize();
         sampleModel.set(pos, newTitle);
         getContentPane().invalidate();
@@ -526,12 +526,9 @@ public class TrackGui extends javax.swing.JFrame {
                AddParticipantButton.setEnabled(true);
                okBut.setEnabled(true);
             }
-                                   
-          
-           
-           
-           System.out.println("----------------THE TRACK-------------");
-           System.out.println(isrcText.getText() +
+            
+            System.out.println("----------------THE TRACK-------------");
+            System.out.println(isrcText.getText() +
                            hidden+
                            trackIdentifierText.getText()+
                            trackArtistText.getText()+
@@ -548,9 +545,7 @@ public class TrackGui extends javax.swing.JFrame {
                            );
            System.out.println("--------------------------------------");
             //setVisible(false);
-           //make track frame close once done
-           
-           
+           //make track frame close once done        
         }
     }
     
@@ -558,9 +553,9 @@ public class TrackGui extends javax.swing.JFrame {
         
         public void actionPerformed(ActionEvent e) {
             //int pos = (Integer.parseInt(trkNrText.getText())) -1;
-            part = new PartGui();
-            part.setVisible(true);
-            part.connect(theXml,pos,true,returnThis());
+            participantGui = new ParticipantGui();
+            participantGui.setVisible(true);
+            participantGui.connect(theXml,pos,true,returnThis());
         }
     }
     
@@ -586,10 +581,10 @@ public class TrackGui extends javax.swing.JFrame {
         
         public void actionPerformed(ActionEvent e) {
             //int pos = (Integer.parseInt(trkNrText.getText())) -1;
-            part = new PartGui();
-            part.setVisible(true);
-            part.connect(theXml,pos,true,returnThis());
-            part.setEdit(pos,prtcpntLst.getSelectedIndex());
+            participantGui = new ParticipantGui();
+            participantGui.setVisible(true);
+            participantGui.connect(theXml,pos,true,returnThis());
+            participantGui.setEdit(pos,prtcpntLst.getSelectedIndex());
         }
     }
     

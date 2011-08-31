@@ -6,11 +6,12 @@ import java.awt.event.*;
 import javax.swing.ImageIcon;
 
 import main.Xml;
+import model.Participant;
 /**
  *
  * @author Administrator
  */
-public class PartGui extends javax.swing.JFrame {
+public class ParticipantGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify
     private javax.swing.JButton okBut;
@@ -18,8 +19,8 @@ public class PartGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField pNameText;
-    private javax.swing.JTextField pRoleText;
+    private javax.swing.JTextField participantNameText;
+    private javax.swing.JTextField participantRoleText;
     // End of variables declaration
     
     private Xml xml = null;
@@ -28,13 +29,13 @@ public class PartGui extends javax.swing.JFrame {
     private OkHandler oklis =null;
     private boolean tracklevel = false;
     private boolean isEdit = false;
-    private int pos;
-    private TrackGui track = null;
+    private int trackNumber;
+    private TrackGui trackGui = null;
     private ProductGui prod = null;
 
 
     /** Creates new form PartGui */
-    public PartGui() {
+    public ParticipantGui() {
         initComponents();
     }
 
@@ -50,8 +51,8 @@ public class PartGui extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        pNameText = new javax.swing.JTextField();
-        pRoleText = new javax.swing.JTextField();
+        participantNameText = new javax.swing.JTextField();
+        participantRoleText = new javax.swing.JTextField();
         okBut = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
@@ -79,13 +80,13 @@ public class PartGui extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pNameText))
+                            .addComponent(participantNameText))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(okBut)
-                                .addComponent(pRoleText, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(participantRoleText, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,11 +99,11 @@ public class PartGui extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(pNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(participantNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(pRoleText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(participantRoleText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(okBut)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -120,7 +121,7 @@ public class PartGui extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PartGui().setVisible(true);
+                new ParticipantGui().setVisible(true);
             }
         });
     }
@@ -130,21 +131,22 @@ public class PartGui extends javax.swing.JFrame {
         trackNo = tNo;
         if(atTracklevel == true){
             tracklevel =true;
-            track = theTrack;
+            trackGui = theTrack;
         }
     }
     
     public void setEdit(int thePos, int pNo){
         isEdit = true;
-        pos = thePos;
-        partNo = pNo;
+
         if(tracklevel ==false){
-            pNameText.setText(xml.getParTagValue(pos,"participant_name"));
-            pRoleText.setText(xml.getParTagValue(pos,"participant_role"));
+        	Participant participant = xml.getParticipant(pNo);
+            participantNameText.setText(participant.Name);
+            participantRoleText.setText(participant.Role);
         }
         else if(tracklevel ==true){
-            pNameText.setText(xml.getTrackParticipentTagValue(pos,pNo,"participant_name"));
-            pRoleText.setText(xml.getTrackParticipentTagValue(pos,pNo,"participant_role"));
+        	Participant participant =xml.getTrackParticipant(thePos, pNo);
+            participantNameText.setText(participant.Name);
+            participantRoleText.setText(participant.Role);
         }
     }
         
@@ -158,30 +160,28 @@ public class PartGui extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e){
             if(isEdit ==false){
                 if(tracklevel ==true){
-                    xml.addTrackParticipent(trackNo,pRoleText.getText(),pNameText.getText());
-                    System.out.println(pNameText.getText() + "   " + pRoleText.getText());
-                    track.updatePList(pRoleText.getText() + " - " + pNameText.getText());
+                    xml.addTrackParticipent(trackNo,participantRoleText.getText(),participantNameText.getText());
+                    System.out.println(participantNameText.getText() + "   " + participantRoleText.getText());
+                    trackGui.updatePList(participantRoleText.getText() + " - " + participantNameText.getText());
                     //setVisible(false);
                    //dispose();
                 }
                 else{
-                    xml.addParticipant(pRoleText.getText(), pNameText.getText());
-                    System.out.println(pNameText.getText() + "   " + pRoleText.getText());
-                    prod.updateParList(pNameText.getText() + " - " + pRoleText.getText());
+                    xml.addParticipant(participantRoleText.getText(), participantNameText.getText());
+                    System.out.println(participantNameText.getText() + "   " + participantRoleText.getText());
+                    prod.updateParList(participantNameText.getText() + " - " + participantRoleText.getText());
                     //setVisible(false);
                     //dispose();
                 }
             }
             else if(isEdit ==true){
                 if(tracklevel ==true){
-                    xml.editTrackParTagValue(pos,partNo,"participant_name",pNameText.getText());
-                    xml.editTrackParTagValue(pos,partNo,"participant_role",pRoleText.getText());
-                    track.updateParTInList(partNo,pNameText.getText() + " - " + pRoleText.getText());
+                    xml.replaceTrackParticipant(trackNumber,partNo,new Participant(participantRoleText.getText(),participantNameText.getText()));
+                    trackGui.updateTrackParticipantInList(partNo,participantNameText.getText() + " - " + participantRoleText.getText());
                 }
                 else{
-                    xml.editParTagValue(pos,"participant_name",pNameText.getText());
-                    xml.editParTagValue(pos,"participant_role",pRoleText.getText());
-                    prod.updatePartitleInList(pos, pNameText.getText() + " - " + pRoleText.getText());
+                    xml.replaceParticipant(partNo, new Participant(participantRoleText.getText(),participantNameText.getText()));
+                    prod.updateParticipantInList(trackNumber, participantNameText.getText() + " - " + participantRoleText.getText());
                 }
             }
             setVisible(false);

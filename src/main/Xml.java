@@ -223,18 +223,9 @@ public class Xml
         return(genres.returnVal("genre"));
     }
       
-    public void addTrackParticipent(int tNo, String pRole, String pName){
-        TagCollection track;
-        track = (TagCollection)tracks.accessInside(tNo);
-        //gets the track
-        TagCollection participents = (TagCollection)track.accessInside(2);
-        //gets the participent BCollection from the track
-        TagCollection participent = new TagCollection("participent");
-        //adds a participent collection to the participents collection
-        participent.addTag(new Tag("participant_role",pRole));
-        participent.addTag(new Tag("participant_name",pName));
-        //adds participent info to participent collection
-        participents.addTag(participent);
+    public void addTrackParticipent(int tNo, String role, String name){
+        Track track = getTrack(tNo);
+        track.Participants.add(new Participant(role, name));
     }
     
     public String getTrackParticipentTagValue(int tNo, int pNo, String title){
@@ -247,17 +238,13 @@ public class Xml
         return(participent.returnVal(title));
     }
     
-    public void editTrackParTagValue(int tNo, int parNo, String title, String newVal){
-        TagCollection track;
-        track = (TagCollection)tracks.accessInside(tNo);
-        //gets the track
-        TagCollection participents = (TagCollection)track.accessInside(2);
-        //gets the participent BCollection from the track
-        TagCollection participent = (TagCollection)participents.accessInside(parNo);
-        participent.print();
-        participent.replace(title, newVal);
-        System.out.println("!1111111111111111111111111111111111111111111111111111");
-        participent.print();
+    public Participant getTrackParticipant(int trackNumber, int participantNumber){
+    	Track track = product.Tracks.get(trackNumber);
+    	return track.Participants.get(participantNumber); 
+    }
+    
+    public void replaceTrackParticipant(int tNo, int parNo, Participant newParticipant){
+    	product.Tracks.get(tNo).Participants.set(parNo, newParticipant);
     }
     
     public void editTrackArtistValue(int tNo, String newArt){
@@ -353,24 +340,17 @@ public class Xml
         territories.print();
     }
     
-    public void getPar(int parNo){
-        TagCollection par;
-        par = (TagCollection)participants.accessInside(parNo);
-        par.print();
+    public Participant getParticipant(int parNo){
+        return product.Participants.get(parNo);
     }
     
-    public String getParTagValue(int parNo, String name){
-        TagCollection par;
-        par = (TagCollection)participants.accessInside(parNo);
-        return par.returnVal(name);
+    
+    public Participant getProductParticipant(int participantNumber){
+    	return product.Participants.get(participantNumber);
     }
         
-    public void editParTagValue(int parNo, String title, String newVal){
-        TagCollection par;
-        par = (TagCollection)participants.accessInside(parNo);
-        par.replace(title,newVal);
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        par.print();
+    public void replaceParticipant(int parNo,Participant newParticipant){
+    	product.Participants.set(parNo, newParticipant);
     }
     public void removePar(int parNo){
         participants.print();
