@@ -35,6 +35,7 @@ private String[] ters, terDates, terCodes, exters, genres;
 private boolean successful = true;
 private String distributor = null;
 private TrackExtractor trackExtractor = new TrackExtractor();
+private ParticipantExtractor participantExtractor= new ParticipantExtractor();
 
 int firstRow=4;
 
@@ -177,65 +178,6 @@ int firstRow=4;
             }
         }
     }
-    
-
-    
-    public void addTrackParticipants(Xml xml) throws Exception{
-    	int participantNameColumn = 27;
-    	int participantRoleColumn = 28;
-    	String[] names = getParticipantNames(participantNameColumn);
-    	String[] roles = getParticipantRoles(participantRoleColumn);
-    	if(names.length != roles.length){
-		    successful = false;
-		}
-    	for(int i=0; i<roles.length; i++){
-    		xml.addTrackParticipant(xml.numberOfTracks()-1,roles[i], names[i]);
-    	} 
-    	if(!successful){
-        	throw new Exception("Track participants error UPC : " +xml.getProduct().Upc);
-        }
-    }
-    
-    public void addProductParticipants(Xml xml) throws Exception{
-    	int participantNameColumn = 11;
-    	int participantRoleColumn = 12;
-    	String[] names = getParticipantNames(participantNameColumn);
-    	String[] roles = getParticipantRoles(participantRoleColumn);
-    	if(names.length != roles.length){
-		    successful = false;
-		}
-    	for(int i=0; i<roles.length; i++){
-    		xml.addParticipant(roles[i], names[i]);
-    	}
-    	if(!successful){
-            throw new Exception("Participants error UPC : " + xml.getProduct().Upc);
-        }
-    }
-
-	public String[] getParticipantRoles(int participantRoleColumn) {
-		cell = row.getCell(participantRoleColumn);
-		String rawRoles = antiNullString(cell);
-		String[] roles = rawRoles.split("-");
-		if(!rawRoles.equals("")){
-            for(int i=0; i<roles.length; i++){
-            	roles[i] = roles[i].trim();
-            }
-		}
-		return roles;
-	}
-
-	public String[] getParticipantNames(int parCellStart) {
-		cell = row.getCell(parCellStart);
-		String rawNames = antiNullString(cell);
-		String[] names = rawNames.split("-");
-		if(!rawNames.equals("")){
-			
-		    for(int i=0; i<names.length; i++){
-		    	names[i] = names[i].trim();
-		    }
-		}
-		return names;
-	}
         
         public void setupCellTypes(){
             for(int i=0; i<=sheet.getLastRowNum(); i++){
@@ -271,7 +213,7 @@ int firstRow=4;
 				    String currentUPC = currentReleaseXml.getProduct().Upc;
 					if(currentUPC.equals(antiNullString(cell)) && i>firstRow){
 						trackExtractor.addTrack(currentReleaseXml, row);
-				        addTrackParticipants(currentReleaseXml);
+				        participantExtractor.addTrackParticipants(currentReleaseXml, row);
 				     }
 
 				     else if(!antiNullString(cell).equals("") || i == firstRow) {
@@ -300,9 +242,9 @@ int firstRow=4;
 	public Xml readNewProductRow() throws Exception {
 		Xml prodXml = initializeProduct();
 		addProductGenre(prodXml);
-		addProductParticipants(prodXml);
+		participantExtractor.addProductParticipants(prodXml, row);
 		trackExtractor.addTrack(prodXml, row);
-		addTrackParticipants(prodXml);
+		participantExtractor.addTrackParticipants(prodXml, row);
 		addTerritory(prodXml);                                                
 		return prodXml;
 	}
