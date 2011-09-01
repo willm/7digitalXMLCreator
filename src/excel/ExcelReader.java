@@ -45,10 +45,8 @@ int firstRow=4;
 
     }
     
-    @SuppressWarnings ("unchecked")
-    
     public void reset(){
-        productsRead= new ArrayList();
+        productsRead= new ArrayList<Xml>();
     }
 
 	public void setupFileStream(String thePath) throws Exception {
@@ -70,9 +68,6 @@ int firstRow=4;
         }
     }
     
-    public static void main (String[] args){
-        ExcelReader reader = new ExcelReader ();
-    }
     
     public void setPath(String thePath) throws Exception{
         xlsPath = thePath;
@@ -281,7 +276,7 @@ int firstRow=4;
                 System.out.println("row:"+i +"last row:" + sheet.getLastRowNum());
                 cell =row.getCell(0);
 
-                
+
                 if(i>firstRow){
 	                Xml currentReleaseXml = productsRead.get(productsRead.size()-1);
 	                String currentUPC = currentReleaseXml.getProduct().Upc;
