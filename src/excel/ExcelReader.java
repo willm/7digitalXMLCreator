@@ -273,33 +273,33 @@ int firstRow=4;
             setupReadingExcelFile();
 
             distributor = getDistributor();
-            
-            row = sheet.getRow(firstRow);
-            cell = row.getCell(0);
-            
-            xmlSetupValues[0] = antiNullString(cell);
-            if(productsRead.size() == 0){
-            	productsRead.add(readNewProductRow());
-            }
             //creates product for first row of document
             
-            for(int i=firstRow+1; i<=sheet.getLastRowNum(); i++){
+            for(int i=firstRow; i<=sheet.getLastRowNum(); i++){
                 //counts down to the bottom of excel doc
                 row = sheet.getRow(i);
                 System.out.println("row:"+i +"last row:" + sheet.getLastRowNum());
                 cell =row.getCell(0);
 
-                Xml currentReleaseXml = productsRead.get(productsRead.size()-1);
-                if(currentReleaseXml.getProduct().Upc.equals(antiNullString(cell))){
-                    addTrack(currentReleaseXml);
-                    addTrackParticipants(currentReleaseXml);
-                 }
-                 
-                 else if(!antiNullString(cell).equals("")) {
-                	 productsRead.add(readNewProductRow());
-                    
+                
+                if(i>firstRow){
+	                Xml currentReleaseXml = productsRead.get(productsRead.size()-1);
+	                String currentUPC = currentReleaseXml.getProduct().Upc;
+					if(currentUPC.equals(antiNullString(cell))){
+	                    addTrack(currentReleaseXml);
+	                    addTrackParticipants(currentReleaseXml);
+	                 }
+
+	                 else if(!antiNullString(cell).equals("")) {
+	                	 productsRead.add(readNewProductRow());
+	                    
+	                }
+	            }
+                else if(i==firstRow){
+                	productsRead.add(readNewProductRow());
                 }
             }
+            
             for(int i=0; i<productsRead.size(); i++){
                 Xml toprint = (Xml) productsRead.get(i);
                 toprint.printXml();
