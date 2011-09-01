@@ -76,9 +76,6 @@ int firstRow=4;
         exceltoxml(xlsPath);
     }
     
-    
-
-    
     public Xml newXml(){
         Xml anXml = new Xml(distributor,xmlSetupValues[0],xmlSetupValues[1],
                                             xmlSetupValues[2],xmlSetupValues[3],xmlSetupValues[4],xmlSetupValues[5],
@@ -86,8 +83,6 @@ int firstRow=4;
         return anXml;
     }
     
-    
-
     public void addProductGenre(Xml theXml){
         cell = row.getCell(10);
         String rawGenres = antiNullString(cell);
@@ -179,8 +174,6 @@ int firstRow=4;
 		setupCellTypes();
 	}
 
-
-
 	public Xml initializeProduct() {
 		for(int t=0; t<10; t++){
 		     cell =row.getCell(t);
@@ -190,8 +183,6 @@ int firstRow=4;
             Xml prodXml = newXml();
 		return prodXml;
 	}
-
-
 
 	public String getDistributor() throws Exception {
 		row = sheet.getRow(1);
