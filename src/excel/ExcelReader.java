@@ -31,11 +31,11 @@ private HSSFSheet sheet = null;
 private HSSFRow row = null;
 private HSSFCell cell = null;
 private String[] xmlSetupValues = new String[10];
-private String[] ters, terDates, terCodes, exters, genres;
-private boolean successful = true;
+private String[] genres;
 private String distributor = null;
 private TrackExtractor trackExtractor = new TrackExtractor();
 private ParticipantExtractor participantExtractor= new ParticipantExtractor();
+private TerritoryExtractor territoryExtractor = new TerritoryExtractor();
 
 int firstRow=4;
 
@@ -76,13 +76,8 @@ int firstRow=4;
         exceltoxml(xlsPath);
     }
     
-    public boolean stringComp(String a, String b){
-        return(a.equals(b));
-    }
     
-    public void sendTerError(){
-        System.out.println("TERRITORY ERROR");
-    }
+
     
     public Xml newXml(){
         Xml anXml = new Xml(distributor,xmlSetupValues[0],xmlSetupValues[1],
@@ -91,81 +86,7 @@ int firstRow=4;
         return anXml;
     }
     
-    public void addTerritory(Xml theXml) throws Exception{
-        cell =row.getCell(29);
-        String rawTers = antiNullString(cell);
-        ters = rawTers.split("-");
-        for(int i=0; i<ters.length; i++){
-            ters[i] = ters[i].trim();
-        }
-        
-        cell =row.getCell(30);
-        String rawDates = antiNullString(cell);
-        terDates = rawDates.split("-");
-        for(int i=0; i<terDates.length; i++){
-            terDates[i] = terDates[i].trim();
-        }
-        
-        cell =row.getCell(31);
-        String rawCodes = antiNullString(cell);
-        terCodes = rawCodes.split("-");
-        for(int i=0; i<terCodes.length; i++){
-            terCodes[i] = terCodes[i].trim();
-        }
-        
-        if(ters.length == terDates.length && ters.length == terCodes.length){
-            for(int l=0; l<ters.length; l++){
-                theXml.addTerritory(true,ters[l],terDates[l],terCodes[l],"","");
-            }
-        }
-        
-        else if(ters.length > terDates.length && ters.length == terCodes.length){
-            for(int l=0; l<ters.length; l++){
-                if(l<terDates.length){theXml.addTerritory(true,ters[l],terDates[l],terCodes[l],"","");}
-                else{theXml.addTerritory(true,ters[l],terDates[terDates.length-1],terCodes[l],"","");}
-            }
-        }
-        
-        else if(ters.length == terDates.length && ters.length > terCodes.length){
-            for(int l=0; l<ters.length; l++){
-                if(l<terCodes.length){theXml.addTerritory(true,ters[l],terDates[l],terCodes[l],"","");}
-                else{theXml.addTerritory(true,ters[l],terDates[l],terCodes[terCodes.length-1],"","");}
-            }
-        }
-        
-        else if(ters.length > terDates.length && ters.length > terCodes.length){
-            for(int i=0; i<ters.length; i++){
-                if(i<terCodes.length && i<terDates.length){
-                    theXml.addTerritory(true,ters[i],terDates[i],terCodes[i],"","");
-                }
-                else if(i<terCodes.length && i>=terDates.length){
-                    theXml.addTerritory(true,ters[i],terDates[terDates.length-1],terCodes[i],"","");
-                }
-                else if(i>=terCodes.length && i<terDates.length){
-                    theXml.addTerritory(true,ters[i],terDates[i],terCodes[terCodes.length-1],"","");
-                }
-                else if(i>=terCodes.length && i>=terDates.length){
-                    theXml.addTerritory(true,ters[i],terDates[terDates.length-1],terCodes[terCodes.length-1],"","");
-                }
-            }
-        }
-        
-        if(ters.length < terDates.length | ters.length < terCodes.length){sendTerError();successful=false;};
-        
-        cell =row.getCell(32);
-        String rawExters = antiNullString(cell);
-        exters = rawExters.split("-");
-        if(!rawExters.equals("")){
-            System.out.println("THE EXTER = " + rawExters);
-            for(int m=0; m<exters.length; m++){
-                theXml.addTerritory(false,exters[m],"","","","");
-            }
-        }
-        if(!successful){
-        	throw new Exception("Territory error UPC : " + theXml.getProduct().Upc);
-        }
-        
-    }
+    
 
     public void addProductGenre(Xml theXml){
         cell = row.getCell(10);
@@ -245,7 +166,7 @@ int firstRow=4;
 		participantExtractor.addProductParticipants(prodXml, row);
 		trackExtractor.addTrack(prodXml, row);
 		participantExtractor.addTrackParticipants(prodXml, row);
-		addTerritory(prodXml);                                                
+		territoryExtractor.addTerritory(prodXml, row);
 		return prodXml;
 	}
 
