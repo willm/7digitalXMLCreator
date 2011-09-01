@@ -3,14 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import model.Artist;
-import xmlSerialization.*;
 
 public class Track {
 
 	public String Isrc; 
 	public Boolean isHidden; //could be changed to boolean?
 	public String Id;
-    private Artist TrackArtist;
     public Boolean IsExplicit; //could be changed to boolean?
     public String Volume;
     public int TrackNo; //could be changed to int?
@@ -43,7 +41,6 @@ public class Track {
 		this.Isrc = isrc; 
         this.isHidden = isHidden;
         this.Id = TrackId;
-        this.TrackArtist = TrackArtist;
         this.IsExplicit = isExplicit;
         this.Volume = Volume;
         this.TrackNo = TrackNo;
