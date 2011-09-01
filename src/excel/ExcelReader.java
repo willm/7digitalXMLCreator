@@ -25,14 +25,14 @@ public class ExcelReader
 private POIFSFileSystem fileSystem = null;
 private InputStream inputStream = null;
 private String xlsPath;
-private ArrayList<Xml> productsInSheet;           
+private ArrayList<Xml> productsRead;
 private HSSFWorkbook workBook;
 private HSSFSheet sheet = null;
 private HSSFRow row = null;
 private HSSFCell cell = null;
 private String[] initTrack = new String[14];
 private String[] initXml = new String[10];
-private String[] ters, terDates, terCodes, exters, genres, partNames, partRoles;
+private String[] ters, terDates, terCodes, exters, genres;
 private boolean successful = true;
 private String distributor = null;
 
@@ -41,27 +41,29 @@ int firstRow=4;
 
     public ExcelReader(){
         xlsPath = "";
-        productsInSheet= new ArrayList<Xml>();
+        productsRead= new ArrayList<Xml>();
 
     }
     
     @SuppressWarnings ("unchecked")
     
     public void reset(){
-        productsInSheet= new ArrayList();
+        productsRead= new ArrayList();
     }
 
-
-    public String TestString (String xlsPath){
-        InputStream inputStream = null;
-        
-        try{
-            inputStream = new FileInputStream (xlsPath);
-            }
+	public void setupFileStream(String thePath) throws Exception {
+		try{
+            inputStream = new FileInputStream (thePath);
+        }
         catch (FileNotFoundException e){
-            System.out.println ("File not found in the specified path.");
-            e.printStackTrace ();
-            }
+        	e.printStackTrace ();
+            throw new Exception("File not found in the specified path.");
+        }
+	}
+
+    public String TestString (String xlsPath) throws Exception{
+        
+    	setupFileStream(xlsPath);
         
         POIFSFileSystem fileSystem = null;
         
@@ -93,7 +95,7 @@ int firstRow=4;
         ExcelReader reader = new ExcelReader ();
     }
     
-    public void setPath(String thePath){
+    public void setPath(String thePath) throws Exception{
         xlsPath = thePath;
         System.out.println("From read: " + xlsPath);
         exceltoxml(xlsPath);
@@ -209,34 +211,58 @@ int firstRow=4;
         }
     }
     
-    public void addParticipent(boolean isProduct, Xml theXml){
-        int parCellStart;
-        if(isProduct){parCellStart = 11;}
-        else{parCellStart = 27;}
-            cell = row.getCell(parCellStart);
-            String rawNames = antiNullString(cell);
-            partNames = rawNames.split("-");
-            if(!rawNames.equals("")){
-                for(int i=0; i<partNames.length; i++){
-                    partNames[i] = partNames[i].trim();
-                }
+
+    
+    public void addTrackParticipants(Xml xml){
+    	int participantNameColumn = 27;
+    	int participantRoleColumn = 28;
+    	String[] names = getParticipantNames(participantNameColumn);
+    	String[] roles = getParticipantRoles(participantRoleColumn);
+    	if(names.length != roles.length){
+		    successful = false;
+		}
+    	for(int i=0; i<roles.length; i++){
+    		xml.addTrackParticipant(xml.numberOfTracks()-1,roles[i], names[i]);
+    	}    	
+    }
+    
+    public void addProductParticipants(Xml xml){
+    	int participantNameColumn = 11;
+    	int participantRoleColumn = 12;
+    	String[] names = getParticipantNames(participantNameColumn);
+    	String[] roles = getParticipantRoles(participantRoleColumn);
+    	if(names.length != roles.length){
+		    successful = false;
+		}
+    	for(int i=0; i<roles.length; i++){
+    		xml.addParticipant(roles[i], names[i]);
+    	}    	
+    }
+
+	public String[] getParticipantRoles(int participantRoleColumn) {
+		cell = row.getCell(participantRoleColumn);
+		String rawRoles = antiNullString(cell);
+		String[] roles = rawRoles.split("-");
+		if(!rawRoles.equals("")){
+            for(int i=0; i<roles.length; i++){
+            	roles[i] = roles[i].trim();
             }
-            cell = row.getCell(parCellStart+1);
-            String rawRoles = antiNullString(cell);
-            partRoles = rawRoles.split("-");
-            
-            if(partNames.length != partRoles.length){
-                successful = false;
-            }
-            //this will return a genre error (maybe a little simplistic)
-            if(!rawRoles.equals("")){
-                for(int i=0; i<partRoles.length; i++){
-                    partRoles[i] = partRoles[i].trim();
-                    if(isProduct){theXml.addParticipant(partRoles[i], partNames[i]);}
-                    else{theXml.addTrackParticipent(theXml.numberOfTracks()-1, partRoles[i], partNames[i]);}
-                }
-            }
-        }
+		}
+		return roles;
+	}
+
+	public String[] getParticipantNames(int parCellStart) {
+		cell = row.getCell(parCellStart);
+		String rawNames = antiNullString(cell);
+		String[] names = rawNames.split("-");
+		if(!rawNames.equals("")){
+			
+		    for(int i=0; i<names.length; i++){
+		    	names[i] = names[i].trim();
+		    }
+		}
+		return names;
+	}
         
         public void celltype(){
             for(int i=0; i<=sheet.getLastRowNum(); i++){
@@ -250,17 +276,11 @@ int firstRow=4;
         }
 
             
-    public String exceltoxml(String thePath){
+    public void exceltoxml(String thePath) throws Exception{
         
         int fileAmount =0;
         
-        try{
-            inputStream = new FileInputStream (thePath);
-        }
-        catch (FileNotFoundException e){
-            return ("File not found in the specified path.");
-            //e.printStackTrace ();
-        }
+        setupFileStream(thePath);
                
         try{
             fileSystem = new POIFSFileSystem (inputStream);
@@ -270,39 +290,30 @@ int firstRow=4;
             
             celltype();
 
-            row = sheet.getRow(1);
-            cell = row.getCell(1);
-            distributor = antiNullString(cell);
-            if(distributor.equals("")){
-                return("No distributor name supplied");
-            }
+            distributor = getDistributor();
+            
             row = sheet.getRow(firstRow);
             cell = row.getCell(0);
             initXml[0] = antiNullString(cell);
-            if(productsInSheet.size() == 0){
-                for(int j=0; j<10; j++){
-                        cell =row.getCell(j);
-                        initXml[j] = antiNullString(cell);
-                    }
-                    
-                Xml prodXml = newXml();
-                addProductGenre(prodXml);
-                addParticipent(true, prodXml);
+            if(productsRead.size() == 0){
+                Xml firstProductXml = initializeProduct();
+                addProductGenre(firstProductXml);
+                addProductParticipants( firstProductXml);
                 if(!successful){
-                    return("Participents error UPC : " + initXml[0]);
+                    throw new Exception("Participents error UPC : " + initXml[0]);
                 }
-                addTrack(prodXml);
-                addParticipent(false, prodXml);
+                addTrack(firstProductXml);
+                addTrackParticipants( firstProductXml);
                 if(!successful){
-                    return("Track participents error UPC : " + initXml[0]);
+                    throw new Exception("Track participents error UPC : " + initXml[0]);
                 }
-                addTer(prodXml);
+                addTer(firstProductXml);
                 
                 if(!successful){
-                    return("territory error UPC : " + initXml[0]);
+                    throw new Exception("territory error UPC : " + initXml[0]);
                 }
                 
-                productsInSheet.add(prodXml);
+                productsRead.add(firstProductXml);
             }
             //creates product for first row of document
             
@@ -311,59 +322,75 @@ int firstRow=4;
                 row = sheet.getRow(i);
                 System.out.println("row:"+i +"last row:" + sheet.getLastRowNum());
                 cell =row.getCell(0);  
-                Xml current = (Xml) productsInSheet.get(productsInSheet.size()-1);
-                if(current.getTagVal(1).equals(("\""+antiNullString(cell))+"\"")==true){
-                    //checks if next row belongs to same product as the last (getTagVal(1) gets upc out of previous xml)
-                    
+                Xml currentReleaseXml = productsRead.get(productsRead.size()-1);
+                if(currentReleaseXml.getProduct().Upc.equals(antiNullString(cell))){
                     for(int k=10; k<24; k++){
                             cell =row.getCell(k);
                             initTrack[k-10] = antiNullString(cell);
                         }
-                    addTrack(current);
-                    addParticipent(false, current);
+                    addTrack(currentReleaseXml);
+                    addTrackParticipants(currentReleaseXml);
                     if(!successful){
-                    return("Track participents error UPC : " + initXml[0]);
+                    	throw new Exception("Track participents error UPC : " + initXml[0]);
                     }
                  }
                  
                  else if(!antiNullString(cell).equals("")) {
-                     for(int t=0; t<10; t++){
-                         cell =row.getCell(t);
-                         System.out.println(t + " " + antiNullString(cell));
-                         initXml[t] = antiNullString(cell);
-                        }
-                Xml prodXml = newXml();
+                     Xml prodXml = initializeProduct();
                 addProductGenre(prodXml);
-                addParticipent(true, prodXml);
+                addProductParticipants(prodXml);
                 if(!successful){
-                    return("Participents error UPC : " + initXml[0]);
+                	throw new Exception("Participents error UPC : " + initXml[0]);
                 }
                 addTrack(prodXml);
-                addParticipent(false, prodXml);
+                addTrackParticipants(prodXml);
                 if(!successful){
-                    return("Track participents error UPC : " + initXml[0]);
+                	throw new Exception("Track participents error UPC : " + initXml[0]);
                 }
                 addTer(prodXml);
                 
                 if(!successful){
-                    return("Territory error UPC : " + initXml[0]);
+                	throw new Exception("Territory error UPC : " + initXml[0]);
                 }
                                                 
-                productsInSheet.add(prodXml);
+                productsRead.add(prodXml);
                     
                 }
             }
-            for(int i=0; i<productsInSheet.size(); i++){
-                Xml toprint = (Xml) productsInSheet.get(i);
+            for(int i=0; i<productsRead.size(); i++){
+                Xml toprint = (Xml) productsRead.get(i);
                 toprint.printXml();
             }
-            fileAmount = productsInSheet.size();
-            productsInSheet= new ArrayList();
+            fileAmount = productsRead.size();
+            productsRead= new ArrayList();
             
         }
         catch (IOException e){
             e.printStackTrace ();
         }
-        return (fileAmount +" : xmls were created or modified");
-    }        
+        System.out.println(fileAmount +" : xmls were created or modified");
+    }
+
+
+
+	public Xml initializeProduct() {
+		for(int t=0; t<10; t++){
+		     cell =row.getCell(t);
+		     System.out.println(t + " " + antiNullString(cell));
+		     initXml[t] = antiNullString(cell);
+		    }
+            Xml prodXml = newXml();
+		return prodXml;
+	}
+
+
+
+	public String getDistributor() throws Exception {
+		row = sheet.getRow(1);
+		cell = row.getCell(1);
+		if(antiNullString(cell).equals("")){
+            throw new Exception("No distributor name supplied");
+        }
+		return antiNullString(cell);
+	}
 }

@@ -1,22 +1,20 @@
 package gui;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import javax.swing.filechooser.*;
 
 import excel.ExcelReader;
 
+
 public class ReadGui extends javax.swing.JFrame {
 
-    // Variables declaration - do not modify
+
     private javax.swing.JFileChooser jFileChooser1;
     private FileListener filelis;
-    private ExcelReader theRead = new ExcelReader();
-    // End of variables declaration
+    private ExcelReader excelReader = new ExcelReader();
 
-    /** Creates new form ReadGui */
+
     public ReadGui() {
         initComponents();
     }
@@ -59,45 +57,37 @@ public class ReadGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
-    
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ReadGui().setVisible(true);
-            }
-        });
-    }
-    
 
 
-    public String getExtension(File file) {
-            String theName = file.getName();
-            String ext = theName.substring(theName.lastIndexOf(".")+1, theName.length());
-            return ext;
-            }
+	public String getExtension(File file) {
+		String theName = file.getName();
+		String ext = theName.substring(theName.lastIndexOf(".")+1, theName.length());
+		return ext;
+	}
 
-        private class FileListener implements ActionListener {
-
-            public void actionPerformed(ActionEvent e) {
-
-                if (JFileChooser.APPROVE_SELECTION.equals(e.getActionCommand())){    
-                    File file = jFileChooser1.getSelectedFile();
-                    //theRead.setPath(file.getAbsolutePath());
-                    //theRead.exceltoxml(file.getAbsolutePath());
-                    //int filesCreated = theRead.getFileamount();
-                    JOptionPane.showMessageDialog(null, theRead.exceltoxml(file.getAbsolutePath()));
-                    //This line creates all the xmls and returns the result as a message box
-                    theRead.reset();
-                }
-                else if (JFileChooser.CANCEL_SELECTION.equals(e.getActionCommand())) {
-                    System.out.println("Open command cancelled by user.");
-                    ReadGui.this.setVisible(false);
-                }
-            }
-    }
+	private class FileListener implements ActionListener {
+	
+	    public void actionPerformed(ActionEvent e) {
+	
+	        if (JFileChooser.APPROVE_SELECTION.equals(e.getActionCommand())){    
+	            File file = jFileChooser1.getSelectedFile();
+	            try{
+	            	excelReader.exceltoxml(file.getAbsolutePath());
+	            	JOptionPane.showMessageDialog(null, "Success");
+	            }
+	            catch(Exception ex){
+	            	JOptionPane.showMessageDialog(null, "Fail : " + ex.getMessage());
+	            }
+	            
+	            //This line creates all the xmls and returns the result as a message box
+	            excelReader.reset();
+	        }
+	        else if (JFileChooser.CANCEL_SELECTION.equals(e.getActionCommand())) {
+	            System.out.println("Open command cancelled by user.");
+	            ReadGui.this.setVisible(false);
+	        }
+	    }
+	}
     
 
     public class ExcelFilter extends javax.swing.filechooser.FileFilter {

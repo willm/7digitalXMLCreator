@@ -152,7 +152,7 @@ public class Xml
         return(product.Tracks.size());
     }
               
-    public void addTrackParticipent(int tNo, String role, String name){
+    public void addTrackParticipant(int tNo, String role, String name){
         Track track = getTrack(tNo);
         track.Participants.add(new Participant(role, name));
     }

@@ -149,7 +149,7 @@ public class ParticipantGui extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e){
             if(isEdit ==false){
                 if(tracklevel ==true){
-                    xml.addTrackParticipent(trackNo,participantRoleText.getText(),participantNameText.getText());
+                    xml.addTrackParticipant(trackNo,participantRoleText.getText(),participantNameText.getText());
                     System.out.println(participantNameText.getText() + "   " + participantRoleText.getText());
                     trackGui.updatePList(participantRoleText.getText() + " - " + participantNameText.getText());
                     //setVisible(false);
