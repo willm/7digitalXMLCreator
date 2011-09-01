@@ -213,7 +213,7 @@ int firstRow=4;
     
 
     
-    public void addTrackParticipants(Xml xml){
+    public void addTrackParticipants(Xml xml) throws Exception{
     	int participantNameColumn = 27;
     	int participantRoleColumn = 28;
     	String[] names = getParticipantNames(participantNameColumn);
@@ -223,10 +223,13 @@ int firstRow=4;
 		}
     	for(int i=0; i<roles.length; i++){
     		xml.addTrackParticipant(xml.numberOfTracks()-1,roles[i], names[i]);
-    	}    	
+    	} 
+    	if(!successful){
+        	throw new Exception("Track participents error UPC : " +xml.getProduct().Upc);
+        }
     }
     
-    public void addProductParticipants(Xml xml){
+    public void addProductParticipants(Xml xml) throws Exception{
     	int participantNameColumn = 11;
     	int participantRoleColumn = 12;
     	String[] names = getParticipantNames(participantNameColumn);
@@ -236,7 +239,10 @@ int firstRow=4;
 		}
     	for(int i=0; i<roles.length; i++){
     		xml.addParticipant(roles[i], names[i]);
-    	}    	
+    	}
+    	if(!successful){
+            throw new Exception("Participants error UPC : " + xml.getProduct().Upc);
+        }
     }
 
 	public String[] getParticipantRoles(int participantRoleColumn) {
@@ -299,9 +305,7 @@ int firstRow=4;
                 Xml firstProductXml = initializeProduct();
                 addProductGenre(firstProductXml);
                 addProductParticipants( firstProductXml);
-                if(!successful){
-                    throw new Exception("Participents error UPC : " + initXml[0]);
-                }
+                
                 addTrack(firstProductXml);
                 addTrackParticipants( firstProductXml);
                 if(!successful){
@@ -330,9 +334,7 @@ int firstRow=4;
                         }
                     addTrack(currentReleaseXml);
                     addTrackParticipants(currentReleaseXml);
-                    if(!successful){
-                    	throw new Exception("Track participents error UPC : " + initXml[0]);
-                    }
+                    
                  }
                  
                  else if(!antiNullString(cell).equals("")) {
