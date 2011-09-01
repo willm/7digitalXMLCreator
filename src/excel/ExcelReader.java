@@ -31,7 +31,7 @@ private HSSFSheet sheet = null;
 private HSSFRow row = null;
 private HSSFCell cell = null;
 private String[] initTrack = new String[14];
-private String[] initXml = new String[10];
+private String[] xmlSetupValues = new String[10];
 private String[] ters, terDates, terCodes, exters, genres;
 private boolean successful = true;
 private String distributor = null;
@@ -60,27 +60,6 @@ int firstRow=4;
             throw new Exception("File not found in the specified path.");
         }
 	}
-
-    public String TestString (String xlsPath) throws Exception{
-        
-    	setupFileStream(xlsPath);
-        
-        POIFSFileSystem fileSystem = null;
-        
-        try{
-            fileSystem = new POIFSFileSystem (inputStream);
-            
-            HSSFWorkbook      workBook = new HSSFWorkbook (fileSystem);
-            HSSFSheet         sheet    = workBook.getSheetAt (0);
-            HSSFRow row = sheet.getRow(10);
-            HSSFCell cell = row.getCell(0);
-            return antiNullString(cell);
-        }
-        catch (IOException e){
-            e.printStackTrace ();
-        }
-        return("nothing");
-    }
     
     public String antiNullString(HSSFCell theCell){
         if(theCell != null){
@@ -110,9 +89,9 @@ int firstRow=4;
     }
     
     public Xml newXml(){
-        Xml anXml = new Xml(distributor,initXml[0],initXml[1],
-                                            initXml[2],initXml[3],initXml[4],initXml[5],
-                                            initXml[6],initXml[7],initXml[8],new Boolean(initXml[9]));
+        Xml anXml = new Xml(distributor,xmlSetupValues[0],xmlSetupValues[1],
+                                            xmlSetupValues[2],xmlSetupValues[3],xmlSetupValues[4],xmlSetupValues[5],
+                                            xmlSetupValues[6],xmlSetupValues[7],xmlSetupValues[8],new Boolean(xmlSetupValues[9]));
         return anXml;
     }
     
@@ -127,7 +106,7 @@ int firstRow=4;
                     initTrack[10],initTrack[11],initTrack[12],initTrack[13]);
     }
     
-    public void addTer(Xml theXml){
+    public void addTerritory(Xml theXml) throws Exception{
         cell =row.getCell(29);
         String rawTers = antiNullString(cell);
         ters = rawTers.split("-");
@@ -197,6 +176,10 @@ int firstRow=4;
                 theXml.addTerritory(false,exters[m],"","","","");
             }
         }
+        if(!successful){
+        	throw new Exception("Territory error UPC : " + theXml.getProduct().Upc);
+        }
+        
     }
 
     public void addProductGenre(Xml theXml){
@@ -225,7 +208,7 @@ int firstRow=4;
     		xml.addTrackParticipant(xml.numberOfTracks()-1,roles[i], names[i]);
     	} 
     	if(!successful){
-        	throw new Exception("Track participents error UPC : " +xml.getProduct().Upc);
+        	throw new Exception("Track participants error UPC : " +xml.getProduct().Upc);
         }
     }
     
@@ -270,7 +253,7 @@ int firstRow=4;
 		return names;
 	}
         
-        public void celltype(){
+        public void setupCellTypes(){
             for(int i=0; i<=sheet.getLastRowNum(); i++){
                 row = sheet.getRow(i);
                 for(int j=0; j<32; j++){
@@ -283,41 +266,20 @@ int firstRow=4;
 
             
     public void exceltoxml(String thePath) throws Exception{
-        
-        int fileAmount =0;
-        
+
         setupFileStream(thePath);
                
         try{
-            fileSystem = new POIFSFileSystem (inputStream);
-            workBook = new HSSFWorkbook (fileSystem);
-            workBook.setMissingCellPolicy(Row.CREATE_NULL_AS_BLANK);
-            sheet = workBook.getSheetAt (0);
-            
-            celltype();
+            setupReadingExcelFile();
 
             distributor = getDistributor();
             
             row = sheet.getRow(firstRow);
             cell = row.getCell(0);
-            initXml[0] = antiNullString(cell);
+            
+            xmlSetupValues[0] = antiNullString(cell);
             if(productsRead.size() == 0){
-                Xml firstProductXml = initializeProduct();
-                addProductGenre(firstProductXml);
-                addProductParticipants( firstProductXml);
-                
-                addTrack(firstProductXml);
-                addTrackParticipants( firstProductXml);
-                if(!successful){
-                    throw new Exception("Track participents error UPC : " + initXml[0]);
-                }
-                addTer(firstProductXml);
-                
-                if(!successful){
-                    throw new Exception("territory error UPC : " + initXml[0]);
-                }
-                
-                productsRead.add(firstProductXml);
+            	productsRead.add(readNewProductRow());
             }
             //creates product for first row of document
             
@@ -325,37 +287,16 @@ int firstRow=4;
                 //counts down to the bottom of excel doc
                 row = sheet.getRow(i);
                 System.out.println("row:"+i +"last row:" + sheet.getLastRowNum());
-                cell =row.getCell(0);  
+                cell =row.getCell(0);
+
                 Xml currentReleaseXml = productsRead.get(productsRead.size()-1);
                 if(currentReleaseXml.getProduct().Upc.equals(antiNullString(cell))){
-                    for(int k=10; k<24; k++){
-                            cell =row.getCell(k);
-                            initTrack[k-10] = antiNullString(cell);
-                        }
                     addTrack(currentReleaseXml);
                     addTrackParticipants(currentReleaseXml);
-                    
                  }
                  
                  else if(!antiNullString(cell).equals("")) {
-                     Xml prodXml = initializeProduct();
-                addProductGenre(prodXml);
-                addProductParticipants(prodXml);
-                if(!successful){
-                	throw new Exception("Participents error UPC : " + initXml[0]);
-                }
-                addTrack(prodXml);
-                addTrackParticipants(prodXml);
-                if(!successful){
-                	throw new Exception("Track participents error UPC : " + initXml[0]);
-                }
-                addTer(prodXml);
-                
-                if(!successful){
-                	throw new Exception("Territory error UPC : " + initXml[0]);
-                }
-                                                
-                productsRead.add(prodXml);
+                	 productsRead.add(readNewProductRow());
                     
                 }
             }
@@ -363,15 +304,35 @@ int firstRow=4;
                 Xml toprint = (Xml) productsRead.get(i);
                 toprint.printXml();
             }
-            fileAmount = productsRead.size();
+            
             productsRead= new ArrayList();
             
         }
         catch (IOException e){
             e.printStackTrace ();
         }
+        int fileAmount = productsRead.size();
         System.out.println(fileAmount +" : xmls were created or modified");
     }
+
+	public Xml readNewProductRow() throws Exception {
+		Xml prodXml = initializeProduct();
+		addProductGenre(prodXml);
+		addProductParticipants(prodXml);
+		addTrack(prodXml);
+		addTrackParticipants(prodXml);
+		addTerritory(prodXml);                                                
+		return prodXml;
+	}
+
+	public void setupReadingExcelFile() throws IOException {
+		fileSystem = new POIFSFileSystem (inputStream);
+		workBook = new HSSFWorkbook (fileSystem);
+		workBook.setMissingCellPolicy(Row.CREATE_NULL_AS_BLANK);
+		sheet = workBook.getSheetAt (0);
+
+		setupCellTypes();
+	}
 
 
 
@@ -379,7 +340,7 @@ int firstRow=4;
 		for(int t=0; t<10; t++){
 		     cell =row.getCell(t);
 		     System.out.println(t + " " + antiNullString(cell));
-		     initXml[t] = antiNullString(cell);
+		     xmlSetupValues[t] = antiNullString(cell);
 		    }
             Xml prodXml = newXml();
 		return prodXml;
