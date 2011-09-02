@@ -8,11 +8,15 @@ import main.Xml;
 public class TerritoryExtractor {
 	
 	private boolean successful = true;
-
+	private int territoryCodesColumn = 29;
+	private int territoryDatesColumn = 30;
+	private int territoryPriceCodeColumn = 31;
+	
 
 	public void addTerritory(Xml theXml, HSSFRow currentRow) throws Exception{
 		HSSFRow row = currentRow;
-		HSSFCell cell =row.getCell(29);
+		
+		HSSFCell cell =row.getCell(territoryCodesColumn);
         String rawTers = antiNullString(cell);
         String[] ters = rawTers.split("-");
         
@@ -21,14 +25,16 @@ public class TerritoryExtractor {
             ters[i] = ters[i].trim();
         }
         
-        cell =row.getCell(30);
+        
+		cell =row.getCell(territoryDatesColumn);
         String rawDates = antiNullString(cell);
         String[] terDates = rawDates.split("-");
         for(int i=0; i<terDates.length; i++){
             terDates[i] = terDates[i].trim();
         }
         
-        cell =row.getCell(31);
+        
+		cell =row.getCell(territoryPriceCodeColumn);
         String rawCodes = antiNullString(cell);
         String[] terCodes = rawCodes.split("-");
         for(int i=0; i<terCodes.length; i++){
@@ -72,8 +78,11 @@ public class TerritoryExtractor {
             }
         }
         
-        if(ters.length < terDates.length | ters.length < terCodes.length){sendTerError();successful=false;};
+        if(ters.length < terDates.length | ters.length < terCodes.length){
+        	successful=false;
+        	};
         
+        	
         cell =row.getCell(32);
         String rawExters = antiNullString(cell);
         String[] exters = rawExters.split("-");

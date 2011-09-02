@@ -9,11 +9,12 @@ public class ParticipantExtractor {
 	
 	private HSSFRow row;
 	private boolean successful = true;
+	private int participantNameColumn = 27;
+	private int participantRoleColumn = 28;
 
 	public void addTrackParticipants(Xml xml, HSSFRow currentRow) throws Exception{
 		row = currentRow;
-    	int participantNameColumn = 27;
-    	int participantRoleColumn = 28;
+    	
     	String[] names = getParticipantNames(participantNameColumn);
     	String[] roles = getParticipantRoles(participantRoleColumn);
     	if(names.length != roles.length){
