@@ -31,13 +31,14 @@ private HSSFSheet sheet = null;
 private HSSFRow row = null;
 private HSSFCell cell = null;
 private String[] xmlSetupValues = new String[10];
-private String[] genres;
 private String distributor = null;
 private TrackExtractor trackExtractor = new TrackExtractor();
 private ParticipantExtractor participantExtractor= new ParticipantExtractor();
 private TerritoryExtractor territoryExtractor = new TerritoryExtractor();
+private GenreExtractor genreExtractor = new GenreExtractor();
+private DistributorExtractor distributorExtractor = new DistributorExtractor();
 
-int firstRow=4;
+private final int firstRow=4;
 
 
     public ExcelReader(){
@@ -83,17 +84,7 @@ int firstRow=4;
         return anXml;
     }
     
-    public void addProductGenre(Xml theXml){
-        cell = row.getCell(10);
-        String rawGenres = antiNullString(cell);
-        genres = rawGenres.split("-");
-        if(!rawGenres.equals("")){
-            for(int i=0; i<genres.length; i++){
-                genres[i] = genres[i].trim();
-                theXml.addGenre(genres[i]);
-            }
-        }
-    }
+
         
         public void setupCellTypes(){
             for(int i=0; i<=sheet.getLastRowNum(); i++){
@@ -114,7 +105,7 @@ int firstRow=4;
         try{
             setupReadingExcelFile();
 
-            distributor = getDistributor();
+            distributor = distributorExtractor.getDistributor(sheet);
             //creates product for first row of document
             
             for(int i=firstRow; i<=sheet.getLastRowNum(); i++){
@@ -157,7 +148,7 @@ int firstRow=4;
 
 	public Xml readNewProductRow() throws Exception {
 		Xml prodXml = initializeProduct();
-		addProductGenre(prodXml);
+		genreExtractor.addProductGenre(prodXml, row);
 		participantExtractor.addProductParticipants(prodXml, row);
 		trackExtractor.addTrack(prodXml, row);
 		participantExtractor.addTrackParticipants(prodXml, row);
@@ -184,12 +175,5 @@ int firstRow=4;
 		return prodXml;
 	}
 
-	public String getDistributor() throws Exception {
-		row = sheet.getRow(1);
-		cell = row.getCell(1);
-		if(antiNullString(cell).equals("")){
-            throw new Exception("No distributor name supplied");
-        }
-		return antiNullString(cell);
-	}
+
 }
