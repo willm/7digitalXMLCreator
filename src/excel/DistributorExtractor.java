@@ -4,7 +4,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
-public class DistributorExtractor {
+public class DistributorExtractor extends DataExtractor{
 	
 	private final int distributorRow = 1;
 	private final int distributorColumn = 1;
@@ -17,13 +17,4 @@ public class DistributorExtractor {
         }
 		return antiNullString(cell);
 	}
-	
-    private String antiNullString(HSSFCell theCell){
-        if(theCell != null){
-            return(theCell.getRichStringCellValue().getString());
-        }
-        else{
-            return("");
-        }
-    }
 }

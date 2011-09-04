@@ -5,7 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 
 import main.Xml;
 
-public class TrackExtractor {
+public class TrackExtractor extends DataExtractor{
 
 	private String[] track = new String[14];
 	private HSSFCell cell = null;
@@ -38,15 +38,5 @@ public class TrackExtractor {
 			track[11],
 			track[12],
 			track[trackStratingColumn]);
-    }
-    
-    public String antiNullString(HSSFCell theCell){
-        if(theCell != null){
-            return(theCell.getRichStringCellValue().getString());
-        }
-        else{
-            return("");
-        }
-    }
-	
+    }	
 }

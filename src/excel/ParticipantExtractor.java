@@ -5,7 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 
 import main.Xml;
 
-public class ParticipantExtractor {
+public class ParticipantExtractor extends DataExtractor {
 	
 	private HSSFRow row;
 	private boolean successful = true;
@@ -68,15 +68,5 @@ public class ParticipantExtractor {
 		    }
 		}
 		return names;
-	}
-	
-    private String antiNullString(HSSFCell theCell){
-        if(theCell != null){
-            return(theCell.getRichStringCellValue().getString());
-        }
-        else{
-            return("");
-        }
-    }
-	
+	}	
 }

@@ -5,7 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 
 import main.Xml;
 
-public class GenreExtractor {
+public class GenreExtractor extends DataExtractor{
 	
 	private static final int ProductGenreColumn = 10;
 	
@@ -20,15 +20,6 @@ public class GenreExtractor {
                 genres[i] = genres[i].trim();
                 theXml.addGenre(genres[i]);
             }
-        }
-    }
-    
-    private String antiNullString(HSSFCell theCell){
-        if(theCell != null){
-            return(theCell.getRichStringCellValue().getString());
-        }
-        else{
-            return("");
         }
     }
 }

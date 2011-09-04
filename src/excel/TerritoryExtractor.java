@@ -5,7 +5,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 
 import main.Xml;
 
-public class TerritoryExtractor {
+public class TerritoryExtractor extends DataExtractor {
 	
 	private boolean successful = true;
 	private int territoryCodesColumn = 29;
@@ -97,15 +97,7 @@ public class TerritoryExtractor {
         }
         
     }
-	
-    public String antiNullString(HSSFCell theCell){
-        if(theCell != null){
-            return(theCell.getRichStringCellValue().getString());
-        }
-        else{
-            return("");
-        }
-    }
+
     
     public void sendTerError(){
         System.out.println("TERRITORY ERROR");
