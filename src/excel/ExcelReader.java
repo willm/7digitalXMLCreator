@@ -39,6 +39,7 @@ private GenreExtractor genreExtractor = new GenreExtractor();
 private DistributorExtractor distributorExtractor = new DistributorExtractor();
 
 private final int firstRow=4;
+private ProductExtractor productExtractor = new ProductExtractor();
 
 
     public ExcelReader(){
@@ -77,12 +78,7 @@ private final int firstRow=4;
         exceltoxml(xlsPath);
     }
     
-    public Xml newXml(){
-        Xml anXml = new Xml(distributor,xmlSetupValues[0],xmlSetupValues[1],
-                                            xmlSetupValues[2],xmlSetupValues[3],xmlSetupValues[4],xmlSetupValues[5],
-                                            xmlSetupValues[6],xmlSetupValues[7],xmlSetupValues[8],new Boolean(xmlSetupValues[9]));
-        return anXml;
-    }
+    
     
 
         
@@ -101,53 +97,48 @@ private final int firstRow=4;
     public int exceltoxml(String thePath) throws Exception{
 
         setupFileStream(thePath);
-               
-        try{
-            setupReadingExcelFile();
+        setupReadingExcelFile();
+        
+        distributor = distributorExtractor.getDistributor(sheet);
 
-            distributor = distributorExtractor.getDistributor(sheet);
-            //creates product for first row of document
-            
-            for(int i=firstRow; i<=sheet.getLastRowNum(); i++){
-                //counts down to the bottom of excel doc
-                row = sheet.getRow(i);
-                System.out.println("row:"+i +"last row:" + sheet.getLastRowNum());
-                cell =row.getCell(0);
+        
+        for(int i=firstRow; i<=sheet.getLastRowNum(); i++){
+            //counts down to the bottom of excel doc
+            row = sheet.getRow(i);
+            System.out.println("row:"+i +"last row:" + sheet.getLastRowNum());
+            cell =row.getCell(0);
 
+			if(i>firstRow){
+			    Xml currentReleaseXml = productsRead.get(productsRead.size()-1);
+			    String currentUPC = currentReleaseXml.getProduct().Upc;
+				if(currentUPC.equals(antiNullString(cell)) && i>firstRow){
+					trackExtractor.addTrack(currentReleaseXml, row);
+			        participantExtractor.addTrackParticipants(currentReleaseXml, row);
+			     }
 
-				if(i>firstRow){
-				    Xml currentReleaseXml = productsRead.get(productsRead.size()-1);
-				    String currentUPC = currentReleaseXml.getProduct().Upc;
-					if(currentUPC.equals(antiNullString(cell)) && i>firstRow){
-						trackExtractor.addTrack(currentReleaseXml, row);
-				        participantExtractor.addTrackParticipants(currentReleaseXml, row);
-				     }
-
-				     else if(!antiNullString(cell).equals("") || i == firstRow) {
-				    	 productsRead.add(readNewProductRow());
-				    }
-				}
-                else if(i==firstRow){
-                	productsRead.add(readNewProductRow());
-                }
-            }
-            
-            for(int i=0; i<productsRead.size(); i++){
-                Xml toprint = (Xml) productsRead.get(i);
-                toprint.printXml();
+			     else if(!antiNullString(cell).equals("") || i == firstRow) {
+			    	 productsRead.add(readNewProductRow());
+			    }
+			}
+            else if(i==firstRow){
+            	productsRead.add(readNewProductRow());
             }
         }
-        catch (IOException e){
-            e.printStackTrace ();
-        }
-        int fileAmount = productsRead.size();
+        
+        printFiles();
         productsRead= new ArrayList<Xml>();
-        System.out.println(fileAmount +" : xmls were created or modified");
-        return fileAmount;
+        System.out.println(productsRead.size() +" : xmls were created or modified");
+        return productsRead.size();
     }
-
+    
+    public void printFiles(){
+	    for(int i=0; i<productsRead.size(); i++){
+	        Xml product = productsRead.get(i);
+	        product.printXml();
+	    }
+	}
 	public Xml readNewProductRow() throws Exception {
-		Xml prodXml = initializeProduct();
+		Xml prodXml = productExtractor.extractProduct(distributor, row);
 		genreExtractor.addProductGenre(prodXml, row);
 		participantExtractor.addProductParticipants(prodXml, row);
 		trackExtractor.addTrack(prodXml, row);
@@ -163,16 +154,6 @@ private final int firstRow=4;
 		sheet = workBook.getSheetAt (0);
 
 		setupCellTypes();
-	}
-
-	public Xml initializeProduct() {
-		for(int t=0; t<10; t++){
-		     cell =row.getCell(t);
-		     System.out.println(t + " " + antiNullString(cell));
-		     xmlSetupValues[t] = antiNullString(cell);
-		    }
-            Xml prodXml = newXml();
-		return prodXml;
 	}
 
 
