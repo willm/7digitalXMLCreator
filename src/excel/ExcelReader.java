@@ -29,7 +29,6 @@ private HSSFWorkbook workBook;
 private HSSFSheet sheet;
 private HSSFRow row = null;
 private HSSFCell cell = null;
-private String[] xmlSetupValues = new String[10];
 private String distributor = null;
 private TrackExtractor trackExtractor = new TrackExtractor();
 private ParticipantExtractor participantExtractor= new ParticipantExtractor();
@@ -38,6 +37,7 @@ private GenreExtractor genreExtractor = new GenreExtractor();
 private DistributorExtractor distributorExtractor = new DistributorExtractor();
 
 private final int firstRow=4;
+private ProductExtractor productExtractor =new ProductExtractor();;
 
 
     public ExcelReader(String thePath) throws Exception{
@@ -58,22 +58,17 @@ private final int firstRow=4;
     	setupCellTypes();
     }
     
-    public void setupCellTypes(){
+    private void setupCellTypes(){
         for(int i=0; i<=sheet.getLastRowNum(); i++){
             row = sheet.getRow(i);
             for(int j=0; j<32; j++){
                 cell = row.getCell(j);
                 cell.setCellType(1);
-                System.out.println("The Cell "+i +":"+j+ "type: " + cell.getCellType());
+              //  System.out.println("The Cell "+i +":"+j+ "type: " + cell.getCellType());
             }
         }
     }
     
-    public void reset(){
-        productsRead= new ArrayList<Xml>();
-    }
-
-
     public String antiNullString(HSSFCell theCell){
         if(theCell != null){
             return(theCell.getRichStringCellValue().getString());
@@ -82,17 +77,6 @@ private final int firstRow=4;
             return("");
         }
     }
-    
-    public Xml newXml(){
-        Xml anXml = new Xml(distributor,xmlSetupValues[0],xmlSetupValues[1],
-                                            xmlSetupValues[2],xmlSetupValues[3],xmlSetupValues[4],xmlSetupValues[5],
-                                            xmlSetupValues[6],xmlSetupValues[7],xmlSetupValues[8],new Boolean(xmlSetupValues[9]));
-        return anXml;
-    }
-
-
-        
-
             
     public int exceltoxml() throws Exception{
 
@@ -139,22 +123,12 @@ private final int firstRow=4;
     }
 
 	public Xml readNewProductRow() throws Exception {
-		Xml prodXml = initializeProduct();
+		Xml prodXml = productExtractor.extractProduct(distributor, row);
 		genreExtractor.addProductGenre(prodXml, row);
 		participantExtractor.addProductParticipants(prodXml, row);
 		trackExtractor.addTrack(prodXml, row);
 		participantExtractor.addTrackParticipants(prodXml, row);
 		territoryExtractor.addTerritory(prodXml, row);
-		return prodXml;
-	}
-
-	public Xml initializeProduct() {
-		for(int t=0; t<10; t++){
-		     cell =row.getCell(t);
-		     System.out.println(t + " " + antiNullString(cell));
-		     xmlSetupValues[t] = antiNullString(cell);
-		    }
-            Xml prodXml = newXml();
 		return prodXml;
 	}
 

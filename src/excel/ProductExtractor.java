@@ -20,7 +20,7 @@ public class ProductExtractor extends DataExtractor {
 		
 	}
 
-	public Xml newXml(String distributor , String[] xmlSetupValues){
+	private Xml newXml(String distributor , String[] xmlSetupValues){
         Xml anXml = new Xml(distributor,xmlSetupValues[0],xmlSetupValues[1],
                 xmlSetupValues[2],xmlSetupValues[3],xmlSetupValues[4],xmlSetupValues[5],
                 xmlSetupValues[6],xmlSetupValues[7],xmlSetupValues[8],new Boolean(xmlSetupValues[9]));
