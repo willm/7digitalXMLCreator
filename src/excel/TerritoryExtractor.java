@@ -94,8 +94,7 @@ public class TerritoryExtractor extends DataExtractor {
         }
         if(!successful){
         	throw new Exception("Territory error UPC : " + theXml.getProduct().Upc);
-        }
-        
+        }        
     }
 
     
