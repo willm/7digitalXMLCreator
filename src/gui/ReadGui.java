@@ -12,7 +12,7 @@ public class ReadGui extends javax.swing.JFrame {
 
     private javax.swing.JFileChooser jFileChooser1;
     private FileListener filelis;
-    private ExcelReader excelReader = new ExcelReader();
+   
 
 
     public ReadGui() {
@@ -67,19 +67,19 @@ public class ReadGui extends javax.swing.JFrame {
 	
 	    public void actionPerformed(ActionEvent e) {
 	
+	    	
 	        if (JFileChooser.APPROVE_SELECTION.equals(e.getActionCommand())){    
 	            File file = jFileChooser1.getSelectedFile();
+	            
 	            try{
-	            	int filesCreated = excelReader.exceltoxml(file.getAbsolutePath());
+	            	ExcelReader excelReader = new ExcelReader(file.getAbsolutePath());
+	            	int filesCreated = excelReader.exceltoxml();
 	            	JOptionPane.showMessageDialog(null, "Success : " + filesCreated + " xmls were created");
 	            }
 	            catch(Exception ex){
 	            	JOptionPane.showMessageDialog(null, "Fail : " + ex.getMessage());
 	          ex.printStackTrace();
 	            }
-	            
-	            //This line creates all the xmls and returns the result as a message box
-	            excelReader.reset();
 	        }
 	        else if (JFileChooser.CANCEL_SELECTION.equals(e.getActionCommand())) {
 	            System.out.println("Open command cancelled by user.");

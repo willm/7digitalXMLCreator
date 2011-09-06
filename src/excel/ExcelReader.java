@@ -22,12 +22,11 @@ import java.util.ArrayList;
 public class ExcelReader
 {
 
-private POIFSFileSystem fileSystem = null;
-private InputStream inputStream = null;
-private String xlsPath;
+private POIFSFileSystem fileSystem;
+private InputStream inputStream ;
 private ArrayList<Xml> productsRead;
 private HSSFWorkbook workBook;
-private HSSFSheet sheet = null;
+private HSSFSheet sheet;
 private HSSFRow row = null;
 private HSSFCell cell = null;
 private String[] xmlSetupValues = new String[10];
@@ -41,26 +40,40 @@ private DistributorExtractor distributorExtractor = new DistributorExtractor();
 private final int firstRow=4;
 
 
-    public ExcelReader(){
-        xlsPath = "";
+    public ExcelReader(String thePath) throws Exception{
         productsRead= new ArrayList<Xml>();
-
+        try{
+            inputStream = new FileInputStream (thePath);
+            
+        }
+        catch (FileNotFoundException e){
+        	e.printStackTrace ();
+            throw new Exception("File not found in the specified path.");
+        }
+        
+        fileSystem = new POIFSFileSystem (inputStream);
+    	workBook = new HSSFWorkbook (fileSystem);
+    	workBook.setMissingCellPolicy(Row.CREATE_NULL_AS_BLANK);
+    	sheet = workBook.getSheetAt (0);
+    	setupCellTypes();
+    }
+    
+    public void setupCellTypes(){
+        for(int i=0; i<=sheet.getLastRowNum(); i++){
+            row = sheet.getRow(i);
+            for(int j=0; j<32; j++){
+                cell = row.getCell(j);
+                cell.setCellType(1);
+                System.out.println("The Cell "+i +":"+j+ "type: " + cell.getCellType());
+            }
+        }
     }
     
     public void reset(){
         productsRead= new ArrayList<Xml>();
     }
 
-	public void setupFileStream(String thePath) throws Exception {
-		try{
-            inputStream = new FileInputStream (thePath);
-        }
-        catch (FileNotFoundException e){
-        	e.printStackTrace ();
-            throw new Exception("File not found in the specified path.");
-        }
-	}
-    
+
     public String antiNullString(HSSFCell theCell){
         if(theCell != null){
             return(theCell.getRichStringCellValue().getString());
@@ -70,41 +83,20 @@ private final int firstRow=4;
         }
     }
     
-    
-    public void setPath(String thePath) throws Exception{
-        xlsPath = thePath;
-        System.out.println("From read: " + xlsPath);
-        exceltoxml(xlsPath);
-    }
-    
     public Xml newXml(){
         Xml anXml = new Xml(distributor,xmlSetupValues[0],xmlSetupValues[1],
                                             xmlSetupValues[2],xmlSetupValues[3],xmlSetupValues[4],xmlSetupValues[5],
                                             xmlSetupValues[6],xmlSetupValues[7],xmlSetupValues[8],new Boolean(xmlSetupValues[9]));
         return anXml;
     }
-    
+
 
         
-        public void setupCellTypes(){
-            for(int i=0; i<=sheet.getLastRowNum(); i++){
-                row = sheet.getRow(i);
-                for(int j=0; j<32; j++){
-                    cell = row.getCell(j);
-                    cell.setCellType(1);
-                    System.out.println("The Cell "+i +":"+j+ "type: " + cell.getCellType());
-                }
-            }
-        }
 
             
-    public int exceltoxml(String thePath) throws Exception{
+    public int exceltoxml() throws Exception{
 
-        setupFileStream(thePath);
-               
         try{
-            setupReadingExcelFile();
-
             distributor = distributorExtractor.getDistributor(sheet);
             //creates product for first row of document
             
@@ -154,15 +146,6 @@ private final int firstRow=4;
 		participantExtractor.addTrackParticipants(prodXml, row);
 		territoryExtractor.addTerritory(prodXml, row);
 		return prodXml;
-	}
-
-	public void setupReadingExcelFile() throws IOException {
-		fileSystem = new POIFSFileSystem (inputStream);
-		workBook = new HSSFWorkbook (fileSystem);
-		workBook.setMissingCellPolicy(Row.CREATE_NULL_AS_BLANK);
-		sheet = workBook.getSheetAt (0);
-
-		setupCellTypes();
 	}
 
 	public Xml initializeProduct() {
